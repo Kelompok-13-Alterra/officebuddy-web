@@ -1,10 +1,9 @@
 import React from 'react'
 
-export const LoginBaru = () => {
+const Login = () => {
   return (
-    <div>
-        <div>halo dunia</div>
-        <div>halaman login</div>
-    </div>
+    <div>Login</div>
   )
 }
+
+export default Login
