@@ -1,8 +1,13 @@
 import React from "react";
 import "./App.css";
+import { Landing } from "../../page/Landing/Landing";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <Landing />
+    </>
+  );
 }
 
 export default App;
