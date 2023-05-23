@@ -1,0 +1,41 @@
+/* .location {
+  max-width: 1440px;
+  max-height: 1668px;
+} */
+
+.location .location__image {
+  width: 1128px;
+  height: 464px;
+}
+
+.location .container__title {
+  width: 1128px;
+}
+
+.location .container__title h1 {
+  font-size: 57px;
+  color: #0074e5;
+}
+
+.location .container__title p {
+  font-size: 20px;
+}
+
+.location .container__content .card {
+  width: 413px;
+  height: 140px;
+}
+
+.location .container__content .card__mini {
+  width: 289px;
+}
+
+.location .container__content .card h2 {
+  font-size: 32px;
+  color: #0074e5;
+}
+
+.location .container__content .card p {
+  font-size: 16px;
+  line-height: 18.75px;
+}
