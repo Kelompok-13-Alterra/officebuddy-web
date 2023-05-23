@@ -2,3 +2,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Roboto-Bold";
+  src: local("Roboto-Bold"),
+    url("../../assets/fonts/Roboto/Roboto-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Medium";
+  src: local("Roboto-Medium"),
+    url("../../assets/fonts/Roboto/Roboto-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Regular";
+  src: local("Roboto-Regular"),
+    url("../../assets/fonts/Roboto/Roboto-Regular.ttf") format("truetype");
+}
+
+.font-face-ro-bold {
+  font-family: "Roboto-Bold";
+}
+
+.font-face-ro-med {
+  font-family: "Roboto-Medium";
+}
+
+.font-face-ro {
+  font-family: "Roboto-Regular";
+}
