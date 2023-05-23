@@ -9,7 +9,7 @@ import LogoCleaning from "../../assets/img/cleaning.png";
 
 const ThirdLandingPage = () => {
   return (
-    <div className="p-3 w-full relative  py-8">
+    <div className="p-3 w-full relative  py-7">
       <div className="flex justify-center w-[600px} flex-col mx-auto items-center">
         <p className="text-4xl font-face-ro-bold mb-3">Mengapa Perusahaan</p>
         <p className="text-4xl font-face-ro-bold">Memilih Kami ?</p>
