@@ -1,1 +1,4 @@
 /* Add setingan style Global Disini Ex: fonts, */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
