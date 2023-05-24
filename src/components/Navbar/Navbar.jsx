@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Logo from "../../assets/img/Group3.png";
+import "./navbar.css";
 
 function Navbar() {
   const [isMobile, setIsmobile] = useState(false);
 
   return (
     <>
-      <nav className="bg-gradient-to-br from-white to-gray-100 shadow">
+      <nav className="navbar font-face-ro">
         <div className="flex flex-col lg:flex-row">
           <div className="flex items-center justify-between px-4 py-4 lg:px-40 lg:py-0 border-b border-gray-300 lg:border-b-0">
             <div>
