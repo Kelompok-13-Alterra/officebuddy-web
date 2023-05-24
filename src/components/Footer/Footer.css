@@ -1,0 +1,15 @@
+.footer {
+  background-color: #fdfbff;
+}
+
+.footer-img {
+  width: 70px;
+  height: 29.91px;
+}
+
+@media screen and (min-width: 761px) {
+  .footer-img {
+    width: 173.19px;
+    height: 74px;
+  }
+}
