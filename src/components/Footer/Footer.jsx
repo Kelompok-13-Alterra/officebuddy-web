@@ -7,13 +7,13 @@ function Footer() {
     <footer className="footer">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
-          <div className="mb-6 md:mb-0 px-0 lg:px-28">
+          <div className="mb-6 md:mb-0 px-0 md:px-28 lg:px-28">
             <a href="#" className="flex items-center">
-              <img src={Logo} className="w-28 lg:w-40" alt="Logo" />
+              <img src={Logo} className="footer-img" alt="Logo" />
             </a>
           </div>
-          <div className="flex flex-col lg:flex-row gap-8 py-10">
-            <div className="px-0 lg:px-12">
+          <div className="flex flex-col md:flex-row lg:flex-row gap-8 py-10">
+            <div className="px-0 md:px-6 lg:px-12">
               <ul className="text-gray-600 dark:text-black font-medium">
                 <li className="mb-4">
                   <a href="#" className="font-face-ro-bold">
@@ -21,51 +21,51 @@ function Footer() {
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:text-blue-500 hover:underline">
+                  <a href="#" className="font-face-ro hover:text-blue-500">
                     Browse Office
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:text-blue-500 hover:underline">
+                  <a href="#" className="font-face-ro hover:text-blue-500">
                     Location
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:text-blue-500 hover:underline">
+                  <a href="#" className="font-face-ro hover:text-blue-500">
                     Contact Us
                   </a>
                 </li>
               </ul>
             </div>
-            <div className="px-0 lg:px-12">
+            <div className="px-0 md:px-6 lg:px-12">
               <ul className="text-gray-600 dark:text-black font-medium">
                 <li className="mb-4">
-                  <a href="#" className="font-bold">
+                  <a href="#" className="font-face-ro-bold">
                     Support
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:text-blue-500  hover:underline">
+                  <a href="#" className="font-face-ro hover:text-blue-500">
                     Discord
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:text-blue-500  hover:underline">
+                  <a href="#" className="font-face-ro hover:text-blue-500">
                     Customer Service
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:text-blue-500  hover:underline">
+                  <a href="#" className="font-face-ro hover:text-blue-500">
                     Privacy Policy
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:text-blue-500  hover:underline">
+                  <a href="#" className="font-face-ro hover:text-blue-500">
                     Terms &amp; Conditions
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:text-blue-500  hover:underline">
+                  <a href="#" className="font-face-ro hover:text-blue-500">
                     FAQ
                   </a>
                 </li>
@@ -74,7 +74,7 @@ function Footer() {
             <div>
               <ul className="text-gray-600 dark:text-black font-medium">
                 <li className="mb-4">
-                  <a href="#" className="font-bold">
+                  <a href="#" className="font-face-ro-bold">
                     Contact
                   </a>
                 </li>
@@ -93,7 +93,7 @@ function Footer() {
                       d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
                     />
                   </svg>
-                  <a href="#" className="hover:text-blue-500 hover:underline">
+                  <a href="#" className="font-face-ro hover:text-blue-500">
                     <span className="text-white">0</span>303-1157-09
                   </a>
                 </li>
@@ -113,7 +113,7 @@ function Footer() {
                     />
                   </svg>
 
-                  <a href="#" className="hover:text-blue-500 hover:underline">
+                  <a href="#" className="font-face-ro hover:text-blue-500">
                     <span className="text-white">0</span>
                     OfficeBuddy@rockmail.com
                   </a>
@@ -122,10 +122,13 @@ function Footer() {
             </div>
           </div>
         </div>
-        <div className="sm:flex sm:items-center sm:justify-between px-0 lg:px-28">
-          <span className="text-sm text-gray-500 sm:text-center dark:text-black">
+        <div className="sm:flex sm:items-center sm:justify-between px-0 md:px-28 lg:px-28">
+          <span
+            className="text-sm text-gray-500 sm:text-center dark:text-black"
+            style={{ color: "#74777F" }}
+          >
             © 2023{" "}
-            <a href="#" className="hover:underline">
+            <a href="#" className="font-face-ro">
               Office Buddy All rights reserved.
             </a>
           </span>
