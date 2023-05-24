@@ -1,6 +1,9 @@
 import React, { useRef } from "react";
 import emailjs from "@emailjs/browser";
 import Navbar from "../../components/Navbar/Navbar";
+import "./ContactUs.css";
+import { toast } from "react-toastify";
+import Footer from "../../components/Footer/Footer";
 
 const ContactUs = () => {
   const form = useRef();
@@ -8,33 +11,48 @@ const ContactUs = () => {
   const sendEmail = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm(
-      "service_qnt3udr",
-      "template_9tt6yq6",
-      form.current,
-      "tjk-mo2i4UhBICSU2",
-    );
+    emailjs
+      .sendForm(
+        "service_qnt3udr",
+        "template_9tt6yq6",
+        form.current,
+        "tjk-mo2i4UhBICSU2",
+      )
+      .then(
+        (result) => {
+          toast.success(`${result.text}, Message sent successfully`, {
+            position: "top-right",
+          });
+        },
+        (error) => {
+          toast.error(`Message failed to send, ${error.text}`, {
+            position: "top-right",
+          });
+        },
+      );
     e.target.reset();
   };
 
   return (
     <>
       <Navbar />
-      <div className="flex justify-center items-center mt-5">
-        <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
+      <div className="flex justify-center items-center">
+        <h1 className="text-3xl font-bold mb-4 contact__us font-face-ro-bold">
+          Contact Us
+        </h1>
       </div>
       <div className="flex justify-center items-center">
-        <h1 className="text-xl mb-4 ">
+        <h1 className="tim__kami text-xl mb-4 font-face-ro-med">
           Tim kami akan sangat senang untuk bisa membantu anda
         </h1>
       </div>
       <div className="flex justify-center items-center">
-        <form className="p-4" ref={form} onSubmit={sendEmail}>
-          <div className="grid grid-cols-12 gap-4 mb-4">
-            <div className="col-span-6 sm:col-span-6 mb-4 relative">
+        <form className="form__tabel p-4" ref={form} onSubmit={sendEmail}>
+          <div className="name grid grid-cols-1 sm:grid-cols-2 gap-12">
+            <div className="relative">
               <label
                 htmlFor="namaDepan"
-                className="absolute -top-3 left-2 bg-white px-1"
+                className="label__name absolute -top-3 left-2 bg-white px-1 font-face-ro"
               >
                 Nama Depan
               </label>
@@ -42,41 +60,46 @@ const ContactUs = () => {
                 type="text"
                 id="namaDepan"
                 name="namaDepan"
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-1 border border-gray-300 rounded font-face-ro"
+                required
               />
             </div>
-            <div className="col-span-6 sm:col-span-6 mb-4 relative">
+            <div className="relative">
               <label
                 htmlFor="namaBelakang"
-                className="absolute -top-3 left-2 bg-white px-1"
+                className="label__name absolute -top-3 left-2 bg-white px-1 font-face-ro"
               >
                 Nama Belakang
               </label>
               <input
-                type="namaBelakang"
+                type="text"
                 id="namaBelakang"
                 name="namaBelakang"
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-1 border border-gray-300 rounded font-face-ro"
               />
             </div>
-            <div className="col-span-6 sm:col-span-12 mb-4 relative">
+          </div>
+          <div className="grid gap-12">
+            <div className="relative">
               <label
                 htmlFor="email"
-                className="absolute -top-3 left-2 bg-white px-1"
+                className="label__name absolute -top-3 left-2 bg-white px-1 font-face-ro"
               >
                 Email
               </label>
               <input
+                type="email"
                 id="email"
                 name="email"
                 rows="4"
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-1 border border-gray-300 rounded font-face-ro"
+                required
               />
             </div>
-            <div className="col-span-6 sm:col-span-12 mb-4 relative">
+            <div className="relative">
               <label
                 htmlFor="message"
-                className="absolute -top-3 left-2 bg-white px-1"
+                className="label__name absolute -top-3 left-2 bg-white px-1 font-face-ro"
               >
                 Message
               </label>
@@ -84,18 +107,22 @@ const ContactUs = () => {
                 id="message"
                 name="message"
                 rows="4"
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-1 border border-gray-300 rounded font-face-ro"
+                required
               />
             </div>
-            <button
-              type="submit"
-              className="col-span-12 sm:col-span-12 bg-blue-500 text-white rounded px-4 py-2 hover:bg-blue-600"
-            >
-              Send Message
-            </button>
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                className="btn__message col-span-12 sm:col-span-12 text-white px-4 py-2 hover:bg-blue-600 font-face-ro-med"
+              >
+                Send Message
+              </button>
+            </div>
           </div>
         </form>
       </div>
+      <Footer />
     </>
   );
 };
