@@ -34,7 +34,7 @@ const SecondHeroLanding = () => {
                 kerja karena vibesnya yang asik banget dan fasilitasnya yang
                 juga banyak sampai kamu betah untuk kerja.
               </p>
-              <button className="h-14 ml-4 sm:ml-0 rounded-md px-1 w-60 flex justify-center items-center text-white gap-4 font-face-ro-med bg-bg-button">
+              <button className="h-14 md:hidden ml-4 sm:ml-0 rounded-md px-1 w-60 flex justify-center items-center text-white gap-4 font-face-ro-med bg-bg-button">
                 Booking Coworking Space{" "}
                 <svg
                   width="11"
