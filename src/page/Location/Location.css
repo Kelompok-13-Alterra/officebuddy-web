@@ -1,0 +1,165 @@
+.location {
+  max-width: 1440px;
+  max-height: 1668px;
+  background-color: #fdfbff;
+}
+
+/* Responsive */
+@media screen and (min-width: 360px) {
+  .location .location__image {
+    width: 328px;
+    height: 133px;
+  }
+
+  .location .container__title {
+    width: 318px;
+  }
+
+  .location .container__title h1 {
+    font-size: 20px;
+    color: #0074e5;
+  }
+
+  .location .container__title p {
+    font-size: 11px;
+  }
+
+  .location .container__content .card {
+    width: 258px;
+    height: 101px;
+  }
+
+  .location .container__content .card__mini {
+    width: 289px;
+  }
+
+  .location .container__content .card h2 {
+    font-size: 20px;
+    line-height: 35px;
+    color: #0074e5;
+  }
+
+  .location .container__content .card p {
+    font-size: 11px;
+    line-height: 18.75px;
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .location .location__image {
+    width: 500px;
+    height: 240px;
+  }
+  .location .container__title {
+    width: 600px;
+  }
+
+  .location .container__title h1 {
+    font-size: 40px;
+    color: #0074e5;
+  }
+
+  .location .container__title p {
+    font-size: 13px;
+  }
+
+  .location .container__content .card {
+    width: 400px;
+    height: 101px;
+  }
+
+  .location .container__content .card__mini {
+    width: 300px;
+  }
+
+  .location .container__content .card h2 {
+    font-size: 28px;
+    line-height: 64px;
+    color: #0074e5;
+  }
+
+  .location .container__content .card p {
+    font-size: 13px;
+    line-height: 18.75px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .location .location__image {
+    width: 900px;
+    height: 364px;
+  }
+
+  .location .container__title {
+    width: 980px;
+  }
+
+  .location .container__title h1 {
+    font-size: 44px;
+    color: #0074e5;
+  }
+
+  .location .container__title p {
+    font-size: 16px;
+  }
+
+  .location .container__content .card {
+    width: 413px;
+    height: 140px;
+  }
+
+  .location .container__content .card__mini {
+    width: 289px;
+  }
+
+  .location .container__content .card h2 {
+    font-size: 28px;
+    line-height: 64px;
+    color: #0074e5;
+  }
+
+  .location .container__content .card p {
+    font-size: 16px;
+    line-height: 18.75px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .location .location__image {
+    width: 1128px;
+    height: 464px;
+  }
+
+  .location .container__title {
+    width: 1128px;
+  }
+
+  .location .container__title h1 {
+    font-size: 57px;
+    color: #0074e5;
+  }
+
+  .location .container__title p {
+    font-size: 20px;
+  }
+
+  .location .container__content .card {
+    width: 413px;
+    height: 140px;
+  }
+
+  .location .container__content .card__mini {
+    width: 289px;
+  }
+
+  .location .container__content .card h2 {
+    font-size: 32px;
+    line-height: 64px;
+    color: #0074e5;
+  }
+
+  .location .container__content .card p {
+    font-size: 16px;
+    line-height: 18.75px;
+  }
+}

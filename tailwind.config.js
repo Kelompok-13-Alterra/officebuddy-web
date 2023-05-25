@@ -10,6 +10,11 @@ export default {
         "bg-secondRounded": "#D6E3FF",
         "bg-fourth": "#7BACFF",
       },
+      screens: {
+        phone: "360px",
+        tablet: "768px",
+        desktop: "1024px",
+      },
     },
   },
   plugins: [],
