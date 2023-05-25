@@ -26,7 +26,7 @@ const FifthLanding = () => {
         </button>
       </div>
       <div className="wrapperCard md:flex-row flex-col flex justify-center gap-10 mx-7 mt-10">
-        <div className="card drop-shadow-md md:w-1/2 w-full mb-10 mx-4 bg-white rounded-lg p-8">
+        <div className="card  mx-auto drop-shadow-md md:w-1/2 w-full mb-10 md:mx-14  bg-white rounded-lg p-4">
           <div className="flex gap-7 items-center">
             <img
               src={Matheus}
@@ -62,7 +62,7 @@ const FifthLanding = () => {
             necessitatibus velit distinctio eius id! Voluptate aut sint totam.""
           </p>
         </div>
-        <div className="card drop-shadow-md md:w-1/2 w-full mb-10 mx-4 bg-white rounded-lg p-8">
+        <div className="card drop-shadow-md md:w-1/2 md:mx-14 w-full mb-10 mx-auto bg-white rounded-lg p-4">
           <div className="flex gap-7 items-center">
             <img
               src={Matheus}

@@ -6,7 +6,7 @@ const SeventhLanding = () => {
   return (
     <div className="bgLanding border-b-2 border-gray-400 pt-5 w-screen py-14 flex md:flex-row flex-col relative bg-bg-body">
       <div className="cardTag md:w-1/2 w-full flex gap-x-8 flex-col justify-center items-center">
-        <p className="font-face-ro-bold text-3xl">
+        <p className="font-face-ro-bold text-center text-3xl">
           Office <span className="text-blue-600">Buddy</span> is available on
         </p>
         <p className="font-face-ro-med w-1/2 text-center">
@@ -19,7 +19,11 @@ const SeventhLanding = () => {
         </div>
       </div>
       <div className="cardImage my-5 w-full md:w-1/2 justify-center items-center">
-        <img src={Handphone} className="w-[500px] h-[410px]" alt="handphone" />
+        <img
+          src={Handphone}
+          className="w-[500px] h-[320px] md:h-[410px]"
+          alt="handphone"
+        />
       </div>
     </div>
   );

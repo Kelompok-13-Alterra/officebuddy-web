@@ -24,8 +24,8 @@ const SixthLanding = () => {
           </div>
           <div className="wordWrapper md:w-1/2  flex flex-col justify-center items-center md:ml-0 ml-48 z-20">
             <div className="flex flex-col justify-start md:justify-start items-start md:items-end mb-8 sm:static relative pr-11 right-20  w-screen md:w-2/3 md:mr-16">
-              <div className="wrapperTag  mb-3 flex justify-center items-start text-5xl font-bold">
-                <h1 className="font-face-ro-bold text-white text-4xl w-full md:text-end text-start">
+              <div className="wrapperTag  mb-3 flex justify-center items-center font-bold">
+                <h1 className="font-face-ro-bold ml-4 md:ml-0 text-white text-3xl w-full md:text-end text-start">
                   Anywhere for Work!
                 </h1>
               </div>
