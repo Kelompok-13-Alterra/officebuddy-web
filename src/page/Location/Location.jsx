@@ -10,7 +10,7 @@ function Location() {
       <header className="sticky top-0">
         <Navbar />
       </header>
-      <main className="flex flex-col gap-16 mt-24 items-center justify-center">
+      <main className="flex flex-wrap flex-col items-center justify-center gap-16 mt-10">
         <div className="container__title">
           <h1 className="text-center font-face-ro-bold">
             Office on whole across Indonesia
@@ -21,7 +21,7 @@ function Location() {
           </p>
         </div>
         <img className="location__image" src={locationImg} alt="img" />
-        <div className="container__content flex flex-row items-center align-middle justify-evenly gap-40 mb-28">
+        <div className="container__content items-center align-middle justify-evenly flex phone:flex-col tablet:flex-row phone:gap-14 tablet:gap-20 desktop:gap-40 phone:mb-14 tablet:mb-28 ">
           <div className="card card__mini">
             <h2 className="text-center font-face-ro-bold">Over 1.000 Office</h2>
             <p className="text-center font-face-ro-med">
