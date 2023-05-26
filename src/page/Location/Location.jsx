@@ -6,7 +6,7 @@ import locationImg from "../../assets/img/location-img.png";
 
 function Location() {
   return (
-    <div className="location">
+    <div className="location w-screen overflow-x-hidden">
       <header className="sticky top-0">
         <Navbar />
       </header>
