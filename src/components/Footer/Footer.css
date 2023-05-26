@@ -2,6 +2,10 @@
   background-color: #fdfbff;
 }
 
+.footer .div__footer {
+  font-size: 12px;
+}
+
 .footer-img {
   width: 70px;
   height: 29.91px;
@@ -13,3 +17,10 @@
     height: 74px;
   }
 }
+
+/* @media screen and (min-width: 200px) {
+  .footer-img {
+    width: 70px;
+    height: 29.91px;
+  }
+} */

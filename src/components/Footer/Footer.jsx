@@ -12,11 +12,11 @@ function Footer() {
               <img src={Logo} className="footer-img" alt="Logo" />
             </a>
           </div>
-          <div className="flex flex-col md:flex-row lg:flex-row gap-8 py-10">
+          <div className="div__footer flex flex-col md:flex-row lg:flex-row py-2 md:py-10 md:px-5 md:gap-3 lg:gap-6 lg:py-10 lg:px-10">
             <div className="px-0 md:px-6 lg:px-12">
               <ul className="text-gray-600 dark:text-black font-medium">
-                <li className="mb-4">
-                  <a href="#" className="font-face-ro-bold">
+                <li className="mb-4 ">
+                  <a href="#" className="font-face-ro-bold text-[14px]">
                     Link
                   </a>
                 </li>
@@ -39,8 +39,8 @@ function Footer() {
             </div>
             <div className="px-0 md:px-6 lg:px-12">
               <ul className="text-gray-600 dark:text-black font-medium">
-                <li className="mb-4">
-                  <a href="#" className="font-face-ro-bold">
+                <li className="mb-4 text-[14px]">
+                  <a href="#" className="font-face-ro-bold ">
                     Support
                   </a>
                 </li>
@@ -73,7 +73,7 @@ function Footer() {
             </div>
             <div>
               <ul className="text-gray-600 dark:text-black font-medium">
-                <li className="mb-4">
+                <li className="mb-4 text-[14px]">
                   <a href="#" className="font-face-ro-bold">
                     Contact
                   </a>
@@ -115,7 +115,7 @@ function Footer() {
 
                   <a href="#" className="font-face-ro hover:text-blue-500">
                     <span className="text-white">0</span>
-                    OfficeBuddy@rockmail.com
+                    officebuddyjaya@gmail.com
                   </a>
                 </li>
               </ul>
