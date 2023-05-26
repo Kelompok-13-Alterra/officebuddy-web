@@ -122,6 +122,7 @@ const ContactUs = () => {
           </div>
         </form>
       </div>
+      <hr />
       <Footer />
     </>
   );
