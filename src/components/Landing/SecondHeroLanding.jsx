@@ -24,17 +24,17 @@ const SecondHeroLanding = () => {
           </div>
           <div className="wordWrapper w-1/2  flex flex-col justify-center items-center ml-48 md:ml-0 z-20">
             <div className="flex flex-col justify-start md:justify-end items-start md:items-end mr-64 md:mr-10">
-              <div className="wrapperTag md:w-[23.75rem] w-[18rem]  h-[12rem] p-2  flex justify-center items-start text-5xl font-bold">
-                <h1 className="font-face-ro-bold text-white text-4xl w-full md:text-end text-start">
+              <div className="wrapperTag md:w-[23.75rem] w-[18rem]  h-[7rem] md:h-[12rem] p-2  flex justify-center items-start text-5xl font-bold">
+                <h1 className="font-face-ro-bold text-white md:text-4xl text-2xl w-full md:text-end text-start">
                   Good Vibes Good Coworking Space
                 </h1>
               </div>
-              <p className="md:w-[500px]-14 w-full px-4 mb-4 font-face-ro-med md:text-end text-white">
+              <p className="md:w-[500px]-14 w-full text-sm md:text-base  px-4 mb-4 font-face-ro-med  md:text-end text-white">
                 Coworking space bisa buat kamu dan temen-temen kamu bisa asik
                 kerja karena vibesnya yang asik banget dan fasilitasnya yang
                 juga banyak sampai kamu betah untuk kerja.
               </p>
-              <button className="h-14 md:hidden ml-4 sm:ml-0 rounded-md px-1 w-60 flex justify-center items-center text-white gap-4 font-face-ro-med bg-bg-button">
+              <button className="h-11 text-sm md:hidden ml-4 sm:ml-0 rounded-md px-1 w-52 flex justify-center items-center text-white gap-4 font-face-ro-med bg-bg-button">
                 Booking Coworking Space{" "}
                 <svg
                   width="11"

@@ -6,10 +6,10 @@ const FifthLanding = () => {
   return (
     <div className="mid-w-screen px-3 py-14 bg-bg-body relative">
       <div className="flex justify-around">
-        <h1 className="font-face-ro-bold text-center text-3xl sm:text-4xl">
+        <h1 className="font-face-ro-bold text-center text-2xl sm:text-3xl">
           Pengalaman Pengguna
         </h1>
-        <button className="h-14 ml-4 absolute md:static  bottom-2 md:mt-0 mt-10 right-6 sm:ml-0 rounded-md px-1 w-60 flex justify-center items-center text-white gap-4 font-face-ro-med bg-bg-button">
+        <button className="h-11 ml-4 absolute md:static  bottom-2 md:mt-0 mt-10 right-6 sm:ml-0 rounded-md px-1 w-52 flex justify-center items-center text-white gap-4 font-face-ro-med bg-bg-button">
           Check Riviews{" "}
           <svg
             width="11"
@@ -57,7 +57,7 @@ const FifthLanding = () => {
               </span>
             </div>
           </div>
-          <p className="mt-4">
+          <p className="mt-4  text-sm md:text-base">
             "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt
             necessitatibus velit distinctio eius id! Voluptate aut sint totam.""
           </p>
@@ -93,7 +93,7 @@ const FifthLanding = () => {
               </span>
             </div>
           </div>
-          <p className="mt-4">
+          <p className="mt-4 text-sm md:text-base">
             "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt
             necessitatibus velit distinctio eius id! Voluptate aut sint totam.""
           </p>

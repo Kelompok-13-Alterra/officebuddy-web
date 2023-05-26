@@ -10,63 +10,87 @@ import LogoCleaning from "../../assets/img/cleaning.png";
 const ThirdLandingPage = () => {
   return (
     <div className="p-3 w-full relative  py-7">
-      <div className="flex justify-center w-[600px} flex-col mx-auto items-center">
-        <p className="text-4xl font-face-ro-bold mb-3">Mengapa Perusahaan</p>
-        <p className="text-4xl font-face-ro-bold">Memilih Kami ?</p>
+      <div className="flex justify-start md:justify-center w-[600px} flex-col mx-auto items-center">
+        <p className="md:text-4xl text-2xl font-face-ro-bold mb-3 text-start md:text-center">
+          Mengapa Perusahaan
+        </p>
+        <p className="md:text-4xl text-2xl font-face-ro-bold text-start md:text-center">
+          Memilih Kami ?
+        </p>
       </div>
       <div className="grid grid-rows-2  w-full md:mb-4  mt-12 md:gap-24 justify-center items-center">
         <div className="grid grid-cols-2 md:grid-cols-4 w-full gap-4 mx-auto">
           <div className="flex gap-y-6 flex-col justify-center items-center">
-            <img src={LogoDesktop} className="w-14 h-9" alt="desktop" />
-            <p className="font-face-ro-bold text-center">
+            <img
+              src={LogoDesktop}
+              className="md:w-14 w-10 h-7 md:h-9"
+              alt="desktop"
+            />
+            <p className="font-face-ro-bold text-center text-xs md:text-base">
               Ruangan yang private
             </p>
           </div>
           <div className="flex gap-y-6 flex-col justify-center items-center">
             <img
               src={LogoInternet}
-              className="w-[3.25rem] h-[2.313rem]"
+              className="md:w-14 w-10 h-7 md:h-9"
               alt="desktop"
             />
-            <p className="font-face-ro-bold text-center">Internet yang cepat</p>
+            <p className="font-face-ro-bold text-center text-xs md:text-base">
+              Internet yang cepat
+            </p>
           </div>
           <div className="flex gap-y-6 flex-col justify-center items-center">
-            <img src={LogoKursi} className="w-14 h-9" alt="desktop" />
-            <p className="font-face-ro-bold text-center">
+            <img
+              src={LogoKursi}
+              className="md:w-14 w-10 h-7 md:h-9"
+              alt="desktop"
+            />
+            <p className="font-face-ro-bold text-xs md:text-base text-center">
               Ruangan yang strategis
             </p>
           </div>
           <div className="flex gap-y-4 flex-col justify-center items-center">
             <img
               src={LogoKalender}
-              className="w-[2.625rem] h-[2.953rem]"
+              className="md:w-14 w-9 h-7 md:h-9"
               alt="desktop"
             />
-            <p className="font-face-ro-bold text-center">Booking yang mudah</p>
+            <p className="font-face-ro-bold text-xs md:text-base text-center">
+              Booking yang mudah
+            </p>
           </div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 md:gap-10 justify-between items-center mx-auto">
           <div className="flex md:gap-y-6 flex-col justify-center mx-10 items-center">
-            <img src={LogoCash} className="w-14 h-[3.266rem]" alt="desktop" />
-            <p className="font-face-ro-bold text-center">
+            <img
+              src={LogoCash}
+              className="md:w-14 w-10 h-7 md:h-9"
+              alt="desktop"
+            />
+            <p className="font-face-ro-bold text-xs md:text-base text-center">
               Pembayaran yang mudah
             </p>
           </div>
           <div className="flex md:gap-y-6 flex-col justify-center items-center">
             <img
               src={LogoOffice}
-              className="w-[2.969rem] h-[2.672rem]"
+              className="md:w-14 w-10 h-7 md:h-9"
               alt="desktop"
             />
-            <p className="font-face-ro-bold text-center">Ruangan yang aman</p>
+            <p className="font-face-ro-bold text-center text-xs md:text-base">
+              Ruangan yang aman
+            </p>
           </div>
           <div className="flex  my-8 gap-y-6 flex-col w-full ml-[50%] md:ml-0 justify-between items-center">
             <img
               src={LogoCleaning}
-              className="w-[2.672rem] h-[3.266]"
+              className="md:w-12 w-9 h-8 md:h-9"
               alt="desktop"
             />
-            <p className="font-face-ro-bold text-center">Ruangan yang bersih</p>
+            <p className="font-face-ro-bold text-center text-xs md:text-base">
+              Ruangan yang bersih
+            </p>
           </div>
         </div>
       </div>
