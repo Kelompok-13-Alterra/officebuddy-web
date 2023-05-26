@@ -1,5 +1,6 @@
 import React from "react";
 import Logo from "../../assets/img/Group3.png";
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 function Footer() {
@@ -22,17 +23,17 @@ function Footer() {
                 </li>
                 <li className="mb-4">
                   <a href="#" className="font-face-ro hover:text-blue-500">
-                    Browse Office
+                    <Link to={"/"}>Browse Office</Link>
                   </a>
                 </li>
                 <li className="mb-4">
                   <a href="#" className="font-face-ro hover:text-blue-500">
-                    Location
+                    <Link to={"/location"}>Locations</Link>
                   </a>
                 </li>
                 <li className="mb-4">
                   <a href="#" className="font-face-ro hover:text-blue-500">
-                    Contact Us
+                    <Link to={"/contact-us"}>Contact Us</Link>
                   </a>
                 </li>
               </ul>
