@@ -13,10 +13,10 @@ const ContactUs = () => {
 
     emailjs
       .sendForm(
-        "service_qnt3udr",
-        "template_9tt6yq6",
+        "service_8o3xwhr",
+        "template_h9gkpsl",
         form.current,
-        "tjk-mo2i4UhBICSU2",
+        "wiEXZq5BTtiYQ4Y2l",
       )
       .then(
         (result) => {
@@ -122,6 +122,7 @@ const ContactUs = () => {
           </div>
         </form>
       </div>
+      <hr />
       <Footer />
     </>
   );
