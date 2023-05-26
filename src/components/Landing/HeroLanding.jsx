@@ -15,7 +15,7 @@ const HeroLanding = () => {
             Kalo mau kerja di kantor pasti mau punya kantor yang enak dan nyaman
             pastinya. Apalagi kalo kantor ada fasilitas lengkap.
           </p>
-          <button className="font-face-ro-med  h-14 mr-24 rounded-md w-56 flex justify-center items-center text-white gap-4 bg-bg-button">
+          <button className="font-face-ro-med md:hidden  h-14 mr-24 rounded-md w-56 flex justify-center items-center text-white gap-4 bg-bg-button">
             Booking Kantor{" "}
             <svg
               width="11"

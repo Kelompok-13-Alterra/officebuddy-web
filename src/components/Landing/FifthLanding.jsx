@@ -10,7 +10,7 @@ const FifthLanding = () => {
           Pengalaman Pengguna
         </h1>
         <button className="h-14 ml-4 absolute md:static  bottom-2 md:mt-0 mt-10 right-6 sm:ml-0 rounded-md px-1 w-60 flex justify-center items-center text-white gap-4 font-face-ro-med bg-bg-button">
-          Check Recomendation{" "}
+          Check Riviews{" "}
           <svg
             width="11"
             height="12"
