@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../../assets/img/Group3.png";
+import { Link } from "react-router-dom";
 import "./navbar.css";
 
 function Navbar() {
@@ -11,9 +12,9 @@ function Navbar() {
         <div className="flex flex-col lg:flex-row">
           <div className="flex items-center justify-between px-4 py-4 lg:px-40 lg:py-0 border-b border-gray-300 lg:border-b-0">
             <div>
-              <a href="#" className="font-semibold uppercase text-black">
+              <Link to={"/"}>
                 <img className="w-24 lg:w-44" src={Logo} alt="Logo" />
-              </a>
+              </Link>
             </div>
             <div>
               <button
@@ -52,28 +53,19 @@ function Navbar() {
             }  lg:flex w-full flex-col justify-center py-3 lg:py-4 lg:flex-row`}
           >
             <div className="flex gap-4 w-full font-face-ro flex-col lg:flex-row lg:justify-center lg:items-center">
-              <a
-                href="#"
-                className="block px-4 py-2 lg:py-4 hover:text-blue-500"
-              >
-                Browse Office
+              <a className="block px-4 py-2 lg:py-4 hover:text-blue-500">
+                <Link to={"/"}>Browse Office</Link>
               </a>
-              <a
-                href="#"
-                className="block px-4 py-2 lg:py-4 hover:text-blue-500"
-              >
-                Locations
+              <a className="block px-4 py-2 lg:py-4 hover:text-blue-500">
+                <Link to={"/location"}>Locations</Link>
               </a>
-              <a
-                href="#"
-                className="block px-4 py-2 lg:py-4 hover:text-blue-500"
-              >
-                Contact Us
+              <a className="block px-4 py-2 lg:py-4 hover:text-blue-500">
+                <Link to={"/contact-us"}>Contact Us</Link>
               </a>
             </div>
             <div className="flex flex-col items-center px-32 shadow-black lg:flex-row">
               <button className="btn__login block rounded-lg bg-blue-500 font-semibold text-white shadow-lg outline-none hover:bg-blue-300">
-                Login as Admin
+                <Link to={"/login"}>Login as Admin</Link>
               </button>
             </div>
           </div>
