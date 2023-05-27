@@ -6,16 +6,16 @@ const HeroLanding = () => {
     <div className="bg-bg-body w-screen md:flex  pt-4 justify-center pb-4">
       <div className="wordWrapper w-1/2  flex flex-col justify-center items-center">
         <div className="flex flex-col ml-48 md:ml-10 mb-5">
-          <div className="wrapperTag w-[350px]  h-[192px] p-2  flex justify-center items-start text-4xl ">
-            <h1 className="text-start font-face-ro-bold ">
+          <div className="wrapperTag w-[350px]  md:h-[192px] h-[120px] p-2  flex justify-center items-start ">
+            <h1 className="text-start md:text-4xl text-2xl  font-face-ro-bold ">
               Mau Sewa Kantor Terbaik Di Kota Kamu ?
             </h1>
           </div>
-          <p className="font-face-ro-med w-[310px] mb-3 text-gray-500 text-base text-start">
+          <p className="font-face-ro-med w-[310px] mb-3 text-sm  text-gray-500 md:text-base text-start">
             Kalo mau kerja di kantor pasti mau punya kantor yang enak dan nyaman
             pastinya. Apalagi kalo kantor ada fasilitas lengkap.
           </p>
-          <button className="font-face-ro-med md:hidden  h-14 mr-24 rounded-md w-56 flex justify-center items-center text-white gap-4 bg-bg-button">
+          <button className="font-face-ro-med md:hidden  h-11 mr-20 rounded-md w-52 flex justify-center items-center text-white gap-4 bg-bg-button">
             Booking Kantor{" "}
             <svg
               width="11"

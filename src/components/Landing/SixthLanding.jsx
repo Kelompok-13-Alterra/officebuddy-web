@@ -8,7 +8,7 @@ const SixthLanding = () => {
       <div className="bg-bg-secondRounded absolute w-60 h-60 rounded-ee-full top-5 left-0 z-10"></div>
       <div className="max-w-screen h-fit bg-bg-fourth z-0">
         <div className="flex  justify-center w-[600px} flex-col mx-auto items-center">
-          <p className="text-4xl text-center z-30 mt-8 text-white font-face-ro-bold mb-3">
+          <p className="md:text-3xl text-2xl text-center z-30 mt-8 text-white font-face-ro-bold mb-3">
             Kantor tersedia di seluruh Indonesia
           </p>
         </div>
@@ -25,16 +25,16 @@ const SixthLanding = () => {
           <div className="wordWrapper md:w-1/2  flex flex-col justify-center items-center md:ml-0 ml-48 z-20">
             <div className="flex flex-col justify-start md:justify-start items-start md:items-end mb-8 sm:static relative pr-11 right-20  w-screen md:w-2/3 md:mr-16">
               <div className="wrapperTag  mb-3 flex justify-center items-center font-bold">
-                <h1 className="font-face-ro-bold ml-4 md:ml-0 text-white text-3xl w-full md:text-end text-start">
+                <h1 className="font-face-ro-bold ml-4 md:ml-0 text-white text-xl w-full md:text-end text-start">
                   Anywhere for Work!
                 </h1>
               </div>
-              <p className="md:w-[500px]-14 w-full px-4 mb-4 font-face-ro-med md:text-end text-white">
+              <p className="md:w-[500px]-14 w-full text-sm md:text-base px-4 mb-4 font-face-ro-med md:text-end text-white">
                 Kamu bisa booking kantor dimanapun kamu berada dan pastinya kamu
                 akan direcomendasikan kentor yang bagus dan punya vibe asik dan
                 cocok banget buat kamu untuk bekerja
               </p>
-              <button className="h-14 ml-4 sm:ml-0 rounded-md px-1 w-44 flex justify-center items-center text-white gap-4 font-face-ro-med bg-bg-button">
+              <button className="h-11 ml-4 sm:ml-0 rounded-md px-1 w-44 flex justify-center items-center text-white gap-4 font-face-ro-med bg-bg-button">
                 Learn More{" "}
                 <svg
                   width="11"

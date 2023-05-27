@@ -6,16 +6,24 @@ const SeventhLanding = () => {
   return (
     <div className="bgLanding border-b-2 border-gray-400 pt-5 w-screen py-14 flex md:flex-row flex-col relative bg-bg-body">
       <div className="cardTag md:w-1/2 w-full flex gap-x-8 flex-col justify-center items-center">
-        <p className="font-face-ro-bold text-center text-3xl">
+        <p className="font-face-ro-bold text-center md:text-3xl text-2xl">
           Office <span className="text-blue-600">Buddy</span> is available on
         </p>
-        <p className="font-face-ro-med w-1/2 text-center">
+        <p className="font-face-ro-med w-1/2 text-sm md:text-base text-center">
           Start your working experience with office
           <span className="text-blue-600"> buddy</span>{" "}
         </p>
         <div className="flex">
-          <img src={Playstore} className="w-54 h-14" alt="playstore" />
-          <img src={Appstore} className="w-54 h-14" alt="appstore" />
+          <img
+            src={Playstore}
+            className="md:w-54 w-40 md:h-14 h-12"
+            alt="playstore"
+          />
+          <img
+            src={Appstore}
+            className="md:w-54 w-40 md:h-14 h-12"
+            alt="appstore"
+          />
         </div>
       </div>
       <div className="cardImage my-5 w-full md:w-1/2 justify-center items-center">
