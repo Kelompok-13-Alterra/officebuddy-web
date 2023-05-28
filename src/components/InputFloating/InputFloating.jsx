@@ -12,6 +12,7 @@ const InputFloating = ({
   onBlur,
   isError,
   className,
+  ...props
 }) => {
   return (
     <div className="relative">
@@ -26,6 +27,7 @@ const InputFloating = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        {...props}
       />
 
       <label
