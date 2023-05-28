@@ -36,17 +36,17 @@ const ContactUs = () => {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center items-center">
-        <h1 className="text-3xl font-bold mb-4 contact__us font-face-ro-bold">
+      <div className="text__contact__us flex justify-center items-center">
+        <h1 className="text-3xl font-bold mb-4 font-face-ro-bold">
           Contact Us
         </h1>
       </div>
-      <div className="flex justify-center items-center">
-        <h1 className="tim__kami text-xl mb-4 font-face-ro-med">
+      <div className="tim__kami flex justify-center items-center">
+        <h1 className="text-xl mb-4 font-face-ro-med">
           Tim kami akan sangat senang untuk bisa membantu anda
         </h1>
       </div>
-      <div className="flex justify-center items-center">
+      <div className="contact_us flex justify-center items-center">
         <form className="form__tabel p-4" ref={form} onSubmit={sendEmail}>
           <div className="name grid grid-cols-1 sm:grid-cols-2 gap-12">
             <div className="relative">

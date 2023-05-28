@@ -1,40 +1,40 @@
-.contact__us {
+.text__contact__us {
   color: #0074e5;
   margin-top: 30px;
 }
 
-.label__name {
+.contact_us .label__name {
   color: #44474e;
 }
 
-.name {
+.contact_us .name {
   margin-bottom: 3rem;
   margin-top: 50px;
 }
 
-.form__tabel {
+.contact_us .form__tabel {
   width: 960px;
   height: 704px;
   margin-bottom: 103px;
 }
 
-#namaDepan {
+.contact_us #namaDepan {
   height: 55px;
 }
 
-#namaBelakang {
+.contact_us #namaBelakang {
   height: 55px;
 }
 
-#email {
+.contact_us #email {
   height: 55px;
 }
 
-#message {
+.contact_us #message {
   height: 290px;
 }
 
-.btn__message {
+.contact_us .btn__message {
   height: 55px;
   width: 100%;
   background-color: #0074e5;
@@ -45,25 +45,25 @@
   -o-border-radius: 10px;
 }
 
-.w-full {
+.contact__us .w-full {
   font-size: 24px;
 }
 
 @media (max-width: 639px) {
-  .name {
+  .contact_us .name {
     margin-bottom: 3rem;
   }
 }
 @media (max-width: 520px) {
-  .tim__kami {
+  .tim__kami h1 {
     font-size: 13px;
   }
 }
 @media (max-width: 360px) {
-  .tim__kami {
+  .tim__kami h1 {
     font-size: 11px;
   }
-  .contact__us {
+  .text__contact__us h1 {
     font-size: 24px;
   }
 }
