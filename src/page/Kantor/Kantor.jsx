@@ -6,12 +6,7 @@ import ModalConfirm from "../../components/ModalConfirm/ModalConfirm";
 import ModalAlert from "../../components/ModalAlert/ModalAlert";
 import ImgDiscard from "../../assets/img/discard.png";
 import ImgSuccess from "../../assets/img/success.png";
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  FilterIcon,
-  PlusIcon,
-} from "../../assets/svg";
+import { FilterIcon, PlusIcon } from "../../assets/svg";
 import ModalFormOffice from "../../components/ModalFormOffice/ModalFormOffice";
 import Pagination from "../../components/Pagination/Pagination";
 
