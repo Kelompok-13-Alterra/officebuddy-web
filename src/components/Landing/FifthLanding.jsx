@@ -58,8 +58,8 @@ const FifthLanding = () => {
             </div>
           </div>
           <p className="mt-4  text-sm md:text-base">
-            "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt
-            necessitatibus velit distinctio eius id! Voluptate aut sint totam.""
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt
+            necessitatibus velit distinctio eius id! Voluptate aut sint totam.
           </p>
         </div>
         <div className="card drop-shadow-md md:w-1/2 md:mx-14 w-full mb-10 mx-auto bg-white rounded-lg p-4">
@@ -94,8 +94,8 @@ const FifthLanding = () => {
             </div>
           </div>
           <p className="mt-4 text-sm md:text-base">
-            "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt
-            necessitatibus velit distinctio eius id! Voluptate aut sint totam.""
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt
+            necessitatibus velit distinctio eius id! Voluptate aut sint totam
           </p>
         </div>
       </div>

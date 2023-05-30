@@ -1,6 +1,5 @@
 import React from "react";
 import KantorImage from "../../assets/img/Kantor2.png";
-import Bg from "../../assets/img/BackgroundSecond.png";
 
 const SecondHeroLanding = () => {
   return (
