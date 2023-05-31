@@ -6,7 +6,15 @@ import ModalConfirm from "../../components/ModalConfirm/ModalConfirm";
 import ModalAlert from "../../components/ModalAlert/ModalAlert";
 import ImgDiscard from "../../assets/img/discard.png";
 import ImgSuccess from "../../assets/img/success.png";
-import { FilterIcon, PlusIcon } from "../../assets/svg";
+import ImgDeleteSuccess from "../../assets/img/delete-success.png";
+import {
+  FilterIcon,
+  PlusIcon,
+  SpeakerIcon,
+  ProjectorIcon,
+  WhiteboardIcon,
+  WaterIcon,
+} from "../../assets/svg";
 import ModalFormOffice from "../../components/ModalFormOffice/ModalFormOffice";
 import Pagination from "../../components/Pagination/Pagination";
 
@@ -34,8 +42,29 @@ const dummyOffice = [
 const Kantor = () => {
   const [modalInsert, setModalInsert] = useState(false);
   const [modalConfirmDelete, setModalConfirmDelete] = useState(false);
-  const [modalAlert, setModalAlert] = useState(false);
+  const [alertInsert, setAlertInsert] = useState(false);
+  const [alertDelete, setAlertDelete] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [officeList, setOfficeList] = useState(dummyOffice);
+
+  const insertOffice = (insertData) => {
+    const officeArr = officeList;
+    officeArr.push({
+      id: officeList.length + 1,
+      ...insertData,
+    });
+
+    setOfficeList(officeArr);
+    setModalInsert(false);
+    setAlertInsert(true);
+  };
+
+  const updateOffice = () => {};
+
+  const deleteOffice = () => {
+    setModalConfirmDelete(false);
+    setAlertDelete(true);
+  };
 
   return (
     <>
@@ -121,7 +150,7 @@ const Kantor = () => {
               </tr>
             </thead>
             <tbody>
-              {dummyOffice.map((office) => (
+              {officeList.map((office) => (
                 <tr
                   key={office.id}
                   className="bg-white border-b-[1px] border-b-[#F4F3F7]"
@@ -147,18 +176,15 @@ const Kantor = () => {
                           key={index}
                           className="px-4 py-[6px] flex gap-3 items-center rounded-full border-[1px] border-[#74777F]"
                         >
-                          <svg
-                            width="12"
-                            height="15"
-                            viewBox="0 0 12 15"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M9.75 0H2.25C1.425 0 0.75 0.675 0.75 1.5V13.5C0.75 14.325 1.425 14.9925 2.25 14.9925L9.75 15C10.575 15 11.25 14.325 11.25 13.5V1.5C11.25 0.675 10.575 0 9.75 0ZM2.25 13.5V1.5H9.75V13.5H2.25ZM6 5.25C6.825 5.25 7.5 4.575 7.5 3.75C7.5 2.925 6.825 2.25 6 2.25C5.1675 2.25 4.5 2.925 4.5 3.75C4.5 4.575 5.1675 5.25 6 5.25ZM6 6.75C4.3425 6.75 3 8.0925 3 9.75C3 11.4075 4.3425 12.75 6 12.75C7.6575 12.75 9 11.4075 9 9.75C9 8.0925 7.6575 6.75 6 6.75ZM6 11.25C5.175 11.25 4.5 10.575 4.5 9.75C4.5 8.925 5.175 8.25 6 8.25C6.825 8.25 7.5 8.925 7.5 9.75C7.5 10.575 6.825 11.25 6 11.25Z"
-                              fill="#005DB9"
-                            />
-                          </svg>
+                          {facility === "Water Refill" ? (
+                            <WaterIcon />
+                          ) : facility === "Speaker" ? (
+                            <SpeakerIcon />
+                          ) : facility === "Projector" ? (
+                            <ProjectorIcon />
+                          ) : facility === "Whiteboard" ? (
+                            <WhiteboardIcon />
+                          ) : null}
 
                           <span className="font-face-ro text-[#44474E] text-[14px]">
                             {facility}
@@ -222,10 +248,7 @@ const Kantor = () => {
           onClickClose={() => {
             setModalInsert(false);
           }}
-          onClickSubmit={() => {
-            setModalInsert(false);
-            setModalAlert(true);
-          }}
+          onClickSubmit={(officeData) => insertOffice(officeData)}
         />
       )}
 
@@ -234,14 +257,22 @@ const Kantor = () => {
           image={ImgDiscard}
           message={"Apakah anda yakin untuk menghapus data Kantor?"}
           onClickBack={() => setModalConfirmDelete(false)}
-          // onClickConfirm={()}
+          onClickConfirm={() => {
+            deleteOffice();
+          }}
+        />
+      ) : alertInsert ? (
+        <ModalAlert
+          image={ImgSuccess}
+          message={"Kantor baru berhasil ditambahkan"}
+          onClickClose={() => setAlertInsert(false)}
         />
       ) : (
-        modalAlert && (
+        alertDelete && (
           <ModalAlert
-            image={ImgSuccess}
-            message={"Kantor baru berhasil ditambahkan"}
-            onClickClose={() => setModalAlert(false)}
+            image={ImgDeleteSuccess}
+            message={"Data berhasil dihapus"}
+            onClickClose={() => setAlertDelete(false)}
           />
         )
       )}

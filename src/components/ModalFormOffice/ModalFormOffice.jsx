@@ -64,7 +64,15 @@ const ModalFormOffice = ({ onClickClose, onClickSubmit }) => {
       return;
     }
     console.log("CREATED >>>>>>", data);
-    onClickSubmit();
+    const officeData = {
+      name: data.officeName,
+      address: data.address,
+      open: data.openTime,
+      close: data.closeTime,
+      facilities: facilities,
+      payment: payment,
+    };
+    onClickSubmit(officeData);
   };
 
   return (
