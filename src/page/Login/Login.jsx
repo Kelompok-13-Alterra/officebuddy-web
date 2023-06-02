@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
@@ -9,6 +10,16 @@ import Logo from "../../assets/img/office-buddy-logo.png";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoginError, setIsLoginError] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const authCheck = () => {
+      if (sessionStorage.getItem("access_token")) {
+        navigate(-1);
+      }
+    };
+    authCheck();
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -45,6 +56,7 @@ const Login = () => {
         if (user.role === 1) {
           toast.success("Login Berhasil");
           sessionStorage.setItem("access_token", token);
+          navigate("/dashboard", { replace: true });
         } else {
           setIsLoginError(true);
           toast.error("Login Gagal: Akses ditolak");
