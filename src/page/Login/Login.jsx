@@ -6,6 +6,7 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { toast } from "react-toastify";
 import Logo from "../../assets/img/office-buddy-logo.png";
+import ImgLoginError from "../../assets/img/login-error.png";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,8 +15,16 @@ const Login = () => {
 
   useEffect(() => {
     const authCheck = () => {
-      if (sessionStorage.getItem("access_token")) {
-        navigate(-1);
+      const accessToken = sessionStorage.getItem("access_token");
+      if (accessToken) {
+        try {
+          const userData = jwtDecode(accessToken);
+          if (userData.role === 1) {
+            navigate("/");
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
       }
     };
     authCheck();
@@ -42,7 +51,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://34.101.193.55:8080/api/v1/auth/login",
+        "http://34.101.193.55:8080/api/v1/auth/admin-login",
         {
           email,
           password,
@@ -192,7 +201,28 @@ const Login = () => {
         </div>
       </div>
 
-      {isLoginError && <></>}
+      {isLoginError && (
+        <div className="fixed w-full h-full inset-0 z-50 bg-black/[.15] backdrop-blur-[2px] overflow-hidden flex justify-center items-center">
+          <div className={`w-[450px] bg-white rounded-3xl px-4 py-6`}>
+            <div className="w-full mx-auto mb-4">
+              <img src={ImgLoginError} alt="Modal Image" />
+            </div>
+
+            <p className="mb-4 px-8 text-center font-face-ro">
+              <span className="text-lg font-semibold block mb-1">
+                Login Gagal
+              </span>
+              Silahkan cek kembali Email dan password yang kamu masukan
+            </p>
+            <button
+              onClick={() => setIsLoginError(false)}
+              className="p-[15px] w-full rounded-full bg-[#005DB9] font-face-ro text-white hover:bg-blue-800"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
