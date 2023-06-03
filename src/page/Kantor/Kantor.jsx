@@ -5,8 +5,10 @@ import BookingIcon from "../../assets/img/booking-icon.png";
 import ModalConfirm from "../../components/ModalConfirm/ModalConfirm";
 import ModalAlert from "../../components/ModalAlert/ModalAlert";
 import ImgDiscard from "../../assets/img/discard.png";
+import ImgConfirmEdit from "../../assets/img/update-confirm.png";
 import ImgSuccess from "../../assets/img/success.png";
 import ImgDeleteSuccess from "../../assets/img/delete-success.png";
+import ImgUpdateSuccess from "../../assets/img/update-success.png";
 import {
   FilterIcon,
   PlusIcon,
@@ -22,30 +24,50 @@ const dummyOffice = [
   {
     id: 1,
     name: "Wellspace",
-    address: "Jl Melahayu No.12",
-    open: "10:00 AM",
-    close: "10:00 PM",
-    facilities: ["Water Refill", "Speaker", "Projector", "Whiteboard"],
-    payment: ["BRI VA", "BNI VA", "BRI TF"],
+    location: "Jl Melahayu No.12",
+    description: "blabla",
+    price: 150000,
+    capacity: 20,
+    open: "10:00",
+    close: "20:00",
+    facilities: "Water Refill,Speaker,Projector,Whiteboard",
+    payment: "BNI VA",
   },
   {
     id: 2,
     name: "Seo Office",
-    address: "Jl Melati No.1",
-    open: "09:00 AM",
-    close: "04:00 PM",
-    facilities: ["Water Refill", "Speaker", "Whiteboard"],
-    payment: ["BRI VA", "BNI VA", "BRI TF", "BRI TF"],
+    location: "Jl Melati No.1",
+    description: "blabla",
+    price: 150000,
+    capacity: 20,
+    open: "09:00",
+    close: "16:00",
+    facilities: "Water Refill,Speaker,Projector,Whiteboard",
+    payment: "BNI VA",
   },
 ];
 
 const Kantor = () => {
-  const [modalInsert, setModalInsert] = useState(false);
-  const [modalConfirmDelete, setModalConfirmDelete] = useState(false);
-  const [alertInsert, setAlertInsert] = useState(false);
-  const [alertDelete, setAlertDelete] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
   const [officeList, setOfficeList] = useState(dummyOffice);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [modalInsert, setModalInsert] = useState(false);
+  const [modalEdit, setModalEdit] = useState(false);
+  const [modalConfirmDelete, setModalConfirmDelete] = useState(false);
+  const [modalConfirmUpdate, setModalConfirmUpdate] = useState(false);
+  const [alertInsert, setAlertInsert] = useState(false);
+  const [alertUpdate, setAlertUpdate] = useState(false);
+  const [alertDelete, setAlertDelete] = useState(false);
+  const [deleteId, setDeleteId] = useState();
+  const [editData, setEditData] = useState();
+
+  const pageSize = 10;
+
+  const handleClickEdit = (id) => {
+    const officeArr = officeList;
+    const selectedOffice = officeArr.find((office) => office.id === id);
+    setEditData(selectedOffice);
+    setModalEdit(true);
+  };
 
   const insertOffice = (insertData) => {
     const officeArr = officeList;
@@ -59,9 +81,28 @@ const Kantor = () => {
     setAlertInsert(true);
   };
 
-  const updateOffice = () => {};
+  const updateOffice = (updateData) => {
+    const officeArr = officeList;
+    const newOfficeList = officeArr.map((office) => {
+      if (office.id === editData.id) {
+        return updateData;
+      }
+      return office;
+    });
 
-  const deleteOffice = () => {
+    setOfficeList(newOfficeList);
+    setEditData(undefined);
+    setModalEdit(false);
+    setModalConfirmUpdate(false);
+    setAlertUpdate(true);
+  };
+
+  const deleteOffice = (id) => {
+    const officeArr = officeList;
+    const newOfficeList = officeArr.filter((office) => office.id !== id);
+
+    setOfficeList(newOfficeList);
+    setDeleteId(undefined);
     setModalConfirmDelete(false);
     setAlertDelete(true);
   };
@@ -160,8 +201,7 @@ const Kantor = () => {
                       {office.name}
                     </h3>
                     <h3 className="font-face-ro text-[#77777A]">
-                      {/* Jl Melahayu No.12 */}
-                      {office.address}
+                      {office.location}
                     </h3>
                   </td>
                   <td className="py-[30px] pl-[22px]">
@@ -171,7 +211,7 @@ const Kantor = () => {
                   </td>
                   <td className="py-3 pl-[22px] max-w-[230px]">
                     <div className="flex flex-wrap gap-1">
-                      {office.facilities.map((facility, index) => (
+                      {office.facilities.split(",").map((facility, index) => (
                         <div
                           key={index}
                           className="px-4 py-[6px] flex gap-3 items-center rounded-full border-[1px] border-[#74777F]"
@@ -195,7 +235,7 @@ const Kantor = () => {
                   </td>
                   <td className="py-3 pl-[22px] max-w-[150px]">
                     <div className="flex flex-wrap gap-1">
-                      {office.payment.map((payment, index) => (
+                      {office.payment.split(",").map((payment, index) => (
                         <div
                           key={index}
                           className="px-4 py-[6px] flex justify-center items-center rounded-full border-[1px] border-[#74777F]"
@@ -209,13 +249,19 @@ const Kantor = () => {
                   </td>
                   <td className="py-[30px] pl-[22px]">
                     <div className="flex flex-wrap gap-1">
-                      <button className="px-6 py-[10px] rounded-full bg-[#005DB9] shadow-lg">
+                      <button
+                        onClick={() => handleClickEdit(office.id)}
+                        className="px-6 py-[10px] rounded-full bg-[#005DB9] shadow-lg"
+                      >
                         <span className="font-face-ro text-white text-[14px]">
                           Edit
                         </span>
                       </button>
                       <button
-                        onClick={() => setModalConfirmDelete(true)}
+                        onClick={() => {
+                          setDeleteId(office.id);
+                          setModalConfirmDelete(true);
+                        }}
                         className="px-6 py-[10px] rounded-full bg-[#BA1A1A]"
                       >
                         <span className="font-face-ro text-white text-[14px]">
@@ -230,35 +276,65 @@ const Kantor = () => {
           </table>
           <div className="px-6 py-5 flex flex-wrap justify-center sm:justify-between items-center gap-3">
             <span className="font-face-ro text-[#46474A] text-[14px]">
-              Menampilkan data dari {1 + (currentPage - 1) * 10}-
-              {currentPage * 10}
+              Menampilkan data dari {1 + (currentPage - 1) * pageSize}-
+              {currentPage * pageSize}
             </span>
             <Pagination
               currentPage={currentPage}
-              dataLength={40}
-              pageSize={10}
+              dataLength={officeList.length}
+              pageSize={pageSize}
               onClickPage={(page) => setCurrentPage(page)}
             />
           </div>
         </div>
       </div>
 
-      {modalInsert && (
+      {modalInsert ? (
         <ModalFormOffice
+          title={"Tambah Kantor"}
           onClickClose={() => {
             setModalInsert(false);
           }}
           onClickSubmit={(officeData) => insertOffice(officeData)}
         />
+      ) : (
+        modalEdit && (
+          <ModalFormOffice
+            title={"Ubah Kantor"}
+            defaultValues={editData}
+            onClickClose={() => {
+              setEditData(undefined);
+              setModalEdit(false);
+            }}
+            onClickSubmit={(officeData) => {
+              setEditData(officeData);
+              setModalConfirmUpdate(true);
+            }}
+          />
+        )
       )}
 
       {modalConfirmDelete ? (
         <ModalConfirm
           image={ImgDiscard}
           message={"Apakah anda yakin untuk menghapus data Kantor?"}
-          onClickBack={() => setModalConfirmDelete(false)}
+          onClickBack={() => {
+            setDeleteId(undefined);
+            setModalConfirmDelete(false);
+          }}
           onClickConfirm={() => {
-            deleteOffice();
+            deleteOffice(deleteId);
+          }}
+        />
+      ) : modalConfirmUpdate ? (
+        <ModalConfirm
+          image={ImgConfirmEdit}
+          message={"Apakah anda yakin untuk mengubah data?"}
+          onClickBack={() => {
+            setModalConfirmUpdate(false);
+          }}
+          onClickConfirm={() => {
+            updateOffice(editData);
           }}
         />
       ) : alertInsert ? (
@@ -266,6 +342,12 @@ const Kantor = () => {
           image={ImgSuccess}
           message={"Kantor baru berhasil ditambahkan"}
           onClickClose={() => setAlertInsert(false)}
+        />
+      ) : alertUpdate ? (
+        <ModalAlert
+          image={ImgUpdateSuccess}
+          message={"Data berhasil diubah"}
+          onClickClose={() => setAlertUpdate(false)}
         />
       ) : (
         alertDelete && (
