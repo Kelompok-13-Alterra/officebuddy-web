@@ -1,0 +1,182 @@
+.dashboard {
+  height: 1024px;
+  background-color: #fdfbff;
+}
+
+.dashboard .dashboard__content-container {
+  width: 1113px;
+  height: 805px;
+  margin-top: 128px;
+  margin-left: 440px;
+}
+
+/* Total Counts of Kantor & Co-working */
+.dashboard .dashboard__card-container {
+  width: 266.25px;
+  height: 192px;
+  padding: 24px;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.dashboard .dashboard__card-container .dashboard__card-container__title {
+  font-size: 16px;
+  color: #44474e;
+}
+
+.dashboard .dashboard__card-container .dashboard__card-container__desc {
+  font-size: 12px;
+  color: #8e9099;
+}
+
+.dashboard .dashboard__card-container .dashboard__card-container__count {
+  font-size: 24px;
+}
+
+/* Graph Statistik */
+.dashboard .dashboard__content-container__activity .dashboard__graph-container {
+  width: 621px;
+  height: 589px;
+  padding: 24px;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.dashboard
+  .dashboard__content-container__activity
+  .dashboard__graph-container
+  h1 {
+  font-size: 18px;
+}
+
+.dashboard
+  .dashboard__content-container__activity
+  .dashboard__graph-container
+  .button-container
+  button {
+  width: Hug (98px);
+  height: Hug (28px);
+  border-radius: 16px;
+  padding: 4px 16px;
+  border: solid #0074e5;
+  border-width: 1px;
+  font-size: 14px;
+  color: #0074e5;
+}
+
+.dashboard
+  .dashboard__content-container__activity
+  .dashboard__graph-container
+  .button-container
+  button:hover {
+  width: Hug (98px);
+  height: Hug (28px);
+  border-radius: 16px;
+  padding: 4px 16px;
+  background-color: #0074e5;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.dashboard
+  .dashboard__content-container__activity
+  .dashboard__graph-container
+  .graph-desc
+  .kantor {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  background-color: #2970ff;
+}
+
+.dashboard
+  .dashboard__content-container__activity
+  .dashboard__graph-container
+  .graph-desc
+  .coWorking {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  background-color: #84adff;
+}
+
+/* User Activity */
+.dashboard
+  .dashboard__content-container__activity
+  .dashboard__activity-container {
+  width: 470px;
+  height: 589px;
+  padding: 24px;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.dashboard
+  .dashboard__content-container__activity
+  .dashboard__activity-container
+  .title-container {
+  width: 270px;
+  height: Hug (70px);
+}
+
+.dashboard
+  .dashboard__content-container
+  .dashboard__activity-container
+  .title-container
+  h1 {
+  color: #001d33;
+}
+
+.dashboard
+  .dashboard__content-container__activity
+  .dashboard__activity-container
+  .title-container
+  p {
+  font-size: 14px;
+  color: #46474a;
+}
+
+.dashboard
+  .dashboard__content-container__activity
+  .dashboard__activity-container
+  .link-container {
+  width: Hug (124px);
+  height: Hug (70px);
+}
+
+.dashboard
+  .dashboard__content-container__activity
+  .dashboard__activity-container
+  .link-container
+  p {
+  font-size: 14px;
+  color: #0074e5;
+}
+
+.dashboard
+  .dashboard__content-container__activity
+  .dashboard__activity-container
+  .card__user
+  .user__image {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dashboard
+  .dashboard__content-container__activity
+  .dashboard__activity-container
+  .card__user
+  .username {
+  font-size: 14px;
+}
+
+.dashboard
+  .dashboard__content-container__activity
+  .dashboard__activity-container
+  .card__user
+  p {
+  font-size: 12px;
+  color: #475467;
+}
