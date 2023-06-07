@@ -1,0 +1,57 @@
+/* .pendapatan {
+  margin-left: 296px;
+  margin-top: 128px;
+  background-color: #fdfbff;
+} */
+
+.pendapatan .pendapatan__content-div {
+  width: 1113px;
+  height: 192px;
+  background-color: #ffffff;
+}
+
+.pendapatan .pendapatan__content-div .card__pendapatan {
+  width: 548.5px;
+  height: 192px;
+}
+
+.pendapatan .pendapatan__working {
+  width: 1113px;
+  height: 644px;
+}
+
+.pendapatan .pendapatan__working .pendapatan__kantor {
+  width: 763px;
+  height: 644px;
+}
+
+.pendapatan .pendapatan__working .pendapatan__kantor .button-container button {
+  width: 140px;
+  height: 40px;
+  border-radius: 16px;
+  padding: 4px 16px;
+  border: solid #0074e5;
+  border-width: 1px;
+  font-size: 14px;
+  color: #0074e5;
+}
+
+.pendapatan .dashboard__activity-container {
+  width: 318px;
+  height: 574px;
+}
+
+.pendapatan .dashboard__activity-container .pagination__text {
+  color: #bbbbbb;
+}
+
+.metode_pembayaran {
+  width: 763px;
+  height: 36px;
+}
+
+.metode_pembayaran .box__pembayaran {
+  box-shadow: 0px 6px 0px -4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(0deg, #e3e2e6, #e3e2e6),
+    linear-gradient(0deg, #f9f9fc, #f9f9fc);
+}
