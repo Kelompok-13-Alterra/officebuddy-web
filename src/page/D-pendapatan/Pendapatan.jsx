@@ -3,13 +3,19 @@ import kantorIcon from "../../assets/img/kantor-icon.png";
 import LogoBank from "../../assets/img/logo-bank-bri.png";
 import CircleDollar from "../../assets/img/circle-dollar.png";
 import CircleMoney from "../../assets/img/circle-money.png";
-// import NavbarDashboard from "../../components/DahsboardNavbar/NavbarDashboard";
-// import Sidebar from "../../components/Sidebar/Sidebar";
+import NavbarDashboard from "../../components/DahsboardNavbar/NavbarDashboard";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import { BarChart, Bar, XAxis, CartesianGrid, Tooltip, YAxis } from "recharts";
 import "./Pendapatan.css";
 
 function Pendapatan() {
+  const link = localStorage.getItem("activelink");
   const [isOpen, setIsOpen] = useState(false);
+  const [clickedMenu, setClickedMenu] = useState(link);
+
+  const handleLinkclick = (link) => {
+    setClickedMenu(link);
+  };
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -146,10 +152,15 @@ function Pendapatan() {
   ];
 
   return (
-    <>
-      <div className="pendapatan flex flex-col gap-10">
+    <div className="flex">
+      <div className="flex">
+        <Sidebar clickedLink={handleLinkclick} />
+      </div>
+      <div className="pendapatan flex flex-col gap-8 w-full ">
+        <NavbarDashboard clickedMenu={clickedMenu} />
+
         {/* card */}
-        <div className="pendapatan__content-div flex justify-between gap-5">
+        <div className="pendapatan__content-div flex justify-between ps-10 gap-5">
           <div className="card__pendapatan shadow-sm ps-6 pt-6">
             <img src={CircleDollar} alt="circle-dollar" />
             <div className="font-face-ro-med pt-4">
@@ -180,7 +191,7 @@ function Pendapatan() {
         {/* end card */}
 
         {/* Working */}
-        <div className="pendapatan__working flex gap-20">
+        <div className="pendapatan__working flex ps-10 gap-20">
           {/* pendapatan-kantor */}
           <div className="pendapatan__kantor">
             <div className="">
@@ -259,7 +270,9 @@ function Pendapatan() {
                 </div>
                 {/* end bar */}
               </div>
-              <div className="metode__pembayaran mt-16 px-5 shadow text-center">
+
+              {/* metode pembayaran */}
+              <div className="metode__pembayaran mt-16 px-5 shadow text-center ms-4">
                 <div className="box_pembayaran flex justify-between border-b-2">
                   <div className="font-face-ro-med">
                     <p>Metode Pembayaran</p>
@@ -288,6 +301,7 @@ function Pendapatan() {
                   })}
                 </div>
               </div>
+              {/* end metode pembayaran */}
             </div>
           </div>
           {/* end pendapatan kantor */}
@@ -303,7 +317,7 @@ function Pendapatan() {
               {user.map((data, index) => {
                 return (
                   <div key={index}>
-                    <div className="card__user flex justify-between w-[360px]">
+                    <div className="card__user flex justify-between w-[300px]">
                       <div className="flex gap-6">
                         <img
                           className="user__image h-10 w-10 shrink-0 rounded-full bg-gray-300"
@@ -339,7 +353,7 @@ function Pendapatan() {
         </div>
         {/* end working */}
       </div>
-    </>
+    </div>
   );
 }
 

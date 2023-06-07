@@ -13,7 +13,6 @@ function App() {
   return (
     <>
       <ToastContainer />
-
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/location" element={<Location />} />
