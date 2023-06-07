@@ -1,0 +1,39 @@
+.not-found {
+  background-color: #fdfbff;
+  height: 1024px;
+}
+
+.not-found .not-found__content-container {
+  width: 360px;
+  height: 310px;
+}
+
+.not-found .not-found__content-container .content-container__desc {
+  width: 291px;
+  height: 96px;
+}
+
+.not-found .not-found__content-container .content-container__desc h1 {
+  font-size: 32px;
+}
+
+.not-found .not-found__content-container .content-container__desc p {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.not-found .not-found__content-container button {
+  width: 360px;
+  height: 50px;
+  background-color: #005db9;
+  color: #ffffff;
+  border-radius: 100px;
+}
+
+.not-found .not-found__content-container button:hover {
+  width: 360px;
+  height: 50px;
+  background-color: #227ad3;
+  color: #ffffff;
+  border-radius: 100px;
+}
