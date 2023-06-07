@@ -6,12 +6,14 @@ import { Landing } from "../../page/Landing/Landing";
 import Location from "../../page/Location/Location";
 import ContactUs from "../../page/ContactUs/ContactUs";
 import Login from "../../page/Login/Login";
+
 import "./App.css";
 
 function App() {
   return (
     <>
       <ToastContainer />
+
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/location" element={<Location />} />
