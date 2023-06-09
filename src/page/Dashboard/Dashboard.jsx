@@ -11,44 +11,44 @@ function Dashboard() {
     {
       id: 1,
       hari: `Senin`,
-      order: 1000,
-      stock: 2000,
+      kantor: 10,
+      coWorking: 20,
     },
     {
       id: 2,
       hari: `Selasa`,
-      order: 2000,
-      stock: 3000,
+      kantor: 20,
+      coWorking: 30,
     },
     {
       id: 3,
       hari: `Rabu`,
-      order: 500,
-      stock: 2000,
+      kantor: 50,
+      coWorking: 20,
     },
     {
       id: 4,
       hari: `Kamis`,
-      order: 1500,
-      stock: 900,
+      kantor: 10,
+      coWorking: 20,
     },
     {
       id: 5,
       hari: `Jumat`,
-      order: 300,
-      stock: 1000,
+      kantor: 30,
+      coWorking: 10,
     },
     {
       id: 6,
       hari: `Sabtu`,
-      order: 3000,
-      stock: 4400,
+      kantor: 30,
+      coWorking: 44,
     },
     {
       id: 7,
       hari: `Minggu`,
-      order: 200,
-      stock: 1000,
+      kantor: 20,
+      coWorking: 10,
     },
   ];
 
@@ -86,8 +86,8 @@ function Dashboard() {
   ];
 
   return (
-    <div className="dashboard">
-      <div className="dashboard__content-container flex flex-col gap-6 ">
+    <div className="dashboard p-12">
+      <div className="dashboard__content-container flex flex-col gap-6">
         <div className="dashboard__content-container__statistik flex gap-4">
           {/* Kantor */}
           <div className="dashboard__card-container shadow-sm">
@@ -191,7 +191,7 @@ function Dashboard() {
                 />
                 <Tooltip />
                 <Bar
-                  dataKey="order"
+                  dataKey="kantor"
                   barSize={32}
                   stackId="stack"
                   fill="#2970FF"
@@ -199,7 +199,7 @@ function Dashboard() {
                   radius={[0, 0, 0, 0]}
                 />
                 <Bar
-                  dataKey="stock"
+                  dataKey="coWorking"
                   barSize={32}
                   stackId="stack"
                   fill="#84ADFF"
