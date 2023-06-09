@@ -153,12 +153,7 @@ function Pendapatan() {
 
   return (
     <div className="flex">
-      <div className="flex">
-        <Sidebar clickedLink={handleLinkclick} />
-      </div>
       <div className="pendapatan flex flex-col gap-8 w-full ">
-        <NavbarDashboard clickedMenu={clickedMenu} />
-
         {/* card */}
         <div className="pendapatan__content-div flex justify-between ps-10 gap-5">
           <div className="card__pendapatan shadow-sm ps-6 pt-6">

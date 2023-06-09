@@ -20,7 +20,7 @@ const Sidebar = ({ clickedLink }) => {
     localStorage.clear("activeLink");
   }, []);
   return (
-    <div className="relative w-72 max-w-72 pt-8 border-r-2 border-gray-300 ">
+    <div className="relative min-w-72 max-w-72 pt-8 border-r-2 border-gray-300 ">
       <div className="flex items-center justify-center mb-6">
         <div className="bg-whiterounded-full  cursor-pointer"></div>
         <img src={LogoBuddy} alt="Logo" />

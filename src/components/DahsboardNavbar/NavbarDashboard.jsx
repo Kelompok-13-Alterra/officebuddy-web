@@ -14,6 +14,7 @@ const NavbarDashboard = ({ clickedMenu }) => {
     const accessToken = sessionStorage.getItem("access_token");
     if (!accessToken) {
       navigate("/login");
+      window.location.reload();
     }
   };
 
@@ -24,7 +25,7 @@ const NavbarDashboard = ({ clickedMenu }) => {
     setOpenConfirm(false);
   };
   return (
-    <div className="w-full border-b shadow-sm border-gray-400 h-24 flex items-center px-8">
+    <div className="miw-full border-b shadow-sm border-gray-400 h-24 flex items-center px-8">
       <ModalDeleteConfirm
         openConfirm={openConfirm}
         handleCloseModalDelete={handleCloseModalDelete}
