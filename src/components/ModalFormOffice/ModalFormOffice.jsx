@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
@@ -22,21 +23,19 @@ const ModalFormOffice = ({
 }) => {
   const [modalConfirmClose, setModalConfirmClose] = useState(false);
   const [facilities, setFacilities] = useState(
-    defaultValues?.facilities.split(",") || [],
+    defaultValues?.Facilities?.split(",").filter((element) => element) || [],
   );
-  const [payment, setPayment] = useState(
-    defaultValues?.payment.split(",") || [],
-  );
+  const [payment, setPayment] = useState("BNI VA");
 
   const formik = useFormik({
     initialValues: {
-      officeName: defaultValues?.name || "",
-      address: defaultValues?.location || "",
-      description: defaultValues?.description || "",
-      price: defaultValues?.price || "",
-      capacity: defaultValues?.capacity || "",
-      openTime: defaultValues?.open || "",
-      closeTime: defaultValues?.close || "",
+      officeName: defaultValues?.Name || "",
+      address: defaultValues?.Location || "",
+      description: defaultValues?.Description || "",
+      price: defaultValues?.Price || "",
+      capacity: defaultValues?.Capacity || "",
+      openTime: defaultValues?.Open || "",
+      closeTime: defaultValues?.Close || "",
     },
     validationSchema: Yup.object().shape({
       officeName: Yup.string().required("Please enter office name."),
@@ -63,10 +62,12 @@ const ModalFormOffice = ({
 
   const onChangePayment = (value) => {
     if (payment.includes(value)) {
-      const newData = payment.filter((item) => item !== value);
-      setPayment(newData);
+      // const newData = payment.filter((item) => item !== value);
+      // setPayment(newData);
+      setPayment("");
     } else {
-      setPayment([...payment, value]);
+      // setPayment([...payment, value]);
+      setPayment(value);
     }
   };
 
@@ -80,16 +81,16 @@ const ModalFormOffice = ({
       return;
     }
     const officeData = {
-      ...(defaultValues?.id && { id: defaultValues.id }),
+      ...(defaultValues?.ID && { id: defaultValues.ID }),
       name: data.officeName,
       description: data.description,
       capacity: data.capacity,
-      open: data.openTime,
-      close: data.closeTime,
+      open: moment(data.openTime, "HH:mm:ss").format("HH:mm:ss"),
+      close: moment(data.closeTime, "HH:mm:ss").format("HH:mm:ss"),
       price: data.price,
       location: data.address,
       facilities: facilities.join(","),
-      payment: payment.join(","),
+      payment: payment,
     };
     console.log("DATA SENT >>>>>>", officeData);
     onClickSubmit(officeData);

@@ -66,6 +66,7 @@ const Login = () => {
           toast.success("Login Berhasil");
           sessionStorage.setItem("access_token", token);
           navigate("/dashboard", { replace: true });
+          window.location.reload();
         } else {
           setIsLoginError(true);
           toast.error("Login Gagal: Akses ditolak");
