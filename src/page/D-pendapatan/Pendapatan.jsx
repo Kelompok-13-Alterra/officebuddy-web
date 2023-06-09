@@ -3,19 +3,11 @@ import kantorIcon from "../../assets/img/kantor-icon.png";
 import LogoBank from "../../assets/img/logo-bank-bri.png";
 import CircleDollar from "../../assets/img/circle-dollar.png";
 import CircleMoney from "../../assets/img/circle-money.png";
-import NavbarDashboard from "../../components/DahsboardNavbar/NavbarDashboard";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import { BarChart, Bar, XAxis, CartesianGrid, Tooltip, YAxis } from "recharts";
 import "./Pendapatan.css";
 
 function Pendapatan() {
-  const link = localStorage.getItem("activelink");
   const [isOpen, setIsOpen] = useState(false);
-  const [clickedMenu, setClickedMenu] = useState(link);
-
-  const handleLinkclick = (link) => {
-    setClickedMenu(link);
-  };
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -152,10 +144,10 @@ function Pendapatan() {
   ];
 
   return (
-    <div className="flex">
-      <div className="pendapatan flex flex-col gap-8 w-full ">
+    <div className="flex p-12">
+      <div className="pendapatan flex flex-col gap-8">
         {/* card */}
-        <div className="pendapatan__content-div flex justify-between ps-10 gap-5">
+        <div className="pendapatan__content-div flex justify-between">
           <div className="card__pendapatan shadow-sm ps-6 pt-6">
             <img src={CircleDollar} alt="circle-dollar" />
             <div className="font-face-ro-med pt-4">
@@ -186,7 +178,7 @@ function Pendapatan() {
         {/* end card */}
 
         {/* Working */}
-        <div className="pendapatan__working flex ps-10 gap-20">
+        <div className="pendapatan__working flex gap-8">
           {/* pendapatan-kantor */}
           <div className="pendapatan__kantor">
             <div className="">
@@ -233,7 +225,7 @@ function Pendapatan() {
                 {/* Bar */}
                 <div className="graph-content mt-10">
                   {" "}
-                  <BarChart width={780} height={381} data={dummyData}>
+                  <BarChart width={699} height={216} data={dummyData}>
                     <XAxis
                       dataKey="hari"
                       axisLine={false}
@@ -267,7 +259,7 @@ function Pendapatan() {
               </div>
 
               {/* metode pembayaran */}
-              <div className="metode__pembayaran mt-16 px-5 shadow text-center ms-4">
+              <div className="metode__pembayaran mt-6 px-5 shadow text-center ms-4">
                 <div className="box_pembayaran flex justify-between border-b-2">
                   <div className="font-face-ro-med">
                     <p>Metode Pembayaran</p>
