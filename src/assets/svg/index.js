@@ -7,6 +7,8 @@ import ProjectorIcon from "./ProjectorIcon";
 import SpeakerIcon from "./SpeakerIcon";
 import WaterIcon from "./WaterIcon";
 import WhiteboardIcon from "./WhiteboardIcon";
+import StarIcon from "./StarIcon";
+import StarEmptyIcon from "./StarEmptyIcon";
 
 export {
   FilterIcon,
@@ -18,4 +20,6 @@ export {
   SpeakerIcon,
   WaterIcon,
   WhiteboardIcon,
+  StarIcon,
+  StarEmptyIcon,
 };
