@@ -37,6 +37,7 @@ const Kantor = () => {
   const [editData, setEditData] = useState();
   const [selectedEdit, setSelectedEdit] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [widgetData, setWidgetData] = useState({});
 
   const pageSize = 10;
 
@@ -67,8 +68,27 @@ const Kantor = () => {
     }
   };
 
+  const getWidgetData = async () => {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.get(
+        "https://api.officebuddy.space/api/v1/admin/office-widget?type=office",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const widgetData = res.data.data;
+      setWidgetData(widgetData);
+    } catch (error) {
+      console.log("GET WIDGET DATA ERROR >>>>", error);
+    }
+  };
+
   useEffect(() => {
     getOffices();
+    getWidgetData();
   }, []);
 
   const handleClickEdit = async (officeId) => {
@@ -129,7 +149,6 @@ const Kantor = () => {
 
   const updateOffice = async (updateData) => {
     setIsLoading(true);
-    console.log("UPDATE DATA >>>>", updateData);
     const token = sessionStorage.getItem("access_token");
     const { id, payment, ...officeData } = updateData;
     console.log(payment);
@@ -147,6 +166,7 @@ const Kantor = () => {
 
       setIsLoading(false);
       setEditData(undefined);
+      setSelectedEdit(undefined);
       setModalEdit(false);
       setModalConfirmUpdate(false);
 
@@ -161,16 +181,6 @@ const Kantor = () => {
       console.log("UPDATE OFFICE ERROR >>>>", error.message);
       setIsLoading(false);
     }
-
-    // const officeArr = officeList;
-    // const newOfficeList = officeArr.map((office) => {
-    //   if (office.id === editData.id) {
-    //     return updateData;
-    //   }
-    //   return office;
-    // });
-
-    // setOfficeList(newOfficeList);
   };
 
   const deleteOffice = async (id) => {
@@ -225,7 +235,7 @@ const Kantor = () => {
                 Jumlah kantor saat ini
               </p>
               <h1 className="font-face-ro text-[24px] leading-8">
-                {officeList?.length}
+                {widgetData?.OfficeCount || "0"}
               </h1>
             </div>
             <div className="p-6">
@@ -242,7 +252,9 @@ const Kantor = () => {
               <p className="mb-1 font-face-ro text-[12px] text-[#8E9099] leading-4">
                 Penilaian kantor saat ini
               </p>
-              <h1 className="font-face-ro text-[24px] leading-8">0</h1>
+              <h1 className="font-face-ro text-[24px] leading-8">
+                {widgetData?.TotalRating || "0"}
+              </h1>
             </div>
             <div className="p-6">
               <div className="mb-4">
@@ -258,7 +270,9 @@ const Kantor = () => {
               <p className="mb-1 font-face-ro text-[12px] text-[#8E9099] leading-4">
                 Booking kantor saat ini
               </p>
-              <h1 className="font-face-ro text-[24px] leading-8">0 Orang</h1>
+              <h1 className="font-face-ro text-[24px] leading-8">
+                {widgetData?.TotalBoking || "0"} Orang
+              </h1>
             </div>
           </div>
 
@@ -392,6 +406,7 @@ const Kantor = () => {
       {modalInsert ? (
         <ModalFormOffice
           title={"Tambah Kantor"}
+          type="office"
           onClickClose={() => {
             setModalInsert(false);
           }}
@@ -401,6 +416,7 @@ const Kantor = () => {
         modalEdit && (
           <ModalFormOffice
             title={"Ubah Kantor"}
+            type="office"
             defaultValues={selectedEdit}
             onClickClose={() => {
               setEditData(undefined);

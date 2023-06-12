@@ -17,6 +17,7 @@ import ImgDiscard from "../../assets/img/discard.png";
 /* eslint-disable react/prop-types */
 const ModalFormOffice = ({
   title,
+  type = "office",
   defaultValues = null,
   onClickClose,
   onClickSubmit,
@@ -38,8 +39,16 @@ const ModalFormOffice = ({
       closeTime: defaultValues?.Close || "",
     },
     validationSchema: Yup.object().shape({
-      officeName: Yup.string().required("Please enter office name."),
-      address: Yup.string().required("Please enter office address."),
+      officeName: Yup.string().required(
+        `Please enter ${
+          type === "office" ? "office" : type === "coworking" && "co-working"
+        } name.`,
+      ),
+      address: Yup.string().required(
+        `Please enter ${
+          type === "office" ? "office" : type === "coworking" && "co-working"
+        } address.`,
+      ),
       description: Yup.string().required("Please add description."),
       price: Yup.number().min(1).required("Please enter the price."),
       capacity: Yup.number().min(1).required("Please enter capacity number."),
@@ -62,11 +71,8 @@ const ModalFormOffice = ({
 
   const onChangePayment = (value) => {
     if (payment.includes(value)) {
-      // const newData = payment.filter((item) => item !== value);
-      // setPayment(newData);
       setPayment("");
     } else {
-      // setPayment([...payment, value]);
       setPayment(value);
     }
   };
@@ -85,8 +91,14 @@ const ModalFormOffice = ({
       name: data.officeName,
       description: data.description,
       capacity: data.capacity,
-      open: moment(data.openTime, "HH:mm:ss").format("HH:mm:ss"),
-      close: moment(data.closeTime, "HH:mm:ss").format("HH:mm:ss"),
+      [defaultValues ? "openHours" : "open"]: moment(
+        data.openTime,
+        "HH:mm:ss",
+      ).format("HH:mm:ss"),
+      [defaultValues ? "closeHours" : "close"]: moment(
+        data.closeTime,
+        "HH:mm:ss",
+      ).format("HH:mm:ss"),
       price: data.price,
       location: data.address,
       facilities: facilities.join(","),
@@ -113,8 +125,16 @@ const ModalFormOffice = ({
                   id="officeName"
                   type="text"
                   name="officeName"
-                  label="Nama Kantor"
-                  placeholder="Nama Kantor"
+                  label={
+                    type === "office"
+                      ? "Nama Kantor"
+                      : type === "coworking" && "Nama Co-Working Space"
+                  }
+                  placeholder={
+                    type === "office"
+                      ? "Nama Kantor"
+                      : type === "coworking" && "Nama Co-Working Space"
+                  }
                   value={formik.values.officeName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
