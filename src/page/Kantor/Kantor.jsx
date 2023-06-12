@@ -137,6 +137,7 @@ const Kantor = () => {
       if (!res.data.meta.is_error) {
         setAlertInsert(true);
         getOffices();
+        getWidgetData();
       } else {
         toast.error("Insert office error");
       }
@@ -173,6 +174,7 @@ const Kantor = () => {
       if (!res.data.meta.is_error) {
         setAlertUpdate(true);
         getOffices();
+        getWidgetData();
       } else {
         toast.error("Update office error");
       }
@@ -204,6 +206,7 @@ const Kantor = () => {
       if (!res.data.meta.is_error) {
         setAlertDelete(true);
         getOffices();
+        getWidgetData();
       } else {
         toast.error("Delete office error");
       }
