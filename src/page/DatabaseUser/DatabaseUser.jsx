@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import UsersIcon from "../../assets/img/users-icon.png";
 import CalendarIcon from "../../assets/img/calendar-icon.png";
 import RatingIcon from "../../assets/img/star-icon.png";
@@ -107,9 +108,12 @@ const DatabaseUser = () => {
                   Lihat detail data pengguna
                 </p>
               </div>
-              <a href="#" className="font-face-ro font-semibold text-[#0074E5]">
+              <Link
+                to="/database-user/total-user"
+                className="font-face-ro font-semibold text-[#0074E5]"
+              >
                 Lihat Semua
-              </a>
+              </Link>
             </div>
             <div className="flex gap-2 items-center justify-between">
               <div className="w-72 h-72">
@@ -162,9 +166,12 @@ const DatabaseUser = () => {
                   Lihat penilaian pembeli
                 </p>
               </div>
-              <a href="#" className="font-face-ro font-semibold text-[#0074E5]">
+              <Link
+                to="/database-user/user-rating"
+                className="font-face-ro font-semibold text-[#0074E5]"
+              >
                 Lihat Semua
-              </a>
+              </Link>
             </div>
 
             <div className="mb-4">
@@ -236,9 +243,12 @@ const DatabaseUser = () => {
                 Lihat Detail Pesanan Pembeli
               </p>
             </div>
-            <a href="#" className="font-face-ro font-semibold text-[#0074E5]">
+            <Link
+              to="/database-user/total-booking"
+              className="font-face-ro font-semibold text-[#0074E5]"
+            >
               Lihat Semua
-            </a>
+            </Link>
           </div>
 
           <div className="mb-4">
