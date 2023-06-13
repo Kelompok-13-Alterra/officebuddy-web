@@ -34,8 +34,8 @@ const ModalFormUser = ({ defaultValues, onClickClose, onClickSubmit }) => {
 
   return (
     <>
-      <div className="fixed w-full h-full inset-0 z-50 bg-black/[.15] backdrop-blur-[2px] overflow-auto flex flex-col justify-center">
-        <div className="flex justify-center items-center py-8">
+      <div className="fixed w-full h-full inset-0 z-50 bg-black/[.15] backdrop-blur-[2px] overflow-auto ">
+        <div className="flex h-full justify-center items-center py-8">
           <div className={`w-3/4 bg-white rounded-3xl p-8`}>
             <div className="flex gap-3 justify-between items-center mb-11">
               <h2 className="font-face-ro text-[22px]">Ubah Data Akun</h2>

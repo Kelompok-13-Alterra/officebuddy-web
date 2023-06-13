@@ -1,4 +1,6 @@
 import ArrowLeftIcon from "./ArrowLeftIcon";
+import ArrowUpIcon from "./ArrowUpIcon";
+import ArrowDownIcon from "./ArrowDownIcon";
 import ArrowRightIcon from "./ArrowRightIcon";
 import FilterIcon from "./FilterIcon";
 import CloseIcon from "./CloseIcon";
@@ -14,6 +16,8 @@ export {
   FilterIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
+  ArrowUpIcon,
+  ArrowDownIcon,
   CloseIcon,
   PlusIcon,
   ProjectorIcon,
