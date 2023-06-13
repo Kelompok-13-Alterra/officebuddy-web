@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import kantorIcon from "../../assets/img/kantor-icon.png";
 import coWorkingIcon from "../../assets/img/co-working-icon.png";
 import bookingKantorIcon from "../../assets/img/kantor-booking-icon.png";
 import bookingCoWorkingIcon from "../../assets/img/co-working-booking-icon.png";
 import { BarChart, Bar, XAxis, CartesianGrid, Tooltip } from "recharts";
+import axios from "axios";
 import "./Dashboard.css";
 
 function Dashboard() {
+  const [widgetData, setWidgetData] = useState([]);
   const dummyData = [
     {
       id: 1,
@@ -85,6 +87,27 @@ function Dashboard() {
     },
   ];
 
+  async function getData() {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const response = await axios.get(
+        "https://api.officebuddy.space/api/v1/admin/dashboard-widget",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      setWidgetData(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  });
+
   return (
     <div className="dashboard p-12">
       <div className="dashboard__content-container flex flex-col gap-6">
@@ -101,7 +124,7 @@ function Dashboard() {
                   Jumlah kantor saat ini
                 </p>
                 <p className="dashboard__card-container__count font-face-ro">
-                  36
+                  {widgetData.OfficeTotal}
                 </p>
               </div>
             </div>
@@ -119,7 +142,7 @@ function Dashboard() {
                   Jumlah Co-Working Space saat ini
                 </p>
                 <p className="dashboard__card-container__count font-face-ro">
-                  16
+                  {widgetData.CoWorkingTotal}
                 </p>
               </div>
             </div>
@@ -137,7 +160,7 @@ function Dashboard() {
                   Booking kantor saat ini
                 </p>
                 <p className="dashboard__card-container__count font-face-ro">
-                  160 Orang
+                  {widgetData.OfficeTransactionToday} Orang
                 </p>
               </div>
             </div>
@@ -160,7 +183,7 @@ function Dashboard() {
                   Booking Co-Working Space hari ini
                 </p>
                 <p className="dashboard__card-container__count font-face-ro">
-                  89 Orang
+                  {widgetData.CoWorkingTransactionToday} Orang
                 </p>
               </div>
             </div>
