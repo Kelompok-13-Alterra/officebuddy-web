@@ -5,6 +5,7 @@ import CircleDollar from "../../assets/img/circle-dollar.png";
 import CircleMoney from "../../assets/img/circle-money.png";
 import { BarChart, Bar, XAxis, CartesianGrid, Tooltip, YAxis } from "recharts";
 import "./Pendapatan.css";
+import NavbarDashboard from "../../components/DahsboardNavbar/NavbarDashboard";
 
 function Pendapatan() {
   const [isOpen, setIsOpen] = useState(false);
@@ -144,201 +145,204 @@ function Pendapatan() {
   ];
 
   return (
-    <div className="flex p-12">
-      <div className="pendapatan flex flex-col gap-8">
-        {/* card */}
-        <div className="pendapatan__content-div flex justify-between">
-          <div className="card__pendapatan shadow-sm ps-6 pt-6">
-            <img src={CircleDollar} alt="circle-dollar" />
-            <div className="font-face-ro-med pt-4">
-              <p>Pendapatan Hari Ini</p>
+    <div className="flex w-full flex-col">
+      <NavbarDashboard>Pendapatan</NavbarDashboard>
+      <div className="flex p-12">
+        <div className="pendapatan flex flex-col gap-8">
+          {/* card */}
+          <div className="pendapatan__content-div flex justify-between">
+            <div className="card__pendapatan shadow-sm ps-6 pt-6">
+              <img src={CircleDollar} alt="circle-dollar" />
+              <div className="font-face-ro-med pt-4">
+                <p>Pendapatan Hari Ini</p>
+              </div>
+              <div className="font-face-ro">
+                <p className="text-slate-400">Jumlah pendapatan hari ini</p>
+              </div>
+              <div>
+                <p>Rp.300.000</p>
+              </div>
             </div>
-            <div className="font-face-ro">
-              <p className="text-slate-400">Jumlah pendapatan hari ini</p>
-            </div>
-            <div>
-              <p>Rp.300.000</p>
+            <div className="card__pendapatan shadow-sm ps-6 pt-6">
+              <img src={CircleMoney} alt="circle-money" />
+              <div className="font-face-ro-med  pt-4">
+                <p>Total Pendapatan</p>
+              </div>
+              <div className="font-face-ro">
+                <p className="text-slate-400">
+                  Jumlah pendapatan secara keseluruhan
+                </p>
+              </div>
+              <div>
+                <p>Rp.160.000,00</p>
+              </div>
             </div>
           </div>
-          <div className="card__pendapatan shadow-sm ps-6 pt-6">
-            <img src={CircleMoney} alt="circle-money" />
-            <div className="font-face-ro-med  pt-4">
-              <p>Total Pendapatan</p>
-            </div>
-            <div className="font-face-ro">
-              <p className="text-slate-400">
-                Jumlah pendapatan secara keseluruhan
-              </p>
-            </div>
-            <div>
-              <p>Rp.160.000,00</p>
-            </div>
-          </div>
-        </div>
-        {/* end card */}
+          {/* end card */}
 
-        {/* Working */}
-        <div className="pendapatan__working flex gap-8">
-          {/* pendapatan-kantor */}
-          <div className="pendapatan__kantor">
-            <div className="">
-              <div className="block">
-                <div className="flex justify-between h-24">
-                  <div className="relative">
-                    <button
-                      className="bg-white-300 text-black font-semibold py-2 px-4 rounded inline-flex items-center"
-                      onClick={toggleDropdown}
-                    >
-                      <span>Pendapatan Untuk Kantor</span>
-                      <svg
-                        className="fill-current h-4 w-4 ml-2"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
+          {/* Working */}
+          <div className="pendapatan__working flex gap-8">
+            {/* pendapatan-kantor */}
+            <div className="pendapatan__kantor">
+              <div className="">
+                <div className="block">
+                  <div className="flex justify-between h-24">
+                    <div className="relative">
+                      <button
+                        className="bg-white-300 text-black font-semibold py-2 px-4 rounded inline-flex items-center"
+                        onClick={toggleDropdown}
                       >
-                        <path
-                          d="M6 8l4 4 4-4"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        />
-                      </svg>
-                    </button>
-                    {isOpen && (
-                      <div className=" bg-white rounded-md ">
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                        <span>Pendapatan Untuk Kantor</span>
+                        <svg
+                          className="fill-current h-4 w-4 ml-2"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
                         >
-                          Pendapatan Untuk Co-Working Space
-                        </a>
+                          <path
+                            d="M6 8l4 4 4-4"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          />
+                        </svg>
+                      </button>
+                      {isOpen && (
+                        <div className=" bg-white rounded-md ">
+                          <a
+                            href="#"
+                            className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                          >
+                            Pendapatan Untuk Co-Working Space
+                          </a>
+                        </div>
+                      )}
+                      <div className="ps-4">
+                        <p>Rp.60.000,00</p>
                       </div>
-                    )}
-                    <div className="ps-4">
-                      <p>Rp.60.000,00</p>
+                    </div>
+                    <div className="button-container font-face-ro-med flex gap-3 text-center">
+                      <button>Minggu ini</button>
                     </div>
                   </div>
-                  <div className="button-container font-face-ro-med flex gap-3 text-center">
-                    <button>Minggu ini</button>
-                  </div>
-                </div>
 
-                {/* Bar */}
-                <div className="graph-content mt-10">
-                  {" "}
-                  <BarChart width={699} height={216} data={dummyData}>
-                    <XAxis
-                      dataKey="hari"
-                      axisLine={false}
-                      tick={{ fill: "#697586" }}
-                    />
-                    <YAxis axisLine={false} />
-                    <CartesianGrid
-                      stroke="#EEF2F6"
-                      horizontal={true}
-                      vertical={false}
-                    />
-                    <Tooltip />
-                    <Bar
-                      dataKey="stock"
-                      barSize={32}
-                      stackId="stack"
-                      fill="#84ADFF"
-                      tick={null}
-                      radius={[10, 10, 0, 0]}
-                    />
-                  </BarChart>
-                  <style>
-                    {`
+                  {/* Bar */}
+                  <div className="graph-content mt-10">
+                    {" "}
+                    <BarChart width={699} height={216} data={dummyData}>
+                      <XAxis
+                        dataKey="hari"
+                        axisLine={false}
+                        tick={{ fill: "#697586" }}
+                      />
+                      <YAxis axisLine={false} />
+                      <CartesianGrid
+                        stroke="#EEF2F6"
+                        horizontal={true}
+                        vertical={false}
+                      />
+                      <Tooltip />
+                      <Bar
+                        dataKey="stock"
+                        barSize={32}
+                        stackId="stack"
+                        fill="#84ADFF"
+                        tick={null}
+                        radius={[10, 10, 0, 0]}
+                      />
+                    </BarChart>
+                    <style>
+                      {`
                   .recharts-cartesian-axis-tick-line {
                     display: none;
                   }
                 `}
-                  </style>
+                    </style>
+                  </div>
+                  {/* end bar */}
                 </div>
-                {/* end bar */}
-              </div>
 
-              {/* metode pembayaran */}
-              <div className="metode__pembayaran mt-6 px-5 shadow text-center ms-4">
-                <div className="box_pembayaran flex justify-between border-b-2">
-                  <div className="font-face-ro-med">
-                    <p>Metode Pembayaran</p>
+                {/* metode pembayaran */}
+                <div className="metode__pembayaran mt-6 px-5 shadow text-center ms-4">
+                  <div className="box_pembayaran flex justify-between border-b-2">
+                    <div className="font-face-ro-med">
+                      <p>Metode Pembayaran</p>
+                    </div>
+                    <div className="font-face-ro-med">
+                      <p>Total Transaksi</p>
+                    </div>
                   </div>
-                  <div className="font-face-ro-med">
-                    <p>Total Transaksi</p>
-                  </div>
-                </div>
-                <div className="pt-4">
-                  {pay.map((data, index) => {
-                    return (
-                      <div key={index}>
-                        <div className="pb-4">
-                          <div className="flex">
-                            <img src={data.image} alt="logoBRI" />
-                            <div className="ps-3">
-                              <p>{data.paragraf}</p>
-                            </div>
-                            <div className="ps-[420px]">
-                              <p>{data.harga}</p>
+                  <div className="pt-4">
+                    {pay.map((data, index) => {
+                      return (
+                        <div key={index}>
+                          <div className="pb-4">
+                            <div className="flex">
+                              <img src={data.image} alt="logoBRI" />
+                              <div className="ps-3">
+                                <p>{data.paragraf}</p>
+                              </div>
+                              <div className="ps-[420px]">
+                                <p>{data.harga}</p>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
+                </div>
+                {/* end metode pembayaran */}
+              </div>
+            </div>
+            {/* end pendapatan kantor */}
+
+            {/* card-pemesanan */}
+            <div className="dashboard__activity-container shadow-sm flex flex-col gap-6">
+              <div className="flex gap-2 justify-between items-center">
+                <div className="title-container flex flex-col gap-1">
+                  <h1 className="font-face-ro-bold">Pemesanan Terakhir</h1>
                 </div>
               </div>
-              {/* end metode pembayaran */}
-            </div>
-          </div>
-          {/* end pendapatan kantor */}
-
-          {/* card-pemesanan */}
-          <div className="dashboard__activity-container shadow-sm flex flex-col gap-6">
-            <div className="flex gap-2 justify-between items-center">
-              <div className="title-container flex flex-col gap-1">
-                <h1 className="font-face-ro-bold">Pemesanan Terakhir</h1>
+              <div className="flex flex-col gap-8">
+                {user.map((data, index) => {
+                  return (
+                    <div key={index}>
+                      <div className="card__user flex justify-between w-[300px]">
+                        <div className="flex gap-6">
+                          <img
+                            className="user__image h-10 w-10 shrink-0 rounded-full bg-gray-300"
+                            src={`https://imageio.forbes.com/specials-images/imageserve/61688aa1d4a8658c3f4d8640/Antonio-Juliano/0x0.jpg?format=jpg&width=200`}
+                          />
+                          <div className="flex flex-col gap-2">
+                            <h5 className="username font-face-ro-bold">
+                              {data.username}
+                            </h5>
+                            <p className="font-face-ro text-xs">
+                              Memesan Coworking space{" "}
+                              <span className="font-face-ro-bold">
+                                {" "}
+                                {data.buying}
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                        <p className="font-face-ro text-right text-xs">
+                          {data.date}
+                        </p>
+                      </div>
+                      {index != user.length - 1 ? <hr /> : <></>}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="pagination__text mt-4 ">
+                <p className="font-face-ro">Menampilkan 3 dari 30 Data</p>
               </div>
             </div>
-            <div className="flex flex-col gap-8">
-              {user.map((data, index) => {
-                return (
-                  <div key={index}>
-                    <div className="card__user flex justify-between w-[300px]">
-                      <div className="flex gap-6">
-                        <img
-                          className="user__image h-10 w-10 shrink-0 rounded-full bg-gray-300"
-                          src={`https://imageio.forbes.com/specials-images/imageserve/61688aa1d4a8658c3f4d8640/Antonio-Juliano/0x0.jpg?format=jpg&width=200`}
-                        />
-                        <div className="flex flex-col gap-2">
-                          <h5 className="username font-face-ro-bold">
-                            {data.username}
-                          </h5>
-                          <p className="font-face-ro text-xs">
-                            Memesan Coworking space{" "}
-                            <span className="font-face-ro-bold">
-                              {" "}
-                              {data.buying}
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                      <p className="font-face-ro text-right text-xs">
-                        {data.date}
-                      </p>
-                    </div>
-                    {index != user.length - 1 ? <hr /> : <></>}
-                  </div>
-                );
-              })}
-            </div>
-            <div className="pagination__text mt-4 ">
-              <p className="font-face-ro">Menampilkan 3 dari 30 Data</p>
-            </div>
+            {/* end card-pemesanan */}
           </div>
-          {/* end card-pemesanan */}
+          {/* end working */}
         </div>
-        {/* end working */}
       </div>
     </div>
   );

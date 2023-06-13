@@ -42,6 +42,7 @@ const Login = () => {
       password: Yup.string().required("Please enter your password"),
     }),
     onSubmit: (values) => {
+      sessionStorage.setItem("email_login", values.email);
       handleLogin(values);
     },
   });

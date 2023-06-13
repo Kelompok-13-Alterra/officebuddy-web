@@ -18,7 +18,7 @@ import CoWorking from "../../page/CoWorking/CoWorking";
 function App() {
   const authUser = sessionStorage.getItem("access_token");
   const link = localStorage.getItem("activelink");
-  const [clickedMenu, setClickedMenu] = useState(link);
+  // const [clickedMenu, setClickedMenu] = useState(link);
 
   const handleLinkclick = (link) => {
     setClickedMenu(link);
@@ -43,17 +43,16 @@ function App() {
   return (
     <div className="flex">
       <Sidebar clickedLink={handleLinkclick} />
-      <div className="flex w-full flex-col">
-        <NavbarDashboard clickedMenu={clickedMenu} />
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/kantor" element={<Kantor />} />
-          <Route path="/pendapatan" element={<Pendapatan />} />
-          <Route path="/co-working" element={<CoWorking />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
+
+      <Routes>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/kantor" element={<Kantor />} />
+        <Route path="/pendapatan" element={<Pendapatan />} />
+        <Route path="/co-working" element={<CoWorking />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
+    // </div>
   );
 }
 

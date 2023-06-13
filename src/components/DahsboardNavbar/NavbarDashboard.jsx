@@ -5,12 +5,15 @@ import { useNavigate } from "react-router";
 import ModalDeleteConfirm from "./ModalDeleteConfirm";
 
 // eslint-disable-next-line react/prop-types
-const NavbarDashboard = ({ clickedMenu }) => {
+const NavbarDashboard = ({ children }) => {
   const [openConfirm, setOpenConfirm] = useState(false);
+  const emailLogin = sessionStorage.getItem("email_login");
+  const username = emailLogin.split("@")[0];
 
   const navigate = useNavigate();
   const handleLogout = () => {
     sessionStorage.removeItem("access_token");
+    sessionStorage.removeItem("email_login");
     const accessToken = sessionStorage.getItem("access_token");
     if (!accessToken) {
       navigate("/login");
@@ -25,21 +28,21 @@ const NavbarDashboard = ({ clickedMenu }) => {
     setOpenConfirm(false);
   };
   return (
-    <div className="miw-full border-b shadow-sm border-gray-400 h-24 flex items-center px-8">
+    <div className="grow relative right-2 border-b shadow-sm border-gray-400 h-24 flex items-center px-8">
       <ModalDeleteConfirm
         openConfirm={openConfirm}
         handleCloseModalDelete={handleCloseModalDelete}
         handleLogout={handleLogout}
       />
       <div className="flex w-1/2">
-        <h1 className="text-lg font-semibold">{clickedMenu}</h1>
+        <h1 className="text-lg font-semibold">{children}</h1>
       </div>
       <div className="flex w-1/2 justify-end  items-center  gap-4">
         <div className="flex items-center mr-11 gap-5">
           <img src={Logo} alt="logo" className="w-[46px] h-[46px]" />
           <div>
-            <p className="font-semibold">Michael Abraham</p>
-            <span>Admin 1</span>
+            <p className="font-semibold">{username}</p>
+            <span>{emailLogin}</span>
           </div>
         </div>
         <button
