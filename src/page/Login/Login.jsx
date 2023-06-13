@@ -51,7 +51,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://34.101.193.55:8080/api/v1/auth/admin-login",
+        "https://api.officebuddy.space/api/v1/auth/admin-login",
         {
           email,
           password,
@@ -66,7 +66,18 @@ const Login = () => {
           toast.success("Login Berhasil");
           sessionStorage.setItem("access_token", token);
           navigate("/dashboard", { replace: true });
-          window.location.reload();
+
+          const getUser = await axios.get(
+            "https://api.officebuddy.space/api/v1/user/me",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+          const { data } = getUser.data;
+          sessionStorage.setItem("user_name", data.Name);
+          sessionStorage.setItem("user_email", data.Email);
         } else {
           setIsLoginError(true);
           toast.error("Login Gagal: Akses ditolak");
