@@ -222,7 +222,7 @@ const TotalUser = () => {
         alertDelete && (
           <ModalAlert
             image={ImgDeleteSuccess}
-            message={"Data berhasil dihapus"}
+            message={"Akun berhasil dihapus"}
             onClickClose={() => setAlertDelete(false)}
           />
         )

@@ -6,7 +6,7 @@ import RatingIcon from "../../assets/img/star-icon.png";
 import ProfileImg from "../../assets/img/Kantor.png";
 import ProfileImg2 from "../../assets/img/Ellipse_imgman.png";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import { StarIcon, StarEmptyIcon } from "../../assets/svg";
+import RatingStar from "../../components/RatingStar/RatingStar";
 
 const chartData = [
   { name: "Tidak Aktif", value: 350 },
@@ -187,11 +187,7 @@ const DatabaseUser = () => {
                     </p>
                   </div>
                   <div className="flex gap-1 mb-2">
-                    {Array(5)
-                      .fill(null)
-                      .map((_, index) => (
-                        <StarIcon key={index} />
-                      ))}
+                    <RatingStar rating={5} />
                   </div>
                   <p className="mb-2 text-sm text-[#475467] font-face-ro">
                     Menilai Bintang 5 pada <b>Wellspace</b>
@@ -213,17 +209,7 @@ const DatabaseUser = () => {
                     </p>
                   </div>
                   <div className="flex gap-1 mb-2">
-                    {Array(4)
-                      .fill(null)
-                      .map((_, index) => (
-                        <StarIcon key={index} />
-                      ))}
-
-                    {Array(1)
-                      .fill(null)
-                      .map((_, index) => (
-                        <StarEmptyIcon key={index} />
-                      ))}
+                    <RatingStar rating={4} />
                   </div>
                   <p className="mb-2 text-sm text-[#475467] font-face-ro">
                     Menilai Bintang 4 pada <b>Wellspace</b>
