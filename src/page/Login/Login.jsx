@@ -11,6 +11,7 @@ import ImgLoginError from "../../assets/img/login-error.png";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoginError, setIsLoginError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const Login = () => {
 
   const handleLogin = async (data) => {
     const { email, password } = data;
-
+    setIsLoading(true);
     try {
       const res = await axios.post(
         "https://api.officebuddy.space/api/v1/auth/admin-login",
@@ -88,6 +89,8 @@ const Login = () => {
     } catch (error) {
       setIsLoginError(true);
       toast.error(`Login Gagal: ${error.response.data.meta.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -232,6 +235,21 @@ const Login = () => {
             >
               Close
             </button>
+          </div>
+        </div>
+      )}
+
+      {isLoading && (
+        <div className="fixed w-full h-full inset-0 z-50 bg-black/[.15] backdrop-blur-[2px] overflow-hidden flex justify-center items-center">
+          <div className="w-[250px] bg-white flex flex-col gap-6 justify-center items-center rounded-3xl px-4 py-8">
+            <div
+              className="animate-spin inline-block w-10 h-10 border-[3px] border-current border-t-transparent text-blue-600 rounded-full"
+              role="status"
+              aria-label="loading"
+            >
+              <span className="sr-only">Loading...</span>
+            </div>
+            <h1>Please Wait...</h1>
           </div>
         </div>
       )}
