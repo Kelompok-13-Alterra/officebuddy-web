@@ -67,7 +67,6 @@ const Login = () => {
           toast.success("Login Berhasil");
           sessionStorage.setItem("access_token", token);
           navigate("/dashboard", { replace: true });
-
           const getUser = await axios.get(
             "https://api.officebuddy.space/api/v1/user/me",
             {

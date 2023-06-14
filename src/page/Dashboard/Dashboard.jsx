@@ -6,7 +6,6 @@ import bookingCoWorkingIcon from "../../assets/img/co-working-booking-icon.png";
 import { BarChart, Bar, XAxis, CartesianGrid, Tooltip } from "recharts";
 import axios from "axios";
 import "./Dashboard.css";
-import NavbarDashboard from "../../components/DahsboardNavbar/NavbarDashboard";
 
 function Dashboard() {
   const [widgetData, setWidgetData] = useState([]);
@@ -126,6 +125,7 @@ function Dashboard() {
                 </p>
                 <p className="dashboard__card-container__count font-face-ro">
                   {widgetData.OfficeTotal}
+                  36
                 </p>
               </div>
             </div>
@@ -144,6 +144,7 @@ function Dashboard() {
                 </p>
                 <p className="dashboard__card-container__count font-face-ro">
                   {widgetData.CoWorkingTotal}
+                  16
                 </p>
               </div>
             </div>
@@ -161,7 +162,7 @@ function Dashboard() {
                   Booking kantor saat ini
                 </p>
                 <p className="dashboard__card-container__count font-face-ro">
-                  {widgetData.OfficeTransactionToday} Orang
+                  {widgetData.OfficeTransactionToday} Orang 160 Orang
                 </p>
               </div>
             </div>
@@ -184,7 +185,7 @@ function Dashboard() {
                   Booking Co-Working Space hari ini
                 </p>
                 <p className="dashboard__card-container__count font-face-ro">
-                  {widgetData.CoWorkingTransactionToday} Orang
+                  {widgetData.CoWorkingTransactionToday} Orang 89 Orang
                 </p>
               </div>
             </div>
