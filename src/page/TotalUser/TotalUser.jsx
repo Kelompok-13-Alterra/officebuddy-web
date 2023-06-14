@@ -56,10 +56,32 @@ const TotalUser = () => {
     setModalEdit(true);
   };
 
-  const deleteUser = (id) => {
-    console.log(`DELETE ID >>> ${id}`);
-    setModalConfirmDelete(false);
-    setAlertDelete(true);
+  const deleteUser = async (id) => {
+    const token = sessionStorage.getItem("access_token");
+    setIsLoading(true);
+    try {
+      const res = await axios.delete(
+        `https://api.officebuddy.space/api/v1/user/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!res.data.meta.is_error) {
+        setAlertDelete(true);
+        getUsers();
+      } else {
+        toast.error(`Gagal menghapus akun user!`);
+      }
+    } catch (error) {
+      toast.error(`Gagal menghapus akun user: ${error.message}`);
+      console.log("GET USERS ERROR >>>>", error);
+    } finally {
+      setModalConfirmDelete(false);
+      setIsLoading(false);
+    }
   };
 
   const updateUser = async (updateData) => {
