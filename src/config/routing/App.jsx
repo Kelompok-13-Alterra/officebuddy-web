@@ -14,6 +14,10 @@ import Pendapatan from "../../page/D-pendapatan/Pendapatan";
 import CoWorking from "../../page/CoWorking/CoWorking";
 import NavigationLayout from "../../components/NavigationLayout/NavigationLayout";
 import PrivateRoute from "../../config/routing/PrivateRoute";
+import DatabaseUser from "../../page/DatabaseUser/DatabaseUser";
+import TotalUser from "../../page/TotalUser/TotalUser";
+import TotalBooking from "../../page/TotalBooking/TotalBooking";
+import UserRating from "../../page/UserRating/UserRating";
 
 function App() {
   return (
@@ -36,6 +40,13 @@ function App() {
           <Route path="/kantor" element={<Kantor />} />
           <Route path="/pendapatan" element={<Pendapatan />} />
           <Route path="/co-working" element={<CoWorking />} />
+          <Route path="/database-user" element={<DatabaseUser />} />
+          <Route path="/database-user/total-user" element={<TotalUser />} />
+          <Route path="/database-user/user-rating" element={<UserRating />} />
+          <Route
+            path="/database-user/total-booking"
+            element={<TotalBooking />}
+          />
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="/404-notfound" element={<NotFound />} />

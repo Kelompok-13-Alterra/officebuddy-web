@@ -125,7 +125,6 @@ function Dashboard() {
                 </p>
                 <p className="dashboard__card-container__count font-face-ro">
                   {widgetData.OfficeTotal}
-                  36
                 </p>
               </div>
             </div>
@@ -144,7 +143,6 @@ function Dashboard() {
                 </p>
                 <p className="dashboard__card-container__count font-face-ro">
                   {widgetData.CoWorkingTotal}
-                  16
                 </p>
               </div>
             </div>
@@ -162,7 +160,7 @@ function Dashboard() {
                   Booking kantor saat ini
                 </p>
                 <p className="dashboard__card-container__count font-face-ro">
-                  {widgetData.OfficeTransactionToday} Orang 160 Orang
+                  {widgetData.OfficeTransactionToday} Orang
                 </p>
               </div>
             </div>
@@ -185,7 +183,7 @@ function Dashboard() {
                   Booking Co-Working Space hari ini
                 </p>
                 <p className="dashboard__card-container__count font-face-ro">
-                  {widgetData.CoWorkingTransactionToday} Orang 89 Orang
+                  {widgetData.CoWorkingTransactionToday} Orang
                 </p>
               </div>
             </div>
