@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import { numberWithCommas } from "../../config/utils/numberWithCommas";
 import Pagination from "../../components/Pagination/Pagination";
 import "./Pendapatan.css";
-import NavbarDashboard from "../../components/DahsboardNavbar/NavbarDashboard";
 
 function Pendapatan() {
   const [isOpen, setIsOpen] = useState(false);

@@ -22,7 +22,6 @@ import {
 import ModalFormOffice from "../../components/ModalFormOffice/ModalFormOffice";
 import Pagination from "../../components/Pagination/Pagination";
 import { toast } from "react-toastify";
-import NavbarDashboard from "../../components/DahsboardNavbar/NavbarDashboard";
 
 const Kantor = () => {
   const [officeList, setOfficeList] = useState([]);

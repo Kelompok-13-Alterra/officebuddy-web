@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router";
 import notFound from "../../assets/img/not-found.png";
 import "./NotFound.css";
-import NavbarDashboard from "../../components/DahsboardNavbar/NavbarDashboard";
 
 function NotFound() {
   const navigate = useNavigate();

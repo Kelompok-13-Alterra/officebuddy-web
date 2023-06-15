@@ -23,7 +23,7 @@ const PrivateRoute = ({ children }) => {
   if (authCheck()) {
     return children;
   } else {
-    return <Navigate to="/login" />;
+    return <Navigate to="/404-notfound" />;
   }
 };
 
