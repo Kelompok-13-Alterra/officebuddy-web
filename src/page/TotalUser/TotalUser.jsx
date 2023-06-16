@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { ArrowRightIcon, FilterIcon } from "../../assets/svg";
+import { ArrowRightIcon } from "../../assets/svg";
 import Pagination from "../../components/Pagination/Pagination";
 import ModalConfirm from "../../components/ModalConfirm/ModalConfirm";
 import ModalAlert from "../../components/ModalAlert/ModalAlert";
@@ -133,9 +133,9 @@ const TotalUser = () => {
             Data Pengguna
           </h2>
 
-          <button className="flex items-center gap-3 px-4 py-[10px] bg-white rounded-full border-[1px] border-[#C7C6CA] text-[#5E5E62] font-medium">
+          {/* <button className="flex items-center gap-3 px-4 py-[10px] bg-white rounded-full border-[1px] border-[#C7C6CA] text-[#5E5E62] font-medium">
             <FilterIcon /> Filters
-          </button>
+          </button> */}
         </div>
 
         <table className="w-full table mb-[5px]">
