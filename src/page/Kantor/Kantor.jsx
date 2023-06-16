@@ -12,7 +12,6 @@ import ImgSuccess from "../../assets/img/success.png";
 import ImgDeleteSuccess from "../../assets/img/delete-success.png";
 import ImgUpdateSuccess from "../../assets/img/update-success.png";
 import {
-  FilterIcon,
   PlusIcon,
   SpeakerIcon,
   ProjectorIcon,
@@ -25,6 +24,7 @@ import { toast } from "react-toastify";
 
 const Kantor = () => {
   const [officeList, setOfficeList] = useState([]);
+  const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
   const [modalInsert, setModalInsert] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
@@ -90,6 +90,19 @@ const Kantor = () => {
     getOffices();
     getWidgetData();
   }, []);
+
+  const handleSort = () => {
+    const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+    setSortOrder(newSortOrder);
+    const newOfficeList = [...officeList];
+    newOfficeList.sort((a, b) => {
+      if (newSortOrder === "asc") {
+        return a.ID - b.ID;
+      }
+      return b.ID - a.ID;
+    });
+    setOfficeList(newOfficeList);
+  };
 
   const handleClickEdit = async (officeId) => {
     setIsLoading(true);
@@ -273,7 +286,7 @@ const Kantor = () => {
               Booking kantor saat ini
             </p>
             <h1 className="font-face-ro text-[24px] leading-8">
-              {widgetData?.TotalBoking || "0"} Orang
+              {widgetData?.TotalBooking || "0"} Orang
             </h1>
           </div>
         </div>
@@ -285,9 +298,9 @@ const Kantor = () => {
             </h2>
 
             <div className="flex gap-3">
-              <button className="flex items-center gap-3 px-4 py-[10px] bg-white rounded-full border-[1px] border-[#C7C6CA] text-[#5E5E62] font-medium">
+              {/* <button className="flex items-center gap-3 px-4 py-[10px] bg-white rounded-full border-[1px] border-[#C7C6CA] text-[#5E5E62] font-medium">
                 <FilterIcon /> Filters
-              </button>
+              </button> */}
               <button
                 onClick={() => setModalInsert(true)}
                 className="flex items-center gap-3 py-[10px] px-6 bg-bg-button rounded-full text-white font-sans font-medium"
@@ -300,7 +313,39 @@ const Kantor = () => {
           <table className="w-full table mb-[5px]">
             <thead>
               <tr className="bg-[#F4F3F7] font-face-ro text-[#46474A] text-left">
-                <th className="py-[18px] pl-[22px]">Nama Kantor</th>
+                <th className="py-[18px] pl-[22px] flex gap-4 justify-between items-center">
+                  Nama Kantor
+                  <button onClick={handleSort}>
+                    {sortOrder === "asc" && (
+                      <svg
+                        className="w-4 h-4 ml-1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M19 9l-7 7-7-7" />
+                      </svg>
+                    )}
+                    {sortOrder === "desc" && (
+                      <svg
+                        className="w-4 h-4 ml-1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M5 15l7-7 7 7" />
+                      </svg>
+                    )}
+                  </button>
+                </th>
                 <th className="py-[18px] pl-[22px]">Jam buka & tutup</th>
                 <th className="py-[18px] pl-[22px]">Fasilitas</th>
                 <th className="py-[18px] pl-[22px]">Pembayaran</th>
