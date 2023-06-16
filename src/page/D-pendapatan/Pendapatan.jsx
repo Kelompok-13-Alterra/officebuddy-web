@@ -61,73 +61,62 @@ function Pendapatan() {
     {
       id: 1,
       hari: `Jan`,
-      order: 1000,
-      stock: 2000,
+      Pendapatan: 2000,
     },
     {
       id: 2,
       hari: `Feb`,
-      order: 2000,
-      stock: 3000,
+      Pendapatan: 3000,
     },
     {
       id: 3,
       hari: `Mar`,
-      order: 500,
-      stock: 2000,
+      Pendapatan: 2000,
     },
     {
       id: 4,
       hari: `April`,
-      order: 1500,
-      stock: 900,
+      Pendapatan: 900,
     },
     {
       id: 5,
       hari: `Mei`,
-      order: 300,
-      stock: 1000,
+      Pendapatan: 1000,
     },
     {
       id: 6,
       hari: `Jun`,
-      order: 3000,
-      stock: 4400,
+      Pendapatan: 4400,
     },
     {
       id: 7,
       hari: `Jul`,
-      order: 200,
-      stock: 1000,
+      Pendapatan: 1000,
     },
     {
       id: 8,
       hari: `Aug`,
-      order: 200,
-      stock: 1100,
+      Pendapatan: 1100,
     },
     {
       id: 9,
       hari: `Sep`,
-      order: 200,
-      stock: 2000,
+      Pendapatan: 2000,
     },
     {
       id: 10,
       hari: `Oct`,
-      order: 200,
-      stock: 1600,
+      Pendapatan: 1600,
     },
     {
       id: 11,
       hari: `Nov`,
-      order: 200,
-      stock: 3000,
+      Pendapatan: 3000,
     },
     {
       id: 12,
       hari: `Des`,
-      stock: 6000,
+      Pendapatan: 6000,
     },
   ];
 
@@ -258,7 +247,7 @@ function Pendapatan() {
                     />
                     <Tooltip />
                     <Bar
-                      dataKey="stock"
+                      dataKey="Pendapatan"
                       barSize={32}
                       stackId="stack"
                       fill="#84ADFF"
@@ -326,10 +315,11 @@ function Pendapatan() {
               {transaction?.map((data, index) => {
                 return (
                   <div key={index}>
-                    <div className="card__user flex justify-between w-[400px]">
-                      <div className="flex gap-6">
+                    <div className="card__user flex justify-between w-[350px]">
+                      <div className="flex gap-4 align-top">
                         <img
-                          className="user__image h-10 w-10 shrink-0 rounded-full bg-gray-300"
+                          className="user__image h-10 w-10 shrink-0 rounded-full bg-gray-300 object-cover"
+                          style={{ width: "46px", height: "46px" }}
                           src={`https://imageio.forbes.com/specials-images/imageserve/61688aa1d4a8658c3f4d8640/Antonio-Juliano/0x0.jpg?format=jpg&width=200`}
                         />
                         <div className="flex flex-col gap-2">
@@ -338,10 +328,10 @@ function Pendapatan() {
                           </h5>
                           <p className="font-face-ro text-xs">
                             Memesan Coworking space{" "}
-                            <span className="font-face-ro-bold">
-                              {" "}
-                              {numberWithCommas(data.Revenue)}
-                            </span>
+                          </p>
+                          <p className="font-face-ro-bold text-[#16B364]">
+                            {"+ "}
+                            {numberWithCommas(data.Revenue)}
                           </p>
                         </div>
                       </div>
