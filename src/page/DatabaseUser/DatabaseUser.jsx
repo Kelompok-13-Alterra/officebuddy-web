@@ -38,38 +38,13 @@ const renderCustomizedLabel = ({
 };
 
 const DatabaseUser = () => {
-  const [totalUser, setTotalUser] = useState(0);
-  const [totalRatings, setTotalRatings] = useState(0);
+  const [widgetData, setWidgetData] = useState({});
 
-  const getUsers = async () => {
+  const getWidgetData = async () => {
     const token = sessionStorage.getItem("access_token");
     try {
-      const res = await axios.get("https://api.officebuddy.space/api/v1/user", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const users = res.data.data;
-      setTotalUser(users.length);
-    } catch (error) {
-      toast.error(`Gagal mendapatkan data user: ${error.message}`);
-      console.log("GET USERS ERROR >>>>", error);
-    }
-  };
-
-  const getTotalRatings = async () => {
-    const token = sessionStorage.getItem("access_token");
-    try {
-      const officeRes = await axios.get(
-        "https://api.officebuddy.space/api/v1/admin/office-widget?type=office",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const coworkingRes = await axios.get(
-        "https://api.officebuddy.space/api/v1/admin/office-widget?type=coworking",
+      const res = await axios.get(
+        "https://api.officebuddy.space/api/v1/admin/user-widget",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -77,22 +52,21 @@ const DatabaseUser = () => {
         },
       );
 
-      const ratingCount =
-        officeRes.data.data.TotalRating + coworkingRes.data.data.TotalRating;
-      setTotalRatings(ratingCount);
+      const widgetData = res.data.data;
+      setWidgetData(widgetData);
     } catch (error) {
       console.log("GET WIDGET DATA ERROR >>>>", error);
+      toast.error("GET WIDGET DATA ERROR");
     }
   };
 
   useEffect(() => {
-    getUsers();
-    getTotalRatings();
+    getWidgetData();
   }, []);
 
   const chartData = [
     { name: "Tidak Aktif", value: 0 },
-    { name: "Aktif", value: totalUser || 0 },
+    { name: "Aktif", value: widgetData?.TotalUser || 0 },
   ];
 
   return (
@@ -113,7 +87,7 @@ const DatabaseUser = () => {
             Lihat data pengguna
           </p>
           <h1 className="font-face-ro text-[24px] leading-8">
-            {totalUser || "0"} Pengguna
+            {widgetData.TotalUser || "0"} Pengguna
           </h1>
         </div>
 
@@ -133,7 +107,7 @@ const DatabaseUser = () => {
             Penilaian Kantor dan Co-Working Space
           </p>
           <h1 className="font-face-ro text-[24px] leading-8">
-            {totalRatings || "0"} Penilaian Terbaru
+            {widgetData.TotalRating || "0"} Penilaian Terbaru
           </h1>
         </div>
       </div>

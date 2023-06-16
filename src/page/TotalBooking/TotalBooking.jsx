@@ -1,39 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { ArrowRightIcon } from "../../assets/svg";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import Pagination from "../../components/Pagination/Pagination";
-
-const dummyOrder = [
-  {
-    ID: 1,
-    Name: "Michael Abraham",
-    Email: "mic2332@gmail.com",
-    Office: {
-      Name: "Wellspace",
-      Type: "Office",
-    },
-    CreatedAt: "2023-06-14T12:12:04.616Z",
-    status: false,
-  },
-  {
-    ID: 2,
-    Name: "Abraham",
-    Email: "abraham@gmail.com",
-    Office: {
-      Name: "Wellspace",
-      Type: "Office",
-    },
-    CreatedAt: "2023-06-12T12:12:04.616Z",
-    status: false,
-  },
-];
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const TotalBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [bookingData, setBookingData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const pageSize = 10;
 
-  useEffect(() => {}, []);
+  const getBooking = async () => {
+    const token = sessionStorage.getItem("access_token");
+    setIsLoading(true);
+    try {
+      const res = await axios.get(
+        "https://api.officebuddy.space/api/v1/transaction",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const bookingData = res.data.data;
+      setBookingData(bookingData);
+    } catch (error) {
+      console.log("GET BOOKING DATA ERROR >>>>", error);
+      toast.error("GET BOOKING DATA ERROR");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getBooking();
+  }, []);
+
+  const currentBookingList = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return bookingData.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, bookingData]);
 
   return (
     <div className="p-8 bg-[#FDFBFF]">
@@ -66,20 +76,25 @@ const TotalBooking = () => {
           </tr>
         </thead>
         <tbody>
-          {dummyOrder.map((booking) => (
+          {isLoading && <h1>Loading...</h1>}
+          {currentBookingList.map((booking) => (
             <tr
               key={booking.ID}
               className="bg-white border-b-[1px] border-b-[#F4F3F7]"
             >
-              <td className="py-10 pl-[22px]">{booking.Name}</td>
-              <td className="py-10 pl-[22px]">{booking.Email}</td>
+              <td className="py-10 pl-[22px]">
+                {booking.User?.Name || "Michael"}
+              </td>
+              <td className="py-10 pl-[22px]">
+                {booking.User?.Email || "mic2332@gmail.com"}
+              </td>
               <td className="py-10 pl-[22px]">
                 <div>
                   <h3 className="font-face-ro text-[#1E1F23]">
-                    {booking.Office.Name}
+                    {booking.Office.Name || "Wellspace"}
                   </h3>
                   <h3 className="font-face-ro text-[#77777A]">
-                    {booking.Office.Type}
+                    {booking.Office.Type || "Office"}
                   </h3>
                 </div>
               </td>
@@ -88,7 +103,7 @@ const TotalBooking = () => {
               </td>
               <td className="py-10 pl-[22px]">
                 <span className="px-4 py-[6px] bg-[#CEE5FF] rounded-full font-face-ro-med text-[#001D33] text-[14px] capitalize">
-                  Menunggu Pembayaran
+                  {!booking.status ? "Menunggu Pembayaran" : "Selesai"}
                 </span>
               </td>
             </tr>
@@ -102,7 +117,7 @@ const TotalBooking = () => {
         </span>
         <Pagination
           currentPage={currentPage}
-          dataLength={dummyOrder.length}
+          dataLength={bookingData.length}
           pageSize={pageSize}
           onClickPage={(page) => setCurrentPage(page)}
         />
