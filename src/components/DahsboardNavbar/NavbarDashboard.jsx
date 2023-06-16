@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Logo from "../../assets/img/Logooffice.png";
 import LogoButton from "../../assets/img/Logout Button.png";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router-dom";
 import ModalDeleteConfirm from "./ModalDeleteConfirm";
 
 // eslint-disable-next-line react/prop-types
-const NavbarDashboard = ({ clickedMenu }) => {
+const NavbarDashboard = () => {
   const [openConfirm, setOpenConfirm] = useState(false);
+  const location = useLocation();
+  const nameUserLogin = sessionStorage.getItem("user_name");
+  const emailUserLogin = sessionStorage.getItem("user_email");
+
+  const currentPage = useMemo(() => {
+    const pathName = location.pathname.split("/")[1];
+    if (pathName === "dashboard") return "Dashboard";
+    if (pathName === "kantor") return "Kantor";
+    if (pathName === "co-working") return "Co-Working";
+    if (pathName === "database-user") return "Database User";
+    if (pathName === "pendapatan") return "Pendapatan";
+  }, [location]);
 
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -14,7 +26,6 @@ const NavbarDashboard = ({ clickedMenu }) => {
     const accessToken = sessionStorage.getItem("access_token");
     if (!accessToken) {
       navigate("/login");
-      window.location.reload();
     }
   };
 
@@ -32,14 +43,14 @@ const NavbarDashboard = ({ clickedMenu }) => {
         handleLogout={handleLogout}
       />
       <div className="flex w-1/2">
-        <h1 className="text-lg font-semibold">{clickedMenu}</h1>
+        <h1 className="text-lg font-semibold">{currentPage}</h1>
       </div>
       <div className="flex w-1/2 justify-end  items-center  gap-4">
         <div className="flex items-center mr-11 gap-5">
           <img src={Logo} alt="logo" className="w-[46px] h-[46px]" />
           <div>
-            <p className="font-semibold">Michael Abraham</p>
-            <span>Admin 1</span>
+            <p className="font-semibold">{nameUserLogin}</p>
+            <span>{emailUserLogin}</span>
           </div>
         </div>
         <button
