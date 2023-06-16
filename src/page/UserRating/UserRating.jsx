@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRightIcon, FilterIcon } from "../../assets/svg";
+import { ArrowRightIcon } from "../../assets/svg";
 import moment from "moment";
 import Pagination from "../../components/Pagination/Pagination";
 import ModalReview from "../../components/ModalReview/ModalReview";
@@ -15,18 +15,18 @@ const dummyRating = [
     ID: 1,
     Name: "Michael Abraham",
     Office: {
-      Name: "Canada Office",
-      Type: "Co-Working",
+      Name: "Wellspace",
+      Type: "Office",
     },
-    CreatedAt: "2023-06-12T12:12:04.616Z",
+    CreatedAt: "2023-06-14T12:12:04.616Z",
     star: 5,
   },
   {
     ID: 2,
-    Name: "Abraham",
+    Name: "Irene Store",
     Office: {
-      Name: "Canada Office",
-      Type: "Co-Working",
+      Name: "Wellspace",
+      Type: "Office",
     },
     CreatedAt: "2023-06-12T12:12:04.616Z",
     star: 4,
@@ -35,7 +35,7 @@ const dummyRating = [
 
 const UserRating = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [modalReview, setModalReview] = useState(true);
+  const [modalReview, setModalReview] = useState(false);
   // const [isLoading, setIsLoading] = useState(false);
   const [modalConfirmDelete, setModalConfirmDelete] = useState(false);
   const [alertDelete, setAlertDelete] = useState(false);
@@ -66,9 +66,9 @@ const UserRating = () => {
             Data Penilaian Pembeli
           </h2>
 
-          <button className="flex items-center gap-3 px-4 py-[10px] bg-white rounded-full border-[1px] border-[#C7C6CA] text-[#5E5E62] font-medium">
+          {/* <button className="flex items-center gap-3 px-4 py-[10px] bg-white rounded-full border-[1px] border-[#C7C6CA] text-[#5E5E62] font-medium">
             <FilterIcon /> Filters
-          </button>
+          </button> */}
         </div>
 
         <table className="w-full table mb-[5px]">

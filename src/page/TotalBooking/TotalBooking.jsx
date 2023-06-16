@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ArrowRightIcon, FilterIcon } from "../../assets/svg";
+import { ArrowRightIcon } from "../../assets/svg";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import Pagination from "../../components/Pagination/Pagination";
@@ -10,10 +10,10 @@ const dummyOrder = [
     Name: "Michael Abraham",
     Email: "mic2332@gmail.com",
     Office: {
-      Name: "Canada Office",
-      Type: "Co-Working",
+      Name: "Wellspace",
+      Type: "Office",
     },
-    CreatedAt: "2023-06-12T12:12:04.616Z",
+    CreatedAt: "2023-06-14T12:12:04.616Z",
     status: false,
   },
   {
@@ -21,10 +21,10 @@ const dummyOrder = [
     Name: "Abraham",
     Email: "abraham@gmail.com",
     Office: {
-      Name: "Canada Office",
-      Type: "Co-Working",
+      Name: "Wellspace",
+      Type: "Office",
     },
-    CreatedAt: "2023-07-12T12:12:04.616Z",
+    CreatedAt: "2023-06-12T12:12:04.616Z",
     status: false,
   },
 ];
@@ -50,9 +50,9 @@ const TotalBooking = () => {
           Data Pesanan Pembeli
         </h2>
 
-        <button className="flex items-center gap-3 px-4 py-[10px] bg-white rounded-full border-[1px] border-[#C7C6CA] text-[#5E5E62] font-medium">
+        {/* <button className="flex items-center gap-3 px-4 py-[10px] bg-white rounded-full border-[1px] border-[#C7C6CA] text-[#5E5E62] font-medium">
           <FilterIcon /> Filters
-        </button>
+        </button> */}
       </div>
 
       <table className="w-full table mb-[5px]">
