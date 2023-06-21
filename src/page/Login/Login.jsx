@@ -66,8 +66,6 @@ const Login = () => {
         if (user.role === 1) {
           toast.success("Login Berhasil");
           sessionStorage.setItem("access_token", token);
-          navigate("/dashboard", { replace: true });
-
           const getUser = await axios.get(
             "https://api.officebuddy.space/api/v1/user/me",
             {
@@ -79,6 +77,8 @@ const Login = () => {
           const { data } = getUser.data;
           sessionStorage.setItem("user_name", data.Name);
           sessionStorage.setItem("user_email", data.Email);
+
+          navigate("/dashboard", { replace: true });
         } else {
           setIsLoginError(true);
           toast.error("Login Gagal: Akses ditolak");
