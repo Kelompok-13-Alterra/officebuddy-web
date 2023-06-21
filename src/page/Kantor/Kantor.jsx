@@ -130,8 +130,8 @@ const Kantor = () => {
   const insertOffice = async (insertData) => {
     setIsLoading(true);
     const token = sessionStorage.getItem("access_token");
-    const { payment, ...officeData } = insertData;
-    console.log(payment);
+    const { payment, formData, ...officeData } = insertData;
+    console.log(payment, formData);
 
     try {
       const res = await axios.post(
@@ -164,8 +164,8 @@ const Kantor = () => {
   const updateOffice = async (updateData) => {
     setIsLoading(true);
     const token = sessionStorage.getItem("access_token");
-    const { id, payment, ...officeData } = updateData;
-    console.log(payment);
+    const { id, payment, formData, ...officeData } = updateData;
+    console.log(payment, formData);
 
     try {
       const res = await axios.put(
