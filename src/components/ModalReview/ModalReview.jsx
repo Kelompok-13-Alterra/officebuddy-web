@@ -1,9 +1,8 @@
 import React from "react";
 import { ArrowUpIcon, CloseIcon } from "../../assets/svg";
-import ProfileImg from "../../assets/img/Ellipse_imgman.png";
-import OfficeImg from "../../assets/img/office-img.png";
-import OfficeImg2 from "../../assets/img/office-img2.png";
+import ProfileImg from "../../assets/img/user_default.jpg";
 import RatingStar from "../RatingStar/RatingStar";
+import moment from "moment";
 
 /* eslint-disable react/prop-types */
 const ModalReview = ({ reviewData, onClickClose }) => {
@@ -23,24 +22,41 @@ const ModalReview = ({ reviewData, onClickClose }) => {
                 <img src={ProfileImg} alt="Profile" />
               </div>
               <div className="font-face-ro">
-                <h2 className="text-[#1E1F23]">Michael Abraham</h2>
+                <h2 className="text-[#1E1F23]">
+                  {reviewData.User?.Name || "Unknown"}
+                </h2>
                 <p className="text-[#ABABAF] text-sm">
-                  Diposting pada tanggal 13/04/2023
+                  Diposting pada tanggal{" "}
+                  {moment(reviewData.CreatedAt).format("DD/MM/YY")}
                 </p>
               </div>
             </div>
 
             <div className="mb-7">
               <div className="flex gap-3 items-center mb-2 font-face-ro">
-                <h3 className="font-bold">Wellspace</h3>
-                <p className="px-4 text-sm rounded-full border-2 border-[#74777F]">
-                  Kantor
+                <h3 className="font-bold">
+                  {reviewData.Office?.Name || "Unknown"}
+                </h3>
+                <p className="px-3 text-sm rounded-full border-2 border-[#74777F]">
+                  {reviewData.Office?.Type === "office"
+                    ? "Kantor"
+                    : reviewData.Office?.Type === "coworking"
+                    ? "Co-Working"
+                    : "-"}
                 </p>
               </div>
 
               <div className="flex gap-7 items-center">
-                <RatingStar rating={5} />
-                <p className="font-face-ro">Sangat Baik</p>
+                <RatingStar rating={reviewData.Star} />
+                <p className="font-face-ro">
+                  {reviewData.Star > 4
+                    ? "Sangat Baik"
+                    : reviewData.Star >= 3
+                    ? "Baik"
+                    : reviewData.Star >= 2
+                    ? "Buruk"
+                    : "Sangat Buruk"}
+                </p>
               </div>
             </div>
 
@@ -52,24 +68,19 @@ const ModalReview = ({ reviewData, onClickClose }) => {
             </div>
 
             <div className="flex flex-wrap items-center gap-[18px] mb-[34px]">
-              <div className="px-4 py-[6px] flex justify-center items-center rounded-full border-2 border-[#74777F]">
-                <span className="font-face-ro-med text-[#44474E] text-[14px]">
-                  Termurah
-                </span>
-              </div>
-              <div className="px-4 py-[6px] flex justify-center items-center rounded-full border-2 border-[#74777F]">
-                <span className="font-face-ro-med text-[#44474E] text-[14px]">
-                  Fasiilitas Lengkap
-                </span>
-              </div>
-              <div className="px-4 py-[6px] flex justify-center items-center rounded-full border-2 border-[#74777F]">
-                <span className="font-face-ro-med text-[#44474E] text-[14px]">
-                  Terdekat
-                </span>
-              </div>
+              {reviewData.Tags.map((tag, index) => (
+                <div
+                  key={index}
+                  className="px-4 py-[6px] flex justify-center items-center rounded-full border-2 border-[#74777F]"
+                >
+                  <span className="font-face-ro-med text-[#44474E] text-[14px]">
+                    {tag}
+                  </span>
+                </div>
+              ))}
             </div>
 
-            <div className="flex items-center gap-4 mb-7">
+            {/* <div className="flex items-center gap-4 mb-7">
               <div className="w-[100px] h-[100px] rounded-lg overflow-hidden">
                 <img
                   className="w-full h-full object-cover object-center"
@@ -91,23 +102,10 @@ const ModalReview = ({ reviewData, onClickClose }) => {
                   alt="Office"
                 />
               </div>
-            </div>
+            </div> */}
 
             <div className="mb-[30px]">
-              <p className="font-face-ro">
-                Tempat co-working space ini luar biasa! Saya sangat terkesan
-                dengan suasana kerjanya yang energik dan produktif. Fasilitas
-                yang disediakan sangat lengkap, mulai dari area kerja yang
-                nyaman hingga ruang rapat yang dilengkapi dengan peralatan
-                modern. Tim pengelola juga sangat ramah dan responsif terhadap
-                kebutuhan saya. Saya sangat senang bisa berkolaborasi dan
-                berinteraksi dengan anggota lain di sini. Suasana kerja yang
-                saling mendukung dan inspiratif membuat saya semakin
-                termotivasi. Tempat ini benar-benar memberikan nilai tambah bagi
-                pekerjaan saya. Sangat merekomendasikan co-working space ini
-                kepada siapa pun yang mencari lingkungan kerja yang kreatif dan
-                profesional!
-              </p>
+              <p className="font-face-ro">{reviewData.Description}</p>
             </div>
           </div>
         </div>

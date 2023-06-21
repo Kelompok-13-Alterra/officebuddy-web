@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRightIcon } from "../../assets/svg";
 import moment from "moment";
@@ -9,45 +9,149 @@ import ModalAlert from "../../components/ModalAlert/ModalAlert";
 import ModalConfirm from "../../components/ModalConfirm/ModalConfirm";
 import ImgDiscard from "../../assets/img/discard2.png";
 import ImgDeleteSuccess from "../../assets/img/delete-success.png";
-
-const dummyRating = [
-  {
-    ID: 1,
-    Name: "Michael Abraham",
-    Office: {
-      Name: "Wellspace",
-      Type: "Office",
-    },
-    CreatedAt: "2023-06-14T12:12:04.616Z",
-    star: 5,
-  },
-  {
-    ID: 2,
-    Name: "Irene Store",
-    Office: {
-      Name: "Wellspace",
-      Type: "Office",
-    },
-    CreatedAt: "2023-06-12T12:12:04.616Z",
-    star: 4,
-  },
-];
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const UserRating = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [modalReview, setModalReview] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [selectedReview, setSelectedReview] = useState({});
+  const [ratingList, setRatingList] = useState([]);
+  const [officeList, setOfficeList] = useState([]);
+  const [userList, setUserList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [modalConfirmDelete, setModalConfirmDelete] = useState(false);
   const [alertDelete, setAlertDelete] = useState(false);
   const [deleteId, setDeleteId] = useState();
   const pageSize = 10;
 
-  useEffect(() => {}, []);
+  const currenRatingList = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return ratingList.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, ratingList]);
 
-  const deleteReview = (id) => {
-    alert(`oooo ${id}`);
-    setModalConfirmDelete(false);
-    setAlertDelete(true);
+  const getRatings = async () => {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.get(
+        "https://api.officebuddy.space/api/v1/rating",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const users = res.data.data;
+      setRatingList(users);
+    } catch (error) {
+      toast.error(`Gagal mendapatkan data rating: ${error.message}`);
+      console.log("GET RATINGS ERROR >>>>", error);
+    }
+  };
+
+  const getUsers = async () => {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.get("https://api.officebuddy.space/api/v1/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const users = res.data.data;
+      setUserList(users);
+    } catch (error) {
+      toast.error(`Gagal mendapatkan data user: ${error.message}`);
+      console.log("GET USERS ERROR >>>>", error);
+    }
+  };
+
+  const getOffices = async () => {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.get(
+        "https://api.officebuddy.space/api/v1/office",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const offices = res.data.data;
+      setOfficeList(offices);
+    } catch (error) {
+      toast.error(`Gagal mendapatkan data kantor: ${error.message}`);
+      console.log("GET OFFICE ERROR >>>>", error);
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+    getOffices();
+    getRatings();
+  }, []);
+
+  const deleteReview = async (id) => {
+    const token = sessionStorage.getItem("access_token");
+    setIsLoading(true);
+    try {
+      const res = await axios.delete(
+        `https://api.officebuddy.space/api/v1/rating/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!res.data.meta.is_error) {
+        setAlertDelete(true);
+        getRatings();
+      } else {
+        toast.error(`Gagal menghapus data review!`);
+      }
+    } catch (error) {
+      toast.error(`Gagal menghapus data review: ${error.message}`);
+      console.log("DELETE REVIEW ERROR >>>>", error);
+    } finally {
+      setModalConfirmDelete(false);
+      setIsLoading(false);
+    }
+  };
+
+  const userData = (id) => {
+    return userList.find((user) => user.ID === id);
+  };
+
+  const officeData = (id) => {
+    return officeList.find((office) => office.ID === id);
+  };
+
+  const handleDetail = async (id) => {
+    setIsLoading(true);
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.get(
+        `https://api.officebuddy.space/api/v1/rating/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const selectedReview = res.data.data;
+      setSelectedReview({
+        User: userData(selectedReview.UserID),
+        Office: officeData(selectedReview.OfficeID),
+        ...selectedReview,
+      });
+      setModalReview(true);
+    } catch (error) {
+      toast.error("GET DETAIL REVIEW ERROR");
+      console.log("GET DETAIL REVIEW ERROR >>>>", error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -82,32 +186,44 @@ const UserRating = () => {
             </tr>
           </thead>
           <tbody>
-            {dummyRating.map((rating) => (
+            {currenRatingList.map((rating) => (
               <tr
                 key={rating.ID}
                 className="bg-white border-b-[1px] border-b-[#F4F3F7]"
               >
-                <td className="py-10 pl-[22px]">{rating.Name}</td>
+                <td className="py-10 pl-[22px]">
+                  {userData(rating.UserID)?.Name || (
+                    <span className="text-red-600 italic">
+                      [Data not found]
+                    </span>
+                  )}
+                </td>
                 <td className="py-10 pl-[22px]">
                   <h3 className="font-face-ro text-[#1E1F23]">
-                    {rating.Office.Name}
+                    {officeData(rating.OfficeID)?.Name || (
+                      <span className="text-red-600 italic">
+                        [Data not found]
+                      </span>
+                    )}
                   </h3>
                   <h3 className="font-face-ro text-[#77777A]">
-                    {rating.Office.Type}
+                    {officeData(rating.OfficeID)?.Type === "office"
+                      ? "Kantor"
+                      : officeData(rating.OfficeID)?.Type === "coworking"
+                      ? "Co-Working"
+                      : ""}
                   </h3>
                 </td>
                 <td className="py-10 pl-[22px]">
                   {moment(rating.CreatedAt).format("DD/MM/YYYY")}
                 </td>
                 <td className="py-10 pl-[22px]">
-                  <RatingStar rating={rating.star} />
+                  <RatingStar rating={rating.Star} />
                 </td>
                 <td className="py-[30px] pl-[22px]">
                   <div className="flex flex-wrap gap-1">
                     <button
-                      onClick={() => {
-                        setModalReview(true);
-                      }}
+                      onClick={() => handleDetail(rating.ID)}
                       className="px-6 py-[10px] rounded-full bg-[#005DB9] shadow-lg"
                     >
                       <span className="font-face-ro text-white text-[14px]">
@@ -138,7 +254,7 @@ const UserRating = () => {
           </span>
           <Pagination
             currentPage={currentPage}
-            dataLength={dummyRating.length}
+            dataLength={ratingList.length}
             pageSize={pageSize}
             onClickPage={(page) => setCurrentPage(page)}
           />
@@ -167,7 +283,25 @@ const UserRating = () => {
       )}
 
       {modalReview && (
-        <ModalReview onClickClose={() => setModalReview(false)} />
+        <ModalReview
+          reviewData={selectedReview}
+          onClickClose={() => setModalReview(false)}
+        />
+      )}
+
+      {isLoading && (
+        <div className="fixed w-full h-full inset-0 z-50 bg-black/[.15] backdrop-blur-[2px] overflow-hidden flex justify-center items-center">
+          <div className="w-[250px] bg-white flex flex-col gap-6 justify-center items-center rounded-3xl px-4 py-8">
+            <div
+              className="animate-spin inline-block w-10 h-10 border-[3px] border-current border-t-transparent text-blue-600 rounded-full"
+              role="status"
+              aria-label="loading"
+            >
+              <span className="sr-only">Loading...</span>
+            </div>
+            <h1>Please Wait...</h1>
+          </div>
+        </div>
       )}
     </>
   );

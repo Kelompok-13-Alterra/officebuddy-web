@@ -10,6 +10,7 @@ import SpeakerIcon from "./SpeakerIcon";
 import WaterIcon from "./WaterIcon";
 import WhiteboardIcon from "./WhiteboardIcon";
 import StarIcon from "./StarIcon";
+import StarHalfIcon from "./StarHalfIcon";
 import StarEmptyIcon from "./StarEmptyIcon";
 
 export {
@@ -26,4 +27,5 @@ export {
   WhiteboardIcon,
   StarIcon,
   StarEmptyIcon,
+  StarHalfIcon,
 };
