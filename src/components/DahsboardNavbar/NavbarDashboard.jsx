@@ -23,9 +23,12 @@ const NavbarDashboard = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     sessionStorage.removeItem("access_token");
+    sessionStorage.removeItem("user_email");
+    sessionStorage.removeItem("user_name");
     const accessToken = sessionStorage.getItem("access_token");
     if (!accessToken) {
-      navigate("/login");
+      navigate("/", { replace: true });
+      window.location.reload();
     }
   };
 
