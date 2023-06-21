@@ -21,6 +21,7 @@ import {
 import ModalFormOffice from "../../components/ModalFormOffice/ModalFormOffice";
 import Pagination from "../../components/Pagination/Pagination";
 import { toast } from "react-toastify";
+import _ from "lodash";
 
 const Kantor = () => {
   const [officeList, setOfficeList] = useState([]);
@@ -95,13 +96,14 @@ const Kantor = () => {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
     const newOfficeList = [...officeList];
-    newOfficeList.sort((a, b) => {
-      if (newSortOrder === "asc") {
-        return a.ID - b.ID;
-      }
-      return b.ID - a.ID;
-    });
-    setOfficeList(newOfficeList);
+
+    setOfficeList(
+      _.orderBy(
+        newOfficeList,
+        [(office) => office.Name.toLowerCase()],
+        newSortOrder,
+      ),
+    );
   };
 
   const handleClickEdit = async (officeId) => {
@@ -144,19 +146,35 @@ const Kantor = () => {
         },
       );
 
-      setIsLoading(false);
+      const officeId = res.data.data.ID;
       setModalInsert(false);
 
       if (!res.data.meta.is_error) {
-        setAlertInsert(true);
-        getOffices();
-        getWidgetData();
+        const uploadRes = await axios.post(
+          `https://api.officebuddy.space/api/v1/office/${officeId}/upload-image`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          },
+        );
+
+        if (!uploadRes.data.meta.is_error) {
+          setAlertInsert(true);
+          getOffices();
+          getWidgetData();
+        } else {
+          toast.error("Upload image error");
+        }
       } else {
         toast.error("Insert office error");
       }
     } catch (error) {
       toast.error(`Insert office error: ${error.message}`);
       console.log("INSERT OFFICE ERROR >>>>", error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -178,13 +196,33 @@ const Kantor = () => {
         },
       );
 
-      setIsLoading(false);
       setEditData(undefined);
       setSelectedEdit(undefined);
       setModalEdit(false);
       setModalConfirmUpdate(false);
 
       if (!res.data.meta.is_error) {
+        if (formData) {
+          const uploadRes = await axios.post(
+            `https://api.officebuddy.space/api/v1/office/${id}/upload-image`,
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+              },
+            },
+          );
+
+          if (!uploadRes.data.meta.is_error) {
+            setAlertUpdate(true);
+            getOffices();
+            getWidgetData();
+          } else {
+            toast.error("Upload image error");
+          }
+        }
+
         setAlertUpdate(true);
         getOffices();
         getWidgetData();
@@ -194,6 +232,7 @@ const Kantor = () => {
     } catch (error) {
       toast.error(`Update office error: ${error.message}`);
       console.log("UPDATE OFFICE ERROR >>>>", error.message);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -313,7 +352,7 @@ const Kantor = () => {
           <table className="w-full table mb-[5px]">
             <thead>
               <tr className="bg-[#F4F3F7] font-face-ro text-[#46474A] text-left">
-                <th className="py-[18px] pl-[22px] flex gap-4 justify-between items-center">
+                <th className="py-[18px] pl-[22px] flex gap-3 items-center">
                   Nama Kantor
                   <button onClick={handleSort}>
                     {sortOrder === "asc" && (

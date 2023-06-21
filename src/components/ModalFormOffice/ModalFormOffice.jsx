@@ -97,9 +97,11 @@ const ModalFormOffice = ({
   };
 
   const handleSubmit = (data) => {
-    if (imgFiles.length < 1) {
-      toast.warning("Tambahkan gambar kantor");
-      return;
+    if (!defaultValues) {
+      if (imgFiles.length < 1) {
+        toast.warning("Tambahkan gambar kantor");
+        return;
+      }
     }
     if (facilities.length < 1) {
       toast.warning("Tambahkan fasilitas");
@@ -111,7 +113,9 @@ const ModalFormOffice = ({
     }
 
     const formData = new FormData();
-    formData.append("image", imgFiles[0]);
+    if (imgFiles.length > 0) {
+      formData.append("office_image", imgFiles[0]);
+    }
 
     const openTime = moment(data.openTime, "HH:mm:ss").format("HH:mm:ss");
     const closeTime = moment(data.closeTime, "HH:mm:ss").format("HH:mm:ss");
@@ -128,7 +132,7 @@ const ModalFormOffice = ({
       location: data.address,
       facilities: strFacilities,
       payment: payment,
-      formData: formData,
+      ...(imgFiles.length > 0 && { formData: formData }),
     };
     console.log("DATA SENT >>>>>>", officeData);
     onClickSubmit(officeData);
@@ -145,6 +149,15 @@ const ModalFormOffice = ({
                 <CloseIcon />
               </button>
             </div>
+            {defaultValues?.ImageUrl && (
+              <div className="w-full h-52 mb-4">
+                <img
+                  className="w-full h-full object-cover object-center"
+                  src={defaultValues.ImageUrl}
+                  alt="Office Image"
+                />
+              </div>
+            )}
             <form onSubmit={formik.handleSubmit}>
               <div
                 {...getRootProps({
@@ -159,10 +172,19 @@ const ModalFormOffice = ({
 
                 {imgFiles.length < 1 ? (
                   <>
-                    <p className="text-[#909094] font-bold mb-1">
-                      Drag & Drop Gambar Kantor Disini
+                    <p className="text-[#909094] font-face-ro font-bold mb-1">
+                      Drag & Drop Gambar{" "}
+                      {type === "office"
+                        ? "Kantor"
+                        : type === "coworking" && "Co-Working"}{" "}
+                      Disini
                     </p>
-                    <p className="text-[#909094]">
+                    {defaultValues && (
+                      <p className="text-[#909094] font-face-ro font-bold mb-1">
+                        untuk meng-update gambar
+                      </p>
+                    )}
+                    <p className="font-face-ro text-[#909094]">
                       Format gambar .jpg .jpeg .png dan ukuran minimum 300 x
                       300px
                     </p>
