@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from "../../assets/svg";
+import { ArrowRightIcon } from "../../assets/svg";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import Pagination from "../../components/Pagination/Pagination";
@@ -141,7 +141,33 @@ const TotalBooking = () => {
             <th className="py-[18px] pl-[22px] flex gap-3 items-center">
               Tanggal Pesanan
               <button onClick={handleOrderByDate}>
-                {orderByDate === "desc" ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                {orderByDate === "desc" ? (
+                  <svg
+                    className="w-4 h-4 ml-1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 15l7-7 7 7" />
+                  </svg>
+                ) : (
+                  <svg
+                    className="w-4 h-4 ml-1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M19 9l-7 7-7-7" />
+                  </svg>
+                )}
               </button>
             </th>
             <th className="py-[18px] pl-[22px]">Status</th>

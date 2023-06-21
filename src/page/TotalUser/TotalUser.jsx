@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from "../../assets/svg";
+import { ArrowRightIcon } from "../../assets/svg";
 import Pagination from "../../components/Pagination/Pagination";
 import ModalConfirm from "../../components/ModalConfirm/ModalConfirm";
 import ModalAlert from "../../components/ModalAlert/ModalAlert";
@@ -55,10 +55,18 @@ const TotalUser = () => {
 
   useEffect(() => {
     if (orderByName === "desc") {
-      const newOrder = _.orderBy(userList, "Name", "desc");
+      const newOrder = _.orderBy(
+        userList,
+        [(user) => user.Name.toLowerCase()],
+        "desc",
+      );
       setUserList(newOrder);
     } else {
-      const newOrder = _.orderBy(userList, "Name", "asc");
+      const newOrder = _.orderBy(
+        userList,
+        [(user) => user.Name.toLowerCase()],
+        "asc",
+      );
       setUserList(newOrder);
     }
   }, [orderByName]);
@@ -164,7 +172,33 @@ const TotalUser = () => {
               <th className="py-[18px] pl-[22px] flex gap-3 items-center">
                 Nama
                 <button onClick={handleOrderByName}>
-                  {orderByName === "desc" ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                  {orderByName === "desc" ? (
+                    <svg
+                      className="w-4 h-4 ml-1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M5 15l7-7 7 7" />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="w-4 h-4 ml-1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M19 9l-7 7-7-7" />
+                    </svg>
+                  )}
                 </button>
               </th>
               <th className="py-[18px] pl-[22px]">Email</th>

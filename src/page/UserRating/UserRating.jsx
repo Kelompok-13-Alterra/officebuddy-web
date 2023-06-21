@@ -11,6 +11,7 @@ import ImgDiscard from "../../assets/img/discard2.png";
 import ImgDeleteSuccess from "../../assets/img/delete-success.png";
 import { toast } from "react-toastify";
 import axios from "axios";
+import _ from "lodash";
 
 const UserRating = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,6 +24,7 @@ const UserRating = () => {
   const [modalConfirmDelete, setModalConfirmDelete] = useState(false);
   const [alertDelete, setAlertDelete] = useState(false);
   const [deleteId, setDeleteId] = useState();
+  const [orderByDate, setOrderByDate] = useState("asc");
   const pageSize = 10;
 
   const currenRatingList = useMemo(() => {
@@ -91,6 +93,16 @@ const UserRating = () => {
     getRatings();
   }, []);
 
+  useEffect(() => {
+    if (orderByDate === "desc") {
+      const newOrder = _.orderBy(ratingList, "CreatedAt", "desc");
+      setRatingList(newOrder);
+    } else {
+      const newOrder = _.orderBy(ratingList, "CreatedAt", "asc");
+      setRatingList(newOrder);
+    }
+  }, [orderByDate]);
+
   const deleteReview = async (id) => {
     const token = sessionStorage.getItem("access_token");
     setIsLoading(true);
@@ -154,6 +166,14 @@ const UserRating = () => {
     }
   };
 
+  const handleOrderByDate = () => {
+    if (orderByDate === "desc") {
+      setOrderByDate("asc");
+    } else {
+      setOrderByDate("desc");
+    }
+  };
+
   return (
     <>
       <div className="p-8 bg-[#FDFBFF]">
@@ -180,7 +200,38 @@ const UserRating = () => {
             <tr className="bg-[#F4F3F7] font-face-ro text-[#46474A] text-left">
               <th className="py-[18px] pl-[22px]">Nama</th>
               <th className="py-[18px] pl-[22px]">Booking</th>
-              <th className="py-[18px] pl-[22px]">Tanggal Penilaian</th>
+              <th className="py-[18px] pl-[22px] flex gap-3 items-center">
+                Tanggal Penilaian{" "}
+                <button onClick={handleOrderByDate}>
+                  {orderByDate === "desc" ? (
+                    <svg
+                      className="w-4 h-4 ml-1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M5 15l7-7 7 7" />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="w-4 h-4 ml-1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M19 9l-7 7-7-7" />
+                    </svg>
+                  )}
+                </button>
+              </th>
               <th className="py-[18px] pl-[22px]">Penilaian</th>
               <th className="py-[18px] pl-[22px]">Action</th>
             </tr>

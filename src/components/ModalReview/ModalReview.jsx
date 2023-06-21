@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowUpIcon, CloseIcon } from "../../assets/svg";
+import { CloseIcon } from "../../assets/svg";
 import ProfileImg from "../../assets/img/user_default.jpg";
 import RatingStar from "../RatingStar/RatingStar";
 import moment from "moment";
@@ -62,9 +62,9 @@ const ModalReview = ({ reviewData, onClickClose }) => {
 
             <div className="flex gap-4 items-center mb-5">
               <h3 className="font-face-ro-med mr-4">Details Review</h3>
-              <button>
+              {/* <button>
                 <ArrowUpIcon />
-              </button>
+              </button> */}
             </div>
 
             <div className="flex flex-wrap items-center gap-[18px] mb-[34px]">
