@@ -1,122 +1,122 @@
-import React, { useState } from "react";
-import kantorIcon from "../../assets/img/kantor-icon.png";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import LogoBank from "../../assets/img/logo-bank-bri.png";
 import CircleDollar from "../../assets/img/circle-dollar.png";
 import CircleMoney from "../../assets/img/circle-money.png";
 import { BarChart, Bar, XAxis, CartesianGrid, Tooltip, YAxis } from "recharts";
+import { toast } from "react-toastify";
+import { numberWithCommas } from "../../config/utils/numberWithCommas";
+import Pagination from "../../components/Pagination/Pagination";
 import "./Pendapatan.css";
 
 function Pendapatan() {
   const [isOpen, setIsOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [allRevenue, setAllRevenue] = useState();
+  const [todayRevenue, setTodayRevenue] = useState();
+  const [transaction, setTransaction] = useState();
+  const pageSize = 5;
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
+  };
+
+  const getRevenue = async () => {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.get(
+        "https://api.officebuddy.space/api/v1/admin/revenue-widget",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      setAllRevenue(res.data.data.TotalAllRevenue);
+      setTodayRevenue(res.data.data.TotalTodayRevenue);
+    } catch (error) {
+      toast.error(`Gagal mendapatkan data kantor: ${error.message}`);
+    }
+  };
+
+  const getTransaction = async (limit = 5, page = 1) => {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.get(
+        `https://api.officebuddy.space/api/v1/transaction/last?limit=${limit}&page=${page}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      console.log(res);
+      setTransaction(res.data.data);
+    } catch (error) {
+      toast.error(`Gagal mendapatkan data kantor: ${error.message}`);
+    }
   };
 
   const dummyData = [
     {
       id: 1,
       hari: `Jan`,
-      order: 1000,
-      stock: 2000,
+      Pendapatan: 2000,
     },
     {
       id: 2,
       hari: `Feb`,
-      order: 2000,
-      stock: 3000,
+      Pendapatan: 3000,
     },
     {
       id: 3,
       hari: `Mar`,
-      order: 500,
-      stock: 2000,
+      Pendapatan: 2000,
     },
     {
       id: 4,
       hari: `April`,
-      order: 1500,
-      stock: 900,
+      Pendapatan: 900,
     },
     {
       id: 5,
       hari: `Mei`,
-      order: 300,
-      stock: 1000,
+      Pendapatan: 1000,
     },
     {
       id: 6,
       hari: `Jun`,
-      order: 3000,
-      stock: 4400,
+      Pendapatan: 4400,
     },
     {
       id: 7,
       hari: `Jul`,
-      order: 200,
-      stock: 1000,
+      Pendapatan: 1000,
     },
     {
       id: 8,
       hari: `Aug`,
-      order: 200,
-      stock: 1100,
+      Pendapatan: 1100,
     },
     {
       id: 9,
       hari: `Sep`,
-      order: 200,
-      stock: 2000,
+      Pendapatan: 2000,
     },
     {
       id: 10,
       hari: `Oct`,
-      order: 200,
-      stock: 1600,
+      Pendapatan: 1600,
     },
     {
       id: 11,
       hari: `Nov`,
-      order: 200,
-      stock: 3000,
+      Pendapatan: 3000,
     },
     {
       id: 12,
       hari: `Des`,
-      stock: 6000,
-    },
-  ];
-
-  const user = [
-    {
-      image: kantorIcon,
-      username: "Farhan",
-      buying: "Indihome",
-      date: "2 Jam yang lalu",
-    },
-    {
-      image: kantorIcon,
-      username: "Rajo",
-      buying: "Wellspace",
-      date: "3 Jam yang lalu",
-    },
-    {
-      image: kantorIcon,
-      username: "Faizal",
-      buying: "Go-jek",
-      date: "4 Jam yang lalu",
-    },
-    {
-      image: kantorIcon,
-      username: "Udin",
-      buying: "Google",
-      date: "5 Jam yang lalu",
-    },
-    {
-      image: kantorIcon,
-      username: "Komang",
-      buying: "Orange",
-      date: "6 Jam yang lalu",
+      Pendapatan: 6000,
     },
   ];
 
@@ -143,6 +143,14 @@ function Pendapatan() {
     },
   ];
 
+  useEffect(() => {
+    getRevenue();
+  }, []);
+
+  useEffect(() => {
+    getTransaction(pageSize, currentPage);
+  }, [currentPage]);
+
   return (
     <div className="flex p-12">
       <div className="pendapatan flex flex-col gap-8">
@@ -157,7 +165,7 @@ function Pendapatan() {
               <p className="text-slate-400">Jumlah pendapatan hari ini</p>
             </div>
             <div>
-              <p>Rp.300.000</p>
+              <p>Rp. {numberWithCommas(allRevenue)}</p>
             </div>
           </div>
           <div className="card__pendapatan shadow-sm ps-6 pt-6">
@@ -171,7 +179,7 @@ function Pendapatan() {
               </p>
             </div>
             <div>
-              <p>Rp.160.000,00</p>
+              <p>Rp. {numberWithCommas(todayRevenue)}</p>
             </div>
           </div>
         </div>
@@ -239,7 +247,7 @@ function Pendapatan() {
                     />
                     <Tooltip />
                     <Bar
-                      dataKey="stock"
+                      dataKey="Pendapatan"
                       barSize={32}
                       stackId="stack"
                       fill="#84ADFF"
@@ -275,7 +283,7 @@ function Pendapatan() {
                         <div className="pb-4">
                           <div className="flex">
                             <img src={data.image} alt="logoBRI" />
-                            <div className="ps-3">
+                            <div className="ps-3" style={{ width: "500px" }}>
                               <p>{data.paragraf}</p>
                             </div>
                             <div className="ps-[420px]">
@@ -294,46 +302,55 @@ function Pendapatan() {
           {/* end pendapatan kantor */}
 
           {/* card-pemesanan */}
-          <div className="dashboard__activity-container shadow-sm flex flex-col gap-6">
+          <div
+            className="dashboard__activity-container shadow-sm flex flex-col gap-6"
+            style={{ width: "500px", height: "500px" }}
+          >
             <div className="flex gap-2 justify-between items-center">
               <div className="title-container flex flex-col gap-1">
                 <h1 className="font-face-ro-bold">Pemesanan Terakhir</h1>
               </div>
             </div>
             <div className="flex flex-col gap-8">
-              {user.map((data, index) => {
+              {transaction?.map((data, index) => {
                 return (
                   <div key={index}>
-                    <div className="card__user flex justify-between w-[300px]">
-                      <div className="flex gap-6">
+                    <div className="card__user flex justify-between w-[350px]">
+                      <div className="flex gap-4 align-top">
                         <img
-                          className="user__image h-10 w-10 shrink-0 rounded-full bg-gray-300"
+                          className="user__image h-10 w-10 shrink-0 rounded-full bg-gray-300 object-cover"
+                          style={{ width: "46px", height: "46px" }}
                           src={`https://imageio.forbes.com/specials-images/imageserve/61688aa1d4a8658c3f4d8640/Antonio-Juliano/0x0.jpg?format=jpg&width=200`}
                         />
                         <div className="flex flex-col gap-2">
                           <h5 className="username font-face-ro-bold">
-                            {data.username}
+                            {data.BuyerName}
                           </h5>
                           <p className="font-face-ro text-xs">
                             Memesan Coworking space{" "}
-                            <span className="font-face-ro-bold">
-                              {" "}
-                              {data.buying}
-                            </span>
+                          </p>
+                          <p className="font-face-ro-bold text-[#16B364]">
+                            {"+ "}
+                            {numberWithCommas(data.Revenue)}
                           </p>
                         </div>
                       </div>
                       <p className="font-face-ro text-right text-xs">
-                        {data.date}
+                        {data.Date}
                       </p>
                     </div>
-                    {index != user.length - 1 ? <hr /> : <></>}
+                    {index != transaction.length - 1 ? <hr /> : <></>}
                   </div>
                 );
               })}
             </div>
-            <div className="pagination__text mt-4 ">
-              <p className="font-face-ro">Menampilkan 3 dari 30 Data</p>
+            <div className="flex justify-end items-center gap-3">
+              <Pagination
+                currentPage={currentPage}
+                dataLength={15}
+                pageSize={pageSize}
+                onClickPage={(page) => setCurrentPage(page)}
+              />
             </div>
           </div>
           {/* end card-pemesanan */}

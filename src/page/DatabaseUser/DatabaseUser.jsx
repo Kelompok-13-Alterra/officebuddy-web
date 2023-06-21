@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import UsersIcon from "../../assets/img/users-icon.png";
 import RatingIcon from "../../assets/img/star-icon.png";
@@ -6,11 +6,9 @@ import ProfileImg from "../../assets/img/Kantor.png";
 import ProfileImg2 from "../../assets/img/Ellipse_imgman.png";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import RatingStar from "../../components/RatingStar/RatingStar";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const chartData = [
-  { name: "Tidak Aktif", value: 350 },
-  { name: "Aktif", value: 650 },
-];
 const COLORS = ["#D6E3FF", "#0074E5"];
 const renderCustomizedLabel = ({
   cx,
@@ -28,17 +26,49 @@ const renderCustomizedLabel = ({
   return (
     <text
       className="font-bold font-face-ro"
+      fill="white"
       x={x}
       y={y}
       textAnchor={x > cx ? "start" : "end"}
       dominantBaseline="central"
     >
-      {`${(percent * 100).toFixed(0)} %`}
+      {`${percent > 0 ? (percent * 100).toFixed(0) + " %" : ""}`}
     </text>
   );
 };
 
 const DatabaseUser = () => {
+  const [widgetData, setWidgetData] = useState({});
+
+  const getWidgetData = async () => {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.get(
+        "https://api.officebuddy.space/api/v1/admin/user-widget",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const widgetData = res.data.data;
+      setWidgetData(widgetData);
+    } catch (error) {
+      console.log("GET WIDGET DATA ERROR >>>>", error);
+      toast.error("GET WIDGET DATA ERROR");
+    }
+  };
+
+  useEffect(() => {
+    getWidgetData();
+  }, []);
+
+  const chartData = [
+    { name: "Tidak Aktif", value: 0 },
+    { name: "Aktif", value: widgetData?.TotalUser || 0 },
+  ];
+
   return (
     <div className="p-8 bg-[#FDFBFF]">
       <div className="grid grid-cols-2 gap-4 mb-[34px]">
@@ -56,7 +86,9 @@ const DatabaseUser = () => {
           <p className="mb-1 font-face-ro text-[12px] text-[#8E9099] leading-4">
             Lihat data pengguna
           </p>
-          <h1 className="font-face-ro text-[24px] leading-8">510 Pengguna</h1>
+          <h1 className="font-face-ro text-[24px] leading-8">
+            {widgetData.TotalUser || "0"} Pengguna
+          </h1>
         </div>
 
         <div className="p-6 bg-white rounded-lg shadow-sm">
@@ -72,10 +104,10 @@ const DatabaseUser = () => {
             Penilaian
           </h3>
           <p className="mb-1 font-face-ro text-[12px] text-[#8E9099] leading-4">
-            Penilaian Co-Working Space
+            Penilaian Kantor dan Co-Working Space
           </p>
           <h1 className="font-face-ro text-[24px] leading-8">
-            16 Penilaian Terbaru
+            {widgetData.TotalRating || "0"} Penilaian Terbaru
           </h1>
         </div>
       </div>
@@ -235,7 +267,7 @@ const DatabaseUser = () => {
                   Memesan <span className="font-bold">Wellspace</span>
                 </h3>
                 <p className="mb-2 font-face-ro text-[#666666]  text-[13px]">
-                  Co-Working Space
+                  Office
                 </p>
                 <p className="font-face-ro-med bg-[#44474E1F] rounded-full text-[13px] text-[#1a1b1ea3] px-2 py-1 inline-block">
                   Selesai
@@ -259,7 +291,7 @@ const DatabaseUser = () => {
                   Memesan <span className="font-bold">Wellspace</span>
                 </h3>
                 <p className="mb-2 font-face-ro text-[#666666] text-[13px]">
-                  Co-Working Space
+                  Office
                 </p>
                 <p className="font-face-ro-med bg-[#CEE5FF] rounded-full text-[13px] text-[#001D33] px-2 py-1 inline-block">
                   Menunggu Pembayaran

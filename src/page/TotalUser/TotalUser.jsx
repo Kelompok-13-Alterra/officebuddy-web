@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { ArrowRightIcon, FilterIcon } from "../../assets/svg";
+import { ArrowRightIcon } from "../../assets/svg";
 import Pagination from "../../components/Pagination/Pagination";
 import ModalConfirm from "../../components/ModalConfirm/ModalConfirm";
 import ModalAlert from "../../components/ModalAlert/ModalAlert";
@@ -56,10 +56,32 @@ const TotalUser = () => {
     setModalEdit(true);
   };
 
-  const deleteUser = (id) => {
-    console.log(`DELETE ID >>> ${id}`);
-    setModalConfirmDelete(false);
-    setAlertDelete(true);
+  const deleteUser = async (id) => {
+    const token = sessionStorage.getItem("access_token");
+    setIsLoading(true);
+    try {
+      const res = await axios.delete(
+        `https://api.officebuddy.space/api/v1/user/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!res.data.meta.is_error) {
+        setAlertDelete(true);
+        getUsers();
+      } else {
+        toast.error(`Gagal menghapus akun user!`);
+      }
+    } catch (error) {
+      toast.error(`Gagal menghapus akun user: ${error.message}`);
+      console.log("GET USERS ERROR >>>>", error);
+    } finally {
+      setModalConfirmDelete(false);
+      setIsLoading(false);
+    }
   };
 
   const updateUser = async (updateData) => {
@@ -111,9 +133,9 @@ const TotalUser = () => {
             Data Pengguna
           </h2>
 
-          <button className="flex items-center gap-3 px-4 py-[10px] bg-white rounded-full border-[1px] border-[#C7C6CA] text-[#5E5E62] font-medium">
+          {/* <button className="flex items-center gap-3 px-4 py-[10px] bg-white rounded-full border-[1px] border-[#C7C6CA] text-[#5E5E62] font-medium">
             <FilterIcon /> Filters
-          </button>
+          </button> */}
         </div>
 
         <table className="w-full table mb-[5px]">

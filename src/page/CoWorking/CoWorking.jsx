@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import axios from "axios";
+import moment from "moment";
+import { toast } from "react-toastify";
 import StarIcon from "../../assets/img/star-icon.png";
 import ModalConfirm from "../../components/ModalConfirm/ModalConfirm";
 import ModalAlert from "../../components/ModalAlert/ModalAlert";
@@ -10,7 +13,6 @@ import BookingCoWorking from "../../assets/img/booking-coworking.png";
 import ImgConfirmEdit from "../../assets/img/update-confirm.png";
 import ImgUpdateSuccess from "../../assets/img/update-success.png";
 import {
-  FilterIcon,
   PlusIcon,
   SpeakerIcon,
   ProjectorIcon,
@@ -18,31 +20,10 @@ import {
   WaterIcon,
 } from "../../assets/svg";
 import Pagination from "../../components/Pagination/Pagination";
-import ModalFormCoWorking from "../../components/ModalFormCoWorking/ModalFormCoWorking";
-
-const dataDummy = [
-  {
-    id: 1,
-    name: "Wellspace",
-    address: "Jl Melahayu No.12",
-    open: "10:00 AM",
-    close: "10:00 PM",
-    facilities: ["Water Refill", "Speaker", "Projector", "Whiteboard"],
-    payment: ["BNI VA"],
-  },
-  {
-    id: 2,
-    name: "Seo Office",
-    address: "Jl Melati No.1",
-    open: "09:00 AM",
-    close: "04:00 PM",
-    facilities: ["Water Refill", "Speaker", "Whiteboard"],
-    payment: ["BNI VA"],
-  },
-];
+import ModalFormOffice from "../../components/ModalFormOffice/ModalFormOffice";
 
 const CoWorking = () => {
-  const [officeList, setOfficeList] = useState(dataDummy);
+  const [coWorkingList, setCoWorkingList] = useState([]);
   const [sortOrder, setSortOrder] = useState("asc");
   const [modalInsert, setModalInsert] = useState(false);
   const [modalUpdate, setModalUpdate] = useState(false);
@@ -54,53 +35,190 @@ const CoWorking = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [editData, setEditData] = useState();
   const [deleteData, setDeleteData] = useState();
+  const [selectedEdit, setSelectedEdit] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [widgetData, setWidgetData] = useState({});
+
+  const currentCoWorkingList = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * 10;
+    const lastPageIndex = firstPageIndex + 10;
+    return coWorkingList.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, coWorkingList]);
+
+  const getCoWorking = async () => {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.get(
+        "https://api.officebuddy.space/api/v1/office",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const coWorking = res.data.data.filter(
+        (office) => office.Type === "coworking",
+      );
+      setCoWorkingList(coWorking);
+    } catch (err) {
+      toast.error(`Gagal mendapatkan data co-working space: ${err.message}`);
+    }
+  };
+
+  const getWidgetData = async () => {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.get(
+        "https://api.officebuddy.space/api/v1/admin/office-widget?type=coworking",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const widgetData = res.data.data;
+      setWidgetData(widgetData);
+    } catch (err) {
+      toast.error(`Gagal mendapatkan data widget: ${err.message}`);
+    }
+  };
+
+  useEffect(() => {
+    getCoWorking();
+    getWidgetData();
+  }, []);
 
   const handleSort = () => {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
-    // Perform sorting logic here
-  };
-
-  const handleClickEdit = (id) => {
-    const selectedOffice = officeList.find((office) => office.id === id);
-    setEditData(selectedOffice);
-    setModalUpdate(true);
-  };
-
-  const insertOffice = (insertData) => {
-    const newOfficeList = [...officeList, insertData];
-    officeList.push({
-      id: officeList.length + 1,
-      ...insertData,
-    });
-    setOfficeList(newOfficeList);
-    setModalInsert(false);
-    setAlertInsert(true);
-  };
-
-  const updateOffice = (updateData) => {
-    const newOfficeList = officeList.map((office) => {
-      if (office.id === editData.id) {
-        return {
-          ...office,
-          ...updateData,
-        };
+    const newcoWorkingList = [...coWorkingList];
+    newcoWorkingList.sort((a, b) => {
+      if (newSortOrder === "asc") {
+        return a.ID - b.ID;
       }
-      return office;
+      return b.ID - a.ID;
     });
-    setOfficeList(newOfficeList);
-    setEditData(null);
-    setModalUpdate(false);
-    setModalConfirmUpdate(false);
-    setAlertUpdate(true);
+    setCoWorkingList(newcoWorkingList);
   };
 
-  const deleteOffice = (id) => {
-    const newOfficeList = officeList.filter((office) => office.id !== id);
-    setOfficeList(newOfficeList);
-    setDeleteData(null);
-    setModalConfirmDelete(false);
-    setAlertDelete(true);
+  const handleClickEdit = async (coWorkingId) => {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.get(
+        `https://api.officebuddy.space/api/v1/office/${coWorkingId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const selectedCoWorking = res.data.data;
+      setSelectedEdit(selectedCoWorking);
+      setModalUpdate(true);
+      setIsLoading(false);
+    } catch (err) {
+      toast.error(
+        `Gagal mendapatkan detail data co-working space: ${err.message}`,
+      );
+    }
+  };
+
+  const insertOffice = async (insertData) => {
+    setIsLoading(true);
+    const token = sessionStorage.getItem("access_token");
+    const { ...coWorkingData } = insertData;
+    try {
+      const res = await axios.post(
+        `https://api.officebuddy.space/api/v1/office?type=coworking`,
+        coWorkingData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      setIsLoading(false);
+      setModalInsert(false);
+
+      if (!res.data.meta.is_error) {
+        setAlertInsert(true);
+        getCoWorking();
+        getWidgetData();
+      } else {
+        toast.error("Gagal menambahkan data co-working space");
+      }
+    } catch (err) {
+      toast.error(`Gagal menambahkan data co-working space: ${err.message}`);
+      console.log("INSERT OFFICE ERROR >>>>", err);
+      setIsLoading(false);
+    }
+  };
+
+  const updateOffice = async (updateData) => {
+    setIsLoading(true);
+    const token = sessionStorage.getItem("access_token");
+    const { id, ...coWorkingData } = updateData;
+    try {
+      const res = await axios.put(
+        `https://api.officebuddy.space/api/v1/office/${id}`,
+        coWorkingData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      setIsLoading(false);
+      setModalUpdate(false);
+      setEditData(null);
+      setModalConfirmUpdate(false);
+      setSelectedEdit(null);
+
+      if (!res.data.meta.is_error) {
+        setAlertUpdate(true);
+        getCoWorking();
+        getWidgetData();
+      } else {
+        toast.error("Gagal mengubah data co-working space");
+      }
+    } catch (err) {
+      toast.error(`Gagal mengubah data co-working space: ${err.message}`);
+      console.log("UPDATE OFFICE ERROR >>>>", err);
+      setIsLoading(false);
+    }
+  };
+
+  const deleteOffice = async (id) => {
+    setIsLoading(true);
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.delete(
+        `https://api.officebuddy.space/api/v1/office/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      setIsLoading(false);
+      setModalConfirmDelete(false);
+      setDeleteData(null);
+
+      if (!res.data.meta.is_error) {
+        setAlertDelete(true);
+        getCoWorking();
+        getWidgetData();
+      } else {
+        toast.error("Gagal menghapus data co-working space");
+      }
+    } catch (err) {
+      toast.error(`Gagal menghapus data co-working space: ${err.message}`);
+      setIsLoading(false);
+      setModalConfirmDelete(false);
+    }
   };
 
   return (
@@ -121,7 +239,9 @@ const CoWorking = () => {
             <p className="mb-1 font-face-ro text-[12px] text-[#8E9099] leading-4">
               Jumlah Co-working Space saat ini
             </p>
-            <h1 className="font-face-ro text-[24px] leading-8">36</h1>
+            <h1 className="font-face-ro text-[24px] leading-8">
+              {widgetData?.OfficeCount || 0}
+            </h1>
           </div>
           <div className="p-6 bg-white rounded-[8px]">
             <div className="mb-4">
@@ -137,7 +257,9 @@ const CoWorking = () => {
             <p className="mb-1 font-face-ro text-[12px] text-[#8E9099] leading-4">
               Penilaian Co-working Space saat ini
             </p>
-            <h1 className="font-face-ro text-[24px] leading-8">16</h1>
+            <h1 className="font-face-ro text-[24px] leading-8">
+              {widgetData?.TotalRating || "0"}
+            </h1>
           </div>
           <div className="p-6 bg-white rounded-[8px]">
             <div className="mb-4">
@@ -153,7 +275,9 @@ const CoWorking = () => {
             <p className="mb-1 font-face-ro text-[12px] text-[#8E9099] leading-4">
               Booking Co-working Space hari ini
             </p>
-            <h1 className="font-face-ro text-[24px] leading-8">150 Orang</h1>
+            <h1 className="font-face-ro text-[24px] leading-8">
+              {widgetData?.TotalBooking || "0"} Orang
+            </h1>
           </div>
         </div>
 
@@ -164,9 +288,6 @@ const CoWorking = () => {
             </h2>
 
             <div className="flex gap-3">
-              <button className="flex items-center gap-3 px-4 py-[10px] bg-white rounded-full border-[1px] border-[#C7C6CA] text-[#5E5E62] font-medium">
-                <FilterIcon /> Filters
-              </button>
               <button
                 onClick={() => setModalInsert(true)}
                 className="flex items-center gap-3 py-[10px] px-6 bg-bg-button rounded-full text-white font-sans font-medium"
@@ -223,65 +344,63 @@ const CoWorking = () => {
               </tr>
             </thead>
             <tbody>
-              {officeList.map((office) => (
+              {currentCoWorkingList.map((office) => (
                 <tr
-                  key={office.id}
+                  key={office.ID}
                   className="bg-white border-b-[1px] border-b-[#F4F3F7]"
                 >
                   <td className="py-[30px] pl-[22px]">
                     <h3 className="font-face-ro text-[#1E1F23]">
-                      {office.name}
+                      {office.Name}
                     </h3>
                     <h3 className="font-face-ro text-[#77777A]">
-                      {office.address}
+                      {office.Location}
                     </h3>
                   </td>
                   <td className="py-[30px] pl-[22px]">
                     <h3 className="font-face-ro text-[#46474A]">
-                      {office.open} - {office.close}
+                      {moment(office.Open, "HH:mm:ss").format("HH:mm A")} -{" "}
+                      {moment(office.Close, "HH:mm:ss").format("HH:mm A")}
                     </h3>
                   </td>
                   <td className="py-3 pl-[22px] max-w-[230px]">
                     <div className="flex flex-wrap gap-1">
-                      {office.facilities.map((facility, index) => (
-                        <div
-                          key={index}
-                          className="px-4 py-[6px] flex gap-3 items-center rounded-full border-[1px] border-[#74777F]"
-                        >
-                          {facility === "Water Refill" ? (
-                            <WaterIcon />
-                          ) : facility === "Speaker" ? (
-                            <SpeakerIcon />
-                          ) : facility === "Projector" ? (
-                            <ProjectorIcon />
-                          ) : facility === "Whiteboard" ? (
-                            <WhiteboardIcon />
-                          ) : null}
-                          <span className="font-face-ro text-[#74777F] text-[14px]">
-                            {facility}
-                          </span>
-                        </div>
-                      ))}
+                      {office.Facilities.split(",")
+                        .filter((element) => element)
+                        .map((facility, index) => (
+                          <div
+                            key={index}
+                            className="px-4 py-[6px] flex gap-3 items-center rounded-full border-[1px] border-[#74777F]"
+                          >
+                            {facility === "Water Refill" ? (
+                              <WaterIcon />
+                            ) : facility === "Speaker" ? (
+                              <SpeakerIcon />
+                            ) : facility === "Projector" ? (
+                              <ProjectorIcon />
+                            ) : facility === "Whiteboard" ? (
+                              <WhiteboardIcon />
+                            ) : null}
+                            <span className="font-face-ro text-[#74777F] text-[14px]">
+                              {facility}
+                            </span>
+                          </div>
+                        ))}
                     </div>
                   </td>
                   <td className="py-3 pl-[22px] max-w-[150px]">
                     <div className="flex flex-wrap gap-1">
-                      {office.payment.map((payment, index) => (
-                        <div
-                          key={index}
-                          className="px-4 py-[6px] flex justify-center items-center rounded-full border-[1px] border-[#74777F]"
-                        >
-                          <span className="font-face-ro text-[#44474E] text-[14px]">
-                            {payment}
-                          </span>
-                        </div>
-                      ))}
+                      <div className="px-4 py-[6px] flex justify-center items-center rounded-full border-[1px] border-[#74777F]">
+                        <span className="font-face-ro text-[#44474E] text-[14px]">
+                          BNI VA
+                        </span>
+                      </div>
                     </div>
                   </td>
                   <td className="py-[30px] pl-[22px]">
                     <div className="flex flex-wrap gap-1">
                       <button
-                        onClick={() => handleClickEdit(office.id)}
+                        onClick={() => handleClickEdit(office.ID)}
                         className="px-6 py-[10px] rounded-full bg-[#005DB9] shadow-lg"
                       >
                         <span className="font-face-ro text-white text-[14px]">
@@ -291,7 +410,7 @@ const CoWorking = () => {
                       <button
                         onClick={() => {
                           setModalConfirmDelete(true);
-                          setDeleteData(office.id);
+                          setDeleteData(office.ID);
                         }}
                         className="px-6 py-[10px] rounded-full bg-[#BA1A1A]"
                       >
@@ -307,15 +426,15 @@ const CoWorking = () => {
           </table>
           {/* Pagination */}
           <div className="px-6 py-5 flex flex-wrap justify-center sm:justify-between items-center gap-3">
-            <span className="font-face-ro text-[#44474E] text-[12px]">
-              Menampilkan data dari {1 + (currentPage - 1) * 10}-{" "}
-              {10 * currentPage}
+            <span className="font-face-ro text-[#46474A] text-[14px]">
+              Menampilkan data dari {1 + (currentPage - 1) * 10}-
+              {currentPage * 10}
             </span>
             <Pagination
               currentPage={currentPage}
-              dataLength={officeList.length}
+              dataLength={coWorkingList.length}
               pageSize={10}
-              onPageChange={(page) => setCurrentPage(page)}
+              onClickPage={(page) => setCurrentPage(page)}
             />
           </div>
         </div>
@@ -323,24 +442,27 @@ const CoWorking = () => {
 
       {/* Modal Insert */}
       {modalInsert ? (
-        <ModalFormCoWorking
+        <ModalFormOffice
           title={"Tambah Co-working Space"}
+          type="coworking"
           onClickClose={() => {
             setModalInsert(false);
           }}
-          onClickSubmit={(officeData) => insertOffice(officeData)}
+          onClickSubmit={(coWorkingData) => insertOffice(coWorkingData)}
         />
       ) : (
         modalUpdate && (
-          <ModalFormCoWorking
+          <ModalFormOffice
             title={"Ubah Co-working Space"}
-            defaultValues={editData}
+            type="coworking"
+            defaultValues={selectedEdit}
             onClickClose={() => {
               setModalUpdate(false);
+              setSelectedEdit(null);
               setEditData(null);
             }}
-            onClickSubmit={(officeData) => {
-              setEditData(officeData);
+            onClickSubmit={(coWorkingData) => {
+              setEditData(coWorkingData);
               setModalConfirmUpdate(true);
             }}
           />
@@ -390,6 +512,21 @@ const CoWorking = () => {
           onClickClose={() => setAlertDelete(false)}
         />
       ) : null}
+
+      {isLoading && (
+        <div className="fixed w-full h-full inset-0 z-50 bg-black/[.15] backdrop-blur-[2px] overflow-hidden flex justify-center items-center">
+          <div className="w-[250px] bg-white flex flex-col gap-6 justify-center items-center rounded-3xl px-4 py-8">
+            <div
+              className="animate-spin inline-block w-10 h-10 border-[3px] border-current border-t-transparent text-blue-600 rounded-full"
+              role="status"
+              aria-label="loading"
+            >
+              <span className="sr-only">Loading...</span>
+            </div>
+            <h1>Please Wait...</h1>
+          </div>
+        </div>
+      )}
     </>
   );
 };
