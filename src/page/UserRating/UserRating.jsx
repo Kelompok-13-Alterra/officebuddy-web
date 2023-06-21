@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRightIcon } from "../../assets/svg";
+import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from "../../assets/svg";
 import moment from "moment";
 import Pagination from "../../components/Pagination/Pagination";
 import ModalReview from "../../components/ModalReview/ModalReview";
@@ -203,33 +203,7 @@ const UserRating = () => {
               <th className="py-[18px] pl-[22px] flex gap-3 items-center">
                 Tanggal Penilaian{" "}
                 <button onClick={handleOrderByDate}>
-                  {orderByDate === "desc" ? (
-                    <svg
-                      className="w-4 h-4 ml-1"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M5 15l7-7 7 7" />
-                    </svg>
-                  ) : (
-                    <svg
-                      className="w-4 h-4 ml-1"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M19 9l-7 7-7-7" />
-                    </svg>
-                  )}
+                  {orderByDate === "desc" ? <ArrowUpIcon /> : <ArrowDownIcon />}
                 </button>
               </th>
               <th className="py-[18px] pl-[22px]">Penilaian</th>
