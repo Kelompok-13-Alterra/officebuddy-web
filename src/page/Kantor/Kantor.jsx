@@ -17,6 +17,8 @@ import {
   ProjectorIcon,
   WhiteboardIcon,
   WaterIcon,
+  ArrowDownIcon,
+  ArrowUpIcon,
 } from "../../assets/svg";
 import ModalFormOffice from "../../components/ModalFormOffice/ModalFormOffice";
 import Pagination from "../../components/Pagination/Pagination";
@@ -355,34 +357,7 @@ const Kantor = () => {
                 <th className="py-[18px] pl-[22px] flex gap-3 items-center">
                   Nama Kantor
                   <button onClick={handleSort}>
-                    {sortOrder === "asc" && (
-                      <svg
-                        className="w-4 h-4 ml-1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M19 9l-7 7-7-7" />
-                      </svg>
-                    )}
-                    {sortOrder === "desc" && (
-                      <svg
-                        className="w-4 h-4 ml-1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M5 15l7-7 7 7" />
-                      </svg>
-                    )}
+                    {sortOrder === "asc" ? <ArrowDownIcon /> : <ArrowUpIcon />}
                   </button>
                 </th>
                 <th className="py-[18px] pl-[22px]">Jam buka & tutup</th>
@@ -407,8 +382,13 @@ const Kantor = () => {
                   </td>
                   <td className="py-[30px] pl-[22px]">
                     <h3 className="font-face-ro text-[#46474A]">
-                      {moment(office.Open, "HH:mm:ss").format("hh:mm A")} -{" "}
-                      {moment(office.Close, "HH:mm:ss").format("hh:mm A")}
+                      {moment(office.Open, "HH:mm:ss")
+                        .locale("en")
+                        .format("hh:mm A")}{" "}
+                      -{" "}
+                      {moment(office.Close, "HH:mm:ss")
+                        .locale("en")
+                        .format("hh:mm A")}
                     </h3>
                   </td>
                   <td className="py-3 pl-[22px] max-w-[230px]">

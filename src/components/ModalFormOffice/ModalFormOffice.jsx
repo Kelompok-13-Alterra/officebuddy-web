@@ -310,7 +310,7 @@ const ModalFormOffice = ({
 
               <div className="flex gap-10 items-center mb-6">
                 <InputFloating
-                  className={"w-[160px]"}
+                  width={160}
                   id="openTime"
                   type="time"
                   name="openTime"
@@ -323,7 +323,7 @@ const ModalFormOffice = ({
                 />
                 <hr className="w-4 border-2 rounded border-[#44474E]" />
                 <InputFloating
-                  className={"w-[160px]"}
+                  width={160}
                   min={formik.values.openTime}
                   id="closeTime"
                   type="time"
