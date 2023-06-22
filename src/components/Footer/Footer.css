@@ -2,13 +2,10 @@
   background-color: #fdfbff;
 }
 
-.footer .div__footer {
-  font-size: 12px;
-}
-
 .footer-img {
   width: 70px;
-  height: 29.91px;
+  object-fit: contain;
+  object-position: center;
 }
 
 @media screen and (min-width: 761px) {
@@ -17,10 +14,3 @@
     height: 74px;
   }
 }
-
-/* @media screen and (min-width: 200px) {
-  .footer-img {
-    width: 70px;
-    height: 29.91px;
-  }
-} */
