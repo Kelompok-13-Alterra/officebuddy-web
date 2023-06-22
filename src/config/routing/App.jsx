@@ -47,9 +47,23 @@ function App() {
             path="/database-user/total-booking"
             element={<TotalBooking />}
           />
-          <Route path="*" element={<NotFound />} />
+          <Route
+            path="*"
+            element={
+              <div className="h-full flex flex-col justify-center items-center">
+                <NotFound />
+              </div>
+            }
+          />
         </Route>
-        <Route path="/404-notfound" element={<NotFound />} />
+        <Route
+          path="/404-notfound"
+          element={
+            <div className="min-h-screen flex flex-col justify-center items-center">
+              <NotFound />
+            </div>
+          }
+        />
       </Routes>
     </>
   );
