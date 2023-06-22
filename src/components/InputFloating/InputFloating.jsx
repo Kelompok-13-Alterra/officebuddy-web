@@ -11,7 +11,7 @@ const InputFloating = ({
   onChange,
   onBlur,
   isError,
-  className,
+  width = null,
   ...props
 }) => {
   return (
@@ -19,7 +19,8 @@ const InputFloating = ({
       <input
         className={`w-full h-14 p-4 rounded block border border-gray-400 focus:outline-[#74777F] placeholder-transparent peer ${
           isError && "border-red-500 focus:outline-red-500"
-        } ${className}`}
+        }`}
+        style={width && { width: width }}
         id={id}
         type={type}
         placeholder={placeholder}

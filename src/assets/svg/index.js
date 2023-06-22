@@ -11,6 +11,7 @@ import WaterIcon from "./WaterIcon";
 import WhiteboardIcon from "./WhiteboardIcon";
 import StarIcon from "./StarIcon";
 import StarEmptyIcon from "./StarEmptyIcon";
+import ImageUploadIcon from "./ImageUploadIcon";
 
 export {
   FilterIcon,
@@ -26,4 +27,5 @@ export {
   WhiteboardIcon,
   StarIcon,
   StarEmptyIcon,
+  ImageUploadIcon,
 };

@@ -3,16 +3,16 @@ import React from "react";
 const ArrowUpIcon = () => {
   return (
     <svg
-      width="12"
-      height="8"
-      viewBox="0 0 12 8"
-      fill="none"
+      className="w-4 h-4 ml-1"
       xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <path
-        d="M10.59 7.42L6 2.83L1.41 7.42L0 6L6 0L12 6L10.59 7.42Z"
-        fill="black"
-      />
+      <path d="M5 15l7-7 7 7" />
     </svg>
   );
 };
