@@ -197,14 +197,16 @@ function Pendapatan() {
       <div className="pendapatan__working flex gap-8 w-full">
         {/* pendapatan-kantor */}
         <div className="pendapatan__kantor w-[60%]">
-          <div className="p-4">
+          <div className="p-6">
             <div className="flex justify-between">
               <div>
                 <button
                   className="bg-white-300 text-black font-semibold mb-4 rounded inline-flex items-center"
                   onClick={toggleDropdown}
                 >
-                  <span className="text-start">Pendapatan Untuk Kantor</span>
+                  <span className="text-start font-face-ro-bold">
+                    Pendapatan Untuk Kantor
+                  </span>
                   <svg
                     className="fill-current h-4 w-4"
                     xmlns="http://www.w3.org/2000/svg"
@@ -220,7 +222,7 @@ function Pendapatan() {
                 </button>
                 {isOpen && (
                   <div className="bg-white rounded-md mb-4">
-                    <button className="block px-4 py-2 text-gray-800 hover:bg-gray-200 text-start">
+                    <button className="block px-4 py-2 font-face-ro-med text-gray-800 hover:bg-gray-200 text-start">
                       Pendapatan Untuk Co-Working Space
                     </button>
                   </div>
@@ -274,10 +276,10 @@ function Pendapatan() {
           {/* metode pembayaran */}
           <div className="metode__pembayaran mt-6 text-center">
             <div className="box_pembayaran shadow bg-[#F9F9FC] px-6 py-2 flex justify-between">
-              <div className="font-face-ro-med">
+              <div className="font-face-ro-bold">
                 <p>Metode Pembayaran</p>
               </div>
-              <div className="font-face-ro-med">
+              <div className="font-face-ro-bold">
                 <p>Total Transaksi</p>
               </div>
             </div>
@@ -295,7 +297,7 @@ function Pendapatan() {
                         className="object-contain object-center"
                       />
                       <div className="ms-3">
-                        <p>{data.paragraf}</p>
+                        <p className="font-face-ro">{data.paragraf}</p>
                       </div>
                     </div>
                     <div className="ms-3">
@@ -313,7 +315,7 @@ function Pendapatan() {
         {/* end pendapatan kantor */}
 
         {/* card-pemesanan */}
-        <div className="dashboard__activity-container grow shadow-sm flex flex-col gap-6">
+        <div className="dashboard__activity-container grow shadow-sm flex flex-col gap-6 p-6">
           <div className="flex gap-2 justify-between items-center">
             <div className="title-container flex flex-col gap-1">
               <h1 className="font-face-ro-bold">Pemesanan Terakhir</h1>
