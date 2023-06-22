@@ -18,9 +18,12 @@ import {
   ProjectorIcon,
   WhiteboardIcon,
   WaterIcon,
+  ArrowDownIcon,
+  ArrowUpIcon,
 } from "../../assets/svg";
 import Pagination from "../../components/Pagination/Pagination";
 import ModalFormOffice from "../../components/ModalFormOffice/ModalFormOffice";
+import _ from "lodash";
 
 const CoWorking = () => {
   const [coWorkingList, setCoWorkingList] = useState([]);
@@ -92,13 +95,13 @@ const CoWorking = () => {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
     const newcoWorkingList = [...coWorkingList];
-    newcoWorkingList.sort((a, b) => {
-      if (newSortOrder === "asc") {
-        return a.ID - b.ID;
-      }
-      return b.ID - a.ID;
-    });
-    setCoWorkingList(newcoWorkingList);
+    setCoWorkingList(
+      _.orderBy(
+        newcoWorkingList,
+        [(office) => office.Name.toLowerCase()],
+        newSortOrder,
+      ),
+    );
   };
 
   const handleClickEdit = async (coWorkingId) => {
@@ -126,7 +129,7 @@ const CoWorking = () => {
   const insertOffice = async (insertData) => {
     setIsLoading(true);
     const token = sessionStorage.getItem("access_token");
-    const { ...coWorkingData } = insertData;
+    const { formData, ...coWorkingData } = insertData;
     try {
       const res = await axios.post(
         `https://api.officebuddy.space/api/v1/office?type=coworking`,
@@ -138,19 +141,36 @@ const CoWorking = () => {
         },
       );
 
+      const coWorkingId = res.data.data.ID;
       setIsLoading(false);
       setModalInsert(false);
 
       if (!res.data.meta.is_error) {
-        setAlertInsert(true);
-        getCoWorking();
-        getWidgetData();
+        const uploadRes = await axios.post(
+          `https://api.officebuddy.space/api/v1/office/${coWorkingId}/upload-image`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          },
+        );
+
+        if (!uploadRes.data.meta.is_error) {
+          setAlertInsert(true);
+          getCoWorking();
+          getWidgetData();
+        } else {
+          toast.error("Upload image error");
+        }
       } else {
-        toast.error("Gagal menambahkan data co-working space");
+        toast.error("Insert Co-Working error");
       }
     } catch (err) {
       toast.error(`Gagal menambahkan data co-working space: ${err.message}`);
-      console.log("INSERT OFFICE ERROR >>>>", err);
+      console.log("INSERT CO-WORKING ERROR >>>>", err);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -158,7 +178,7 @@ const CoWorking = () => {
   const updateOffice = async (updateData) => {
     setIsLoading(true);
     const token = sessionStorage.getItem("access_token");
-    const { id, ...coWorkingData } = updateData;
+    const { id, formData, ...coWorkingData } = updateData;
     try {
       const res = await axios.put(
         `https://api.officebuddy.space/api/v1/office/${id}`,
@@ -177,15 +197,36 @@ const CoWorking = () => {
       setSelectedEdit(null);
 
       if (!res.data.meta.is_error) {
+        if (formData) {
+          const uploadRes = await axios.post(
+            `https://api.officebuddy.space/api/v1/office/${id}/upload-image`,
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+              },
+            },
+          );
+
+          if (!uploadRes.data.meta.is_error) {
+            setAlertUpdate(true);
+            getCoWorking();
+            getWidgetData();
+          } else {
+            toast.error("Upload image error");
+          }
+        }
         setAlertUpdate(true);
         getCoWorking();
         getWidgetData();
       } else {
-        toast.error("Gagal mengubah data co-working space");
+        toast.error("Update Co-Working error");
       }
     } catch (err) {
       toast.error(`Gagal mengubah data co-working space: ${err.message}`);
-      console.log("UPDATE OFFICE ERROR >>>>", err);
+      console.log("UPDATE CO-WORKING ERROR >>>>", err);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -301,41 +342,11 @@ const CoWorking = () => {
           <table className="table min-w-full mb-[5px]">
             <thead>
               <tr className="bg-[#F4F3F7] font-face-ro text-[#46474A] text-left">
-                <th
-                  className="py-3 px-6 text-left cursor-pointer"
-                  onClick={handleSort}
-                >
-                  <span className="py-[18px] pl-[22px] flex justify-between">
-                    <span>Nama</span>
-                    {sortOrder === "asc" && (
-                      <svg
-                        className="w-4 h-4 ml-1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M19 9l-7 7-7-7" />
-                      </svg>
-                    )}
-                    {sortOrder === "desc" && (
-                      <svg
-                        className="w-4 h-4 ml-1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M5 15l7-7 7 7" />
-                      </svg>
-                    )}
-                  </span>
+                <th className="py-[18px] pl-[22px] flex gap-3 items-center">
+                  Nama Co-Working
+                  <button onClick={handleSort}>
+                    {sortOrder === "asc" ? <ArrowDownIcon /> : <ArrowUpIcon />}
+                  </button>
                 </th>
                 <th className="py-[18px] pl-[22px]">Jam buka & tutup</th>
                 <th className="py-[18px] pl-[22px]">Fasilitas</th>
