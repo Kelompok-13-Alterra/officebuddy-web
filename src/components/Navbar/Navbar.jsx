@@ -8,7 +8,7 @@ function Navbar() {
   const navigate = useNavigate();
 
   return (
-    <>
+    <header>
       <nav className="navbar font-face-ro p-4 lg:px-[154px] lg:py-6">
         <div className="flex flex-col lg:flex-row lg:gap-5">
           <div className="flex items-center justify-between">
@@ -110,7 +110,7 @@ function Navbar() {
           </div>
         </div>
       </nav>
-    </>
+    </header>
   );
 }
 
