@@ -20,10 +20,18 @@ const ModalFormUser = ({ defaultValues, onClickClose, onClickSubmit }) => {
     validationSchema: Yup.object().shape({
       name: Yup.string().required("Please enter user name."),
       email: Yup.string().email().required("Please enter email address."),
-      password: Yup.string().required("Please enter password."),
+      // password: Yup.string().required("Please enter password."),
     }),
     onSubmit: (values) => {
-      setUserData(values);
+      if (values.password !== "") {
+        setUserData(values);
+      } else {
+        setUserData({
+          name: values.name,
+          email: values.email,
+        });
+      }
+
       handleSubmit();
     },
   });

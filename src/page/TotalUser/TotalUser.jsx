@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { ArrowRightIcon } from "../../assets/svg";
+import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from "../../assets/svg";
 import Pagination from "../../components/Pagination/Pagination";
 import ModalConfirm from "../../components/ModalConfirm/ModalConfirm";
 import ModalAlert from "../../components/ModalAlert/ModalAlert";
@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import _ from "lodash";
 
 const TotalUser = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,6 +23,7 @@ const TotalUser = () => {
   const [alertDelete, setAlertDelete] = useState(false);
   const [deleteId, setDeleteId] = useState();
   const [selectedEdit, setSelectedEdit] = useState();
+  const [orderByName, setOrderByName] = useState();
 
   const pageSize = 10;
 
@@ -51,6 +53,24 @@ const TotalUser = () => {
     getUsers();
   }, []);
 
+  useEffect(() => {
+    if (orderByName === "desc") {
+      const newOrder = _.orderBy(
+        userList,
+        [(user) => user.Name.toLowerCase()],
+        "desc",
+      );
+      setUserList(newOrder);
+    } else {
+      const newOrder = _.orderBy(
+        userList,
+        [(user) => user.Name.toLowerCase()],
+        "asc",
+      );
+      setUserList(newOrder);
+    }
+  }, [orderByName]);
+
   const handleClickEdit = (userData) => {
     setSelectedEdit(userData);
     setModalEdit(true);
@@ -77,7 +97,7 @@ const TotalUser = () => {
       }
     } catch (error) {
       toast.error(`Gagal menghapus akun user: ${error.message}`);
-      console.log("GET USERS ERROR >>>>", error);
+      console.log("DELETE USER ERROR >>>>", error);
     } finally {
       setModalConfirmDelete(false);
       setIsLoading(false);
@@ -117,6 +137,14 @@ const TotalUser = () => {
     }
   };
 
+  const handleOrderByName = () => {
+    if (orderByName === "desc") {
+      setOrderByName("asc");
+    } else {
+      setOrderByName("desc");
+    }
+  };
+
   return (
     <>
       <div className="p-8 bg-[#FDFBFF]">
@@ -141,7 +169,12 @@ const TotalUser = () => {
         <table className="w-full table mb-[5px]">
           <thead>
             <tr className="bg-[#F4F3F7] font-face-ro text-[#46474A] text-left">
-              <th className="py-[18px] pl-[22px]">Nama</th>
+              <th className="py-[18px] pl-[22px] flex gap-3 items-center">
+                Nama
+                <button onClick={handleOrderByName}>
+                  {orderByName === "desc" ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                </button>
+              </th>
               <th className="py-[18px] pl-[22px]">Email</th>
               <th className="py-[18px] pl-[22px]">Tanggal Pendaftaran</th>
               <th className="py-[18px] pl-[22px]">Status</th>
@@ -154,7 +187,14 @@ const TotalUser = () => {
                 key={user.ID}
                 className="bg-white border-b-[1px] border-b-[#F4F3F7]"
               >
-                <td className="py-10 pl-[22px]">{user.Name}</td>
+                <td className="py-10 pl-[22px]">
+                  {user.Name}
+                  {user.Role === 1 && (
+                    <span className="ms-3 px-2 py-1 bg-green-300 rounded-full font-face-ro-med text-green-900 text-xs capitalize">
+                      Admin
+                    </span>
+                  )}
+                </td>
                 <td className="py-10 pl-[22px]">{user.Email}</td>
                 <td className="py-10 pl-[22px]">
                   {moment(user.CreatedAt).format("DD/MM/YYYY")}
