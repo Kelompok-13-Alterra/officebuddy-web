@@ -3,7 +3,14 @@ import kantorIcon from "../../assets/img/kantor-icon.png";
 import coWorkingIcon from "../../assets/img/co-working-icon.png";
 import bookingKantorIcon from "../../assets/img/kantor-booking-icon.png";
 import bookingCoWorkingIcon from "../../assets/img/co-working-booking-icon.png";
-import { BarChart, Bar, XAxis, CartesianGrid, Tooltip } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import axios from "axios";
 import "./Dashboard.css";
 
@@ -109,11 +116,11 @@ function Dashboard() {
   });
 
   return (
-    <div className="dashboard p-12">
+    <div className="dashboard p-8">
       <div className="dashboard__content-container flex flex-col gap-6">
-        <div className="dashboard__content-container__statistik flex gap-4">
+        <div className="dashboard__content-container__statistik flex w-full gap-4">
           {/* Kantor */}
-          <div className="dashboard__card-container shadow-sm">
+          <div className="dashboard__card-container shadow-sm grow">
             <div className="flex flex-col gap-6">
               <img src={kantorIcon} width={50} height={50} alt="icon" />
               <div className="flex flex-col gap-1">
@@ -131,7 +138,7 @@ function Dashboard() {
           </div>
 
           {/* Co-working */}
-          <div className="dashboard__card-container shadow-sm">
+          <div className="dashboard__card-container shadow-sm grow">
             <div className="flex flex-col gap-6">
               <img src={coWorkingIcon} width={50} height={50} alt="icon" />
               <div className="flex flex-col gap-1">
@@ -149,7 +156,7 @@ function Dashboard() {
           </div>
 
           {/* Booking Kantor */}
-          <div className="dashboard__card-container shadow-sm">
+          <div className="dashboard__card-container shadow-sm grow">
             <div className="flex flex-col gap-6">
               <img src={bookingKantorIcon} width={50} height={50} alt="icon" />
               <div className="flex flex-col gap-1">
@@ -167,7 +174,7 @@ function Dashboard() {
           </div>
 
           {/* Booking Co-working */}
-          <div className="dashboard__card-container shadow-sm">
+          <div className="dashboard__card-container shadow-sm grow">
             <div className="flex flex-col gap-6">
               <img
                 src={bookingCoWorkingIcon}
@@ -189,8 +196,8 @@ function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="dashboard__content-container__activity flex gap-5">
-          <div className="dashboard__graph-container shadow-sm flex flex-col gap-3">
+        <div className="dashboard__content-container__activity flex gap-5 w-full">
+          <div className="dashboard__graph-container shadow-sm flex flex-col grow gap-3 w-[60%]">
             <h1 className="font-face-ro-med">
               Statistik Pesanan Kantor/Co-Working Space
             </h1>
@@ -199,37 +206,38 @@ function Dashboard() {
               <button>Bulan ini</button>
               <button>Tahun ini</button>
             </div>
-            <div className="graph-content">
-              {" "}
-              <BarChart width={573} height={381} data={dummyData}>
-                <XAxis
-                  dataKey="hari"
-                  axisLine={false}
-                  tick={{ fill: "#697586" }}
-                />
-                <CartesianGrid
-                  stroke="#EEF2F6"
-                  horizontal={true}
-                  vertical={false}
-                />
-                <Tooltip />
-                <Bar
-                  dataKey="kantor"
-                  barSize={32}
-                  stackId="stack"
-                  fill="#2970FF"
-                  tick={null}
-                  radius={[0, 0, 0, 0]}
-                />
-                <Bar
-                  dataKey="coWorking"
-                  barSize={32}
-                  stackId="stack"
-                  fill="#84ADFF"
-                  tick={null}
-                  radius={[10, 10, 0, 0]}
-                />
-              </BarChart>
+            <div className="graph-content w-full">
+              <ResponsiveContainer width={"100%"} height={381}>
+                <BarChart data={dummyData}>
+                  <XAxis
+                    dataKey="hari"
+                    axisLine={false}
+                    tick={{ fill: "#697586" }}
+                  />
+                  <CartesianGrid
+                    stroke="#EEF2F6"
+                    horizontal={true}
+                    vertical={false}
+                  />
+                  <Tooltip />
+                  <Bar
+                    dataKey="kantor"
+                    barSize={32}
+                    stackId="stack"
+                    fill="#2970FF"
+                    tick={null}
+                    radius={[0, 0, 0, 0]}
+                  />
+                  <Bar
+                    dataKey="coWorking"
+                    barSize={32}
+                    stackId="stack"
+                    fill="#84ADFF"
+                    tick={null}
+                    radius={[10, 10, 0, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
               <style>
                 {`
                   .recharts-cartesian-axis-tick-line {
@@ -249,16 +257,18 @@ function Dashboard() {
               </div>
             </div>
           </div>
-          <div className="dashboard__activity-container shadow-sm flex flex-col gap-6">
-            <div className="flex gap-2 justify-between items-center">
-              <div className="title-container flex flex-col gap-1">
-                <h1 className="font-face-ro-bold">Aktivitas Pengguna</h1>
-                <p className="font-face-ro text-justify">
-                  Pengguna yang melakukan booking Kantor / Co-Working Space
-                </p>
-              </div>
-              <div className="link-container font-face-ro-bold">
-                <p>Lihat Selengkapnya</p>
+          <div className="dashboard__activity-container shadow-sm flex flex-col gap-6 w-[40%]">
+            <div>
+              <h1 className="font-face-ro-bold mb-1">Aktivitas Pengguna</h1>
+              <div className="flex gap-2 justify-between items-center">
+                <div className="title-container flex flex-col gap-1">
+                  <p className="font-face-ro text-start">
+                    Pengguna yang melakukan booking Kantor / Co-Working Space
+                  </p>
+                </div>
+                <div className="link-container font-face-ro-bold text-end">
+                  <p>Lihat Selengkapnya</p>
+                </div>
               </div>
             </div>
             <div className="flex flex-col gap-6">
