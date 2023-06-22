@@ -4,13 +4,13 @@ import Star from "../../assets/img/star.png";
 
 const FifthLanding = () => {
   return (
-    <div className="mid-w-screen px-3 py-14 bg-bg-body relative">
-      <div className="flex justify-around">
+    <div className="mid-w-screen px-4 py-8 md:py-[100px] bg-bg-body relative">
+      <div className="flex justify-around mb-10 md:mb-[70px]">
         <h1 className="font-face-ro-bold text-center text-2xl sm:text-3xl">
           Pengalaman Pengguna
         </h1>
-        <button className="h-11 ml-4 absolute md:static  bottom-2 md:mt-0 mt-10 right-6 sm:ml-0 rounded-md px-1 w-52 flex justify-center items-center text-white gap-4 font-face-ro-med bg-bg-button">
-          Check Riviews{" "}
+        <button className="h-11 ml-4 absolute md:static bottom-2 md:mt-0 mt-10 right-6 sm:ml-0 rounded-md px-1 w-52 flex justify-center items-center text-white gap-4 font-face-ro-med bg-bg-button">
+          Check Reviews{" "}
           <svg
             width="11"
             height="12"
@@ -25,8 +25,8 @@ const FifthLanding = () => {
           </svg>{" "}
         </button>
       </div>
-      <div className="wrapperCard md:flex-row flex-col flex justify-center gap-10 mx-7 mt-10">
-        <div className="card  mx-auto drop-shadow-md md:w-1/2 w-full mb-10 md:mx-14  bg-white rounded-lg p-4">
+      <div className="wrapperCard md:flex-row flex-col flex justify-center gap-6 md:gap-10 md:px-[12%]">
+        <div className="card mx-auto drop-shadow-md md:w-1/2 w-full mb-10  bg-white rounded-lg p-4">
           <div className="flex gap-7 items-center">
             <img
               src={Matheus}
@@ -58,11 +58,11 @@ const FifthLanding = () => {
             </div>
           </div>
           <p className="mt-4  text-sm md:text-base">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt
-            necessitatibus velit distinctio eius id! Voluptate aut sint totam.
+            “The Place is very cozy and also clean. So many kind of facilities
+            here. Probably I’ll go back here someday.”
           </p>
         </div>
-        <div className="card drop-shadow-md md:w-1/2 md:mx-14 w-full mb-10 mx-auto bg-white rounded-lg p-4">
+        <div className="card drop-shadow-md md:w-1/2 w-full mb-10 mx-auto bg-white rounded-lg p-4">
           <div className="flex gap-7 items-center">
             <img
               src={Matheus}
@@ -94,8 +94,8 @@ const FifthLanding = () => {
             </div>
           </div>
           <p className="mt-4 text-sm md:text-base">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt
-            necessitatibus velit distinctio eius id! Voluptate aut sint totam
+            “The Place is very cozy and also clean. So many kind of facilities
+            here. Probably I’ll go back here someday.”
           </p>
         </div>
       </div>

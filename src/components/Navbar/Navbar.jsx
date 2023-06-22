@@ -1,22 +1,35 @@
 import React, { useState } from "react";
-import Logo from "../../assets/img/Group3.png";
-import { Link } from "react-router-dom";
+import Logo from "../../assets/img/office-buddy-logo.png";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
 
 function Navbar() {
   const [isMobile, setIsmobile] = useState(false);
+  const navigate = useNavigate();
 
   return (
-    <>
-      <nav className="navbar font-face-ro">
-        <div className="flex flex-col lg:flex-row">
-          <div className="flex items-center justify-between px-4 py-4 lg:px-40 lg:py-0 border-b border-gray-300 lg:border-b-0">
-            <div>
+    <header>
+      <nav className="navbar font-face-ro p-4 lg:px-[154px] lg:py-6">
+        <div className="flex flex-col lg:flex-row lg:gap-5">
+          <div className="flex items-center justify-between">
+            <div className="w-24 lg:w-[173px] lg:h-[65px]">
               <Link to={"/"}>
-                <img className="w-24 lg:w-44" src={Logo} alt="Logo" />
+                <img
+                  className="w-full h-full object-contain object-center"
+                  src={Logo}
+                  alt="Logo"
+                />
               </Link>
             </div>
-            <div>
+            <div className="flex gap-5 items-center self-stretch">
+              <button
+                onClick={() => navigate("/login")}
+                className="block px-4 h-full rounded-lg bg-[#0074E5] font-semibold shadow-lg outline-none hover:bg-blue-400 lg:hidden"
+              >
+                <span className="text-white text-sm font-face-ro">
+                  Login as Admin
+                </span>
+              </button>
               <button
                 onClick={() => {
                   setIsmobile(!isMobile);
@@ -50,28 +63,54 @@ function Navbar() {
           <div
             className={`${
               isMobile ? "block" : "hidden"
-            }  lg:flex w-full flex-col justify-center py-3 lg:py-4 lg:flex-row`}
+            }  lg:flex w-full flex-col justify-center lg:flex-row lg:gap-5`}
           >
-            <div className="flex gap-4 w-full font-face-ro flex-col lg:flex-row lg:justify-center lg:items-center">
-              <a className="block px-4 py-2 lg:py-4 hover:text-blue-500">
-                <Link to={"/"}>Browse Office</Link>
-              </a>
-              <a className="block px-4 py-2 lg:py-4 hover:text-blue-500">
-                <Link to={"/location"}>Locations</Link>
-              </a>
-              <a className="block px-4 py-2 lg:py-4 hover:text-blue-500">
-                <Link to={"/contact-us"}>Contact Us</Link>
-              </a>
+            <div className="border-t lg:border-0 mt-4 lg:m-0 flex pt-4 lg:p-0 gap-6 lg:gap-11 w-full font-face-ro flex-col lg:flex-row lg:justify-center lg:items-center">
+              <NavLink
+                to={"/"}
+                className="block lg:p-0 font-face-ro text-sm text-center lg:text-lg hover:text-blue-500"
+              >
+                {({ isActive }) => (
+                  <span className={`${isActive && "text-blue-500 font-bold"}`}>
+                    Browse Office
+                  </span>
+                )}
+              </NavLink>
+              <NavLink
+                to={"/location"}
+                className="block lg:p-0 font-face-ro text-sm text-center lg:text-lg hover:text-blue-500"
+              >
+                {({ isActive }) => (
+                  <span className={`${isActive && "text-blue-500 font-bold"}`}>
+                    Locations
+                  </span>
+                )}
+              </NavLink>
+              <NavLink
+                to={"/contact-us"}
+                className="block lg:p-0 font-face-ro text-sm text-center lg:text-lg hover:text-blue-500"
+              >
+                {({ isActive }) => (
+                  <span className={`${isActive && "text-blue-500 font-bold"}`}>
+                    Contact Us
+                  </span>
+                )}
+              </NavLink>
             </div>
-            <div className="flex flex-col items-center px-32 shadow-black lg:flex-row">
-              <button className="btn__login block rounded-lg bg-blue-500 font-semibold text-white shadow-lg outline-none hover:bg-blue-300">
-                <Link to={"/login"}>Login as Admin</Link>
+            <div className="flex flex-col basis-1/3 items-center justify-end lg:flex-row">
+              <button
+                onClick={() => navigate("/login")}
+                className="btn__login px-4 rounded-lg bg-[#0074E5] shadow-lg outline-none hover:bg-blue-400 hidden lg:block"
+              >
+                <span className="text-white text-lg font-face-ro">
+                  Login as Admin
+                </span>
               </button>
             </div>
           </div>
         </div>
       </nav>
-    </>
+    </header>
   );
 }
 

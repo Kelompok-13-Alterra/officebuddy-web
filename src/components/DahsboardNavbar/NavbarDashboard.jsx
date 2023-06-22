@@ -39,7 +39,7 @@ const NavbarDashboard = () => {
     setOpenConfirm(false);
   };
   return (
-    <div className="miw-full border-b shadow-sm border-gray-400 h-24 flex items-center px-8">
+    <div className="w-full border-b shadow-sm border-gray-400 h-24 flex items-center px-8">
       <ModalDeleteConfirm
         openConfirm={openConfirm}
         handleCloseModalDelete={handleCloseModalDelete}
