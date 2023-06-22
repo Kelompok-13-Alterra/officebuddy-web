@@ -17,10 +17,13 @@ import {
   ProjectorIcon,
   WhiteboardIcon,
   WaterIcon,
+  ArrowDownIcon,
+  ArrowUpIcon,
 } from "../../assets/svg";
 import ModalFormOffice from "../../components/ModalFormOffice/ModalFormOffice";
 import Pagination from "../../components/Pagination/Pagination";
 import { toast } from "react-toastify";
+import _ from "lodash";
 
 const Kantor = () => {
   const [officeList, setOfficeList] = useState([]);
@@ -95,13 +98,14 @@ const Kantor = () => {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
     const newOfficeList = [...officeList];
-    newOfficeList.sort((a, b) => {
-      if (newSortOrder === "asc") {
-        return a.ID - b.ID;
-      }
-      return b.ID - a.ID;
-    });
-    setOfficeList(newOfficeList);
+
+    setOfficeList(
+      _.orderBy(
+        newOfficeList,
+        [(office) => office.Name.toLowerCase()],
+        newSortOrder,
+      ),
+    );
   };
 
   const handleClickEdit = async (officeId) => {
@@ -130,8 +134,8 @@ const Kantor = () => {
   const insertOffice = async (insertData) => {
     setIsLoading(true);
     const token = sessionStorage.getItem("access_token");
-    const { payment, ...officeData } = insertData;
-    console.log(payment);
+    const { payment, formData, ...officeData } = insertData;
+    console.log(payment, formData);
 
     try {
       const res = await axios.post(
@@ -144,19 +148,35 @@ const Kantor = () => {
         },
       );
 
-      setIsLoading(false);
+      const officeId = res.data.data.ID;
       setModalInsert(false);
 
       if (!res.data.meta.is_error) {
-        setAlertInsert(true);
-        getOffices();
-        getWidgetData();
+        const uploadRes = await axios.post(
+          `https://api.officebuddy.space/api/v1/office/${officeId}/upload-image`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          },
+        );
+
+        if (!uploadRes.data.meta.is_error) {
+          setAlertInsert(true);
+          getOffices();
+          getWidgetData();
+        } else {
+          toast.error("Upload image error");
+        }
       } else {
         toast.error("Insert office error");
       }
     } catch (error) {
       toast.error(`Insert office error: ${error.message}`);
       console.log("INSERT OFFICE ERROR >>>>", error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -164,8 +184,8 @@ const Kantor = () => {
   const updateOffice = async (updateData) => {
     setIsLoading(true);
     const token = sessionStorage.getItem("access_token");
-    const { id, payment, ...officeData } = updateData;
-    console.log(payment);
+    const { id, payment, formData, ...officeData } = updateData;
+    console.log(payment, formData);
 
     try {
       const res = await axios.put(
@@ -178,13 +198,33 @@ const Kantor = () => {
         },
       );
 
-      setIsLoading(false);
       setEditData(undefined);
       setSelectedEdit(undefined);
       setModalEdit(false);
       setModalConfirmUpdate(false);
 
       if (!res.data.meta.is_error) {
+        if (formData) {
+          const uploadRes = await axios.post(
+            `https://api.officebuddy.space/api/v1/office/${id}/upload-image`,
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+              },
+            },
+          );
+
+          if (!uploadRes.data.meta.is_error) {
+            setAlertUpdate(true);
+            getOffices();
+            getWidgetData();
+          } else {
+            toast.error("Upload image error");
+          }
+        }
+
         setAlertUpdate(true);
         getOffices();
         getWidgetData();
@@ -194,6 +234,7 @@ const Kantor = () => {
     } catch (error) {
       toast.error(`Update office error: ${error.message}`);
       console.log("UPDATE OFFICE ERROR >>>>", error.message);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -313,37 +354,10 @@ const Kantor = () => {
           <table className="w-full table mb-[5px]">
             <thead>
               <tr className="bg-[#F4F3F7] font-face-ro text-[#46474A] text-left">
-                <th className="py-[18px] pl-[22px] flex gap-4 justify-between items-center">
+                <th className="py-[18px] pl-[22px] flex gap-3 items-center">
                   Nama Kantor
                   <button onClick={handleSort}>
-                    {sortOrder === "asc" && (
-                      <svg
-                        className="w-4 h-4 ml-1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M19 9l-7 7-7-7" />
-                      </svg>
-                    )}
-                    {sortOrder === "desc" && (
-                      <svg
-                        className="w-4 h-4 ml-1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M5 15l7-7 7 7" />
-                      </svg>
-                    )}
+                    {sortOrder === "asc" ? <ArrowDownIcon /> : <ArrowUpIcon />}
                   </button>
                 </th>
                 <th className="py-[18px] pl-[22px]">Jam buka & tutup</th>
@@ -368,8 +382,13 @@ const Kantor = () => {
                   </td>
                   <td className="py-[30px] pl-[22px]">
                     <h3 className="font-face-ro text-[#46474A]">
-                      {moment(office.Open, "HH:mm:ss").format("hh:mm A")} -{" "}
-                      {moment(office.Close, "HH:mm:ss").format("hh:mm A")}
+                      {moment(office.Open, "HH:mm:ss")
+                        .locale("en")
+                        .format("hh:mm A")}{" "}
+                      -{" "}
+                      {moment(office.Close, "HH:mm:ss")
+                        .locale("en")
+                        .format("hh:mm A")}
                     </h3>
                   </td>
                   <td className="py-3 pl-[22px] max-w-[230px]">

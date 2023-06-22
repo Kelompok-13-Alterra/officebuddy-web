@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 import InputFloating from "../InputFloating/InputFloating";
 import {
@@ -10,6 +11,7 @@ import {
   SpeakerIcon,
   WaterIcon,
   WhiteboardIcon,
+  ImageUploadIcon,
 } from "../../assets/svg";
 import ModalConfirm from "../ModalConfirm/ModalConfirm";
 import ImgDiscard from "../../assets/img/discard.png";
@@ -27,6 +29,19 @@ const ModalFormOffice = ({
     defaultValues?.Facilities?.split(",").filter((element) => element) || [],
   );
   const [payment, setPayment] = useState("BNI VA");
+  const [imgFiles, setImgFiles] = useState([]);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: {
+      "image/png": [".png"],
+      "image/jpeg": [".jpeg", ".jpg"],
+    },
+    multiple: false,
+    disabled: imgFiles.length < 1 ? false : true,
+    onDropAccepted: (acceptedFiles) => {
+      setImgFiles(acceptedFiles);
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -60,6 +75,10 @@ const ModalFormOffice = ({
     },
   });
 
+  const removeImg = () => {
+    setImgFiles([]);
+  };
+
   const onChangeFacility = (value) => {
     if (facilities.includes(value)) {
       const newData = facilities.filter((item) => item !== value);
@@ -78,6 +97,12 @@ const ModalFormOffice = ({
   };
 
   const handleSubmit = (data) => {
+    if (!defaultValues) {
+      if (imgFiles.length < 1) {
+        toast.warning("Tambahkan gambar kantor");
+        return;
+      }
+    }
     if (facilities.length < 1) {
       toast.warning("Tambahkan fasilitas");
       return;
@@ -86,23 +111,28 @@ const ModalFormOffice = ({
       toast.warning("Tambahkan pembayaran");
       return;
     }
+
+    const formData = new FormData();
+    if (imgFiles.length > 0) {
+      formData.append("office_image", imgFiles[0]);
+    }
+
+    const openTime = moment(data.openTime, "HH:mm:ss").format("HH:mm:ss");
+    const closeTime = moment(data.closeTime, "HH:mm:ss").format("HH:mm:ss");
+    const strFacilities = facilities.join(",");
+
     const officeData = {
       ...(defaultValues?.ID && { id: defaultValues.ID }),
       name: data.officeName,
       description: data.description,
       capacity: data.capacity,
-      [defaultValues ? "openHours" : "open"]: moment(
-        data.openTime,
-        "HH:mm:ss",
-      ).format("HH:mm:ss"),
-      [defaultValues ? "closeHours" : "close"]: moment(
-        data.closeTime,
-        "HH:mm:ss",
-      ).format("HH:mm:ss"),
+      [defaultValues ? "openHours" : "open"]: openTime,
+      [defaultValues ? "closeHours" : "close"]: closeTime,
       price: data.price,
       location: data.address,
-      facilities: facilities.join(","),
+      facilities: strFacilities,
       payment: payment,
+      ...(imgFiles.length > 0 && { formData: formData }),
     };
     console.log("DATA SENT >>>>>>", officeData);
     onClickSubmit(officeData);
@@ -119,7 +149,58 @@ const ModalFormOffice = ({
                 <CloseIcon />
               </button>
             </div>
+            {defaultValues?.ImageUrl && (
+              <div className="w-full h-52 mb-4">
+                <img
+                  className="w-full h-full object-cover object-center"
+                  src={defaultValues.ImageUrl}
+                  alt="Office Image"
+                />
+              </div>
+            )}
             <form onSubmit={formik.handleSubmit}>
+              <div
+                {...getRootProps({
+                  className:
+                    "dropzone mb-6 flex flex-col items-center bg-[#F4F3F7] border-[#74777F] border-2 border-dashed rounded-xl px-6 py-7",
+                })}
+              >
+                <input {...getInputProps()} />
+                <div className="mb-4">
+                  <ImageUploadIcon />
+                </div>
+
+                {imgFiles.length < 1 ? (
+                  <>
+                    <p className="text-[#909094] font-face-ro font-bold mb-1">
+                      Drag & Drop Gambar{" "}
+                      {type === "office"
+                        ? "Kantor"
+                        : type === "coworking" && "Co-Working"}{" "}
+                      Disini
+                    </p>
+                    {defaultValues && (
+                      <p className="text-[#909094] font-face-ro font-bold mb-1">
+                        untuk meng-update gambar
+                      </p>
+                    )}
+                    <p className="font-face-ro text-[#909094]">
+                      Format gambar .jpg .jpeg .png dan ukuran minimum 300 x
+                      300px
+                    </p>
+                  </>
+                ) : (
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-[#74777F]">
+                    <p className="font-face-ro text-sm text-white truncate max-w-[200px]">
+                      {imgFiles[0].name}
+                    </p>
+                    <button type="button" onClick={() => removeImg()}>
+                      <CloseIcon fill={"white"} />
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <div className="mb-6">
                 <InputFloating
                   id="officeName"
@@ -229,7 +310,7 @@ const ModalFormOffice = ({
 
               <div className="flex gap-10 items-center mb-6">
                 <InputFloating
-                  className={"w-[160px]"}
+                  width={160}
                   id="openTime"
                   type="time"
                   name="openTime"
@@ -242,7 +323,7 @@ const ModalFormOffice = ({
                 />
                 <hr className="w-4 border-2 rounded border-[#44474E]" />
                 <InputFloating
-                  className={"w-[160px]"}
+                  width={160}
                   min={formik.values.openTime}
                   id="closeTime"
                   type="time"

@@ -12,6 +12,7 @@ import WhiteboardIcon from "./WhiteboardIcon";
 import StarIcon from "./StarIcon";
 import StarHalfIcon from "./StarHalfIcon";
 import StarEmptyIcon from "./StarEmptyIcon";
+import ImageUploadIcon from "./ImageUploadIcon";
 
 export {
   FilterIcon,
@@ -28,4 +29,5 @@ export {
   StarIcon,
   StarEmptyIcon,
   StarHalfIcon,
+  ImageUploadIcon,
 };
