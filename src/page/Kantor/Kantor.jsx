@@ -378,7 +378,7 @@ const Kantor = () => {
                   key={office.ID}
                   className="bg-white border-b-[1px] border-b-[#F4F3F7]"
                 >
-                  <td className="py-[30px] pl-[22px]">
+                  <td className="py-[30px] pl-[22px] max-w-[200px]">
                     <h3 className="font-face-ro text-[#1E1F23]">
                       {office.Name}
                     </h3>
