@@ -1,16 +1,55 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { ArrowRightIcon } from "../../assets/svg";
+import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from "../../assets/svg";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import Pagination from "../../components/Pagination/Pagination";
 import axios from "axios";
 import { toast } from "react-toastify";
+import _ from "lodash";
 
 const TotalBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [bookingData, setBookingData] = useState([]);
+  const [userList, setUserList] = useState([]);
+  const [officeList, setOfficeList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [orderByDate, setOrderByDate] = useState("desc");
   const pageSize = 10;
+
+  const getUsers = async () => {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.get("https://api.officebuddy.space/api/v1/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const users = res.data.data;
+      setUserList(users);
+    } catch (error) {
+      toast.error(`Gagal mendapatkan data user: ${error.message}`);
+      console.log("GET USERS ERROR >>>>", error);
+    }
+  };
+
+  const getOffices = async () => {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = await axios.get(
+        "https://api.officebuddy.space/api/v1/office",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const offices = res.data.data;
+      setOfficeList(offices);
+    } catch (error) {
+      toast.error(`Gagal mendapatkan data kantor: ${error.message}`);
+      console.log("GET OFFICE ERROR >>>>", error);
+    }
+  };
 
   const getBooking = async () => {
     const token = sessionStorage.getItem("access_token");
@@ -26,7 +65,7 @@ const TotalBooking = () => {
       );
 
       const bookingData = res.data.data;
-      setBookingData(bookingData);
+      setBookingData(_.orderBy(bookingData, "CreatedAt", "desc"));
     } catch (error) {
       console.log("GET BOOKING DATA ERROR >>>>", error);
       toast.error("GET BOOKING DATA ERROR");
@@ -35,15 +74,43 @@ const TotalBooking = () => {
     }
   };
 
+  const userData = (id) => {
+    return userList.find((user) => user.ID === id);
+  };
+
+  const officeData = (id) => {
+    return officeList.find((office) => office.ID === id);
+  };
+
   useEffect(() => {
+    getUsers();
+    getOffices();
     getBooking();
   }, []);
+
+  useEffect(() => {
+    if (orderByDate === "desc") {
+      const newOrder = _.orderBy(bookingData, "CreatedAt", "desc");
+      setBookingData(newOrder);
+    } else {
+      const newOrder = _.orderBy(bookingData, "CreatedAt", "asc");
+      setBookingData(newOrder);
+    }
+  }, [orderByDate]);
 
   const currentBookingList = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
     return bookingData.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, bookingData]);
+
+  const handleOrderByDate = () => {
+    if (orderByDate === "desc") {
+      setOrderByDate("asc");
+    } else {
+      setOrderByDate("desc");
+    }
+  };
 
   return (
     <div className="p-8 bg-[#FDFBFF]">
@@ -71,7 +138,12 @@ const TotalBooking = () => {
             <th className="py-[18px] pl-[22px]">Nama</th>
             <th className="py-[18px] pl-[22px]">Email</th>
             <th className="py-[18px] pl-[22px]">Booking</th>
-            <th className="py-[18px] pl-[22px]">Tanggal Pesanan</th>
+            <th className="py-[18px] pl-[22px] flex gap-3 items-center">
+              Tanggal Pesanan
+              <button onClick={handleOrderByDate}>
+                {orderByDate === "desc" ? <ArrowUpIcon /> : <ArrowDownIcon />}
+              </button>
+            </th>
             <th className="py-[18px] pl-[22px]">Status</th>
           </tr>
         </thead>
@@ -83,18 +155,30 @@ const TotalBooking = () => {
               className="bg-white border-b-[1px] border-b-[#F4F3F7]"
             >
               <td className="py-10 pl-[22px]">
-                {booking.User?.Name || "Michael"}
+                {userData(booking.UserID)?.Name || (
+                  <span className="text-red-600 italic">[Data not found]</span>
+                )}
               </td>
               <td className="py-10 pl-[22px]">
-                {booking.User?.Email || "mic2332@gmail.com"}
+                {userData(booking.UserID)?.Email || (
+                  <span className="text-red-600 italic">[Data not found]</span>
+                )}
               </td>
               <td className="py-10 pl-[22px]">
                 <div>
                   <h3 className="font-face-ro text-[#1E1F23]">
-                    {booking.Office.Name || "Wellspace"}
+                    {officeData(booking.OfficeID)?.Name || (
+                      <span className="text-red-600 italic">
+                        [Data not found]
+                      </span>
+                    )}
                   </h3>
                   <h3 className="font-face-ro text-[#77777A]">
-                    {booking.Office.Type || "Office"}
+                    {officeData(booking.OfficeID)?.Type === "office"
+                      ? "Kantor"
+                      : officeData(booking.OfficeID)?.Type === "coworking"
+                      ? "Co-Working"
+                      : ""}
                   </h3>
                 </div>
               </td>
@@ -102,8 +186,14 @@ const TotalBooking = () => {
                 {moment(booking.CreatedAt).format("DD/MM/YYYY")}
               </td>
               <td className="py-10 pl-[22px]">
-                <span className="px-4 py-[6px] bg-[#CEE5FF] rounded-full font-face-ro-med text-[#001D33] text-[14px] capitalize">
-                  {!booking.status ? "Menunggu Pembayaran" : "Selesai"}
+                <span
+                  className={`px-4 py-[6px]  rounded-full font-face-ro-med text-[14px] capitalize ${
+                    booking.Status
+                      ? "bg-[#44474E1F] text-[#1a1b1ea3]"
+                      : "bg-[#CEE5FF] text-[#001D33]"
+                  }`}
+                >
+                  {!booking.Status ? "Menunggu Pembayaran" : "Selesai"}
                 </span>
               </td>
             </tr>

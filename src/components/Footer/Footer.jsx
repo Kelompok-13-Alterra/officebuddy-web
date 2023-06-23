@@ -6,21 +6,17 @@ import "./Footer.css";
 function Footer() {
   return (
     <footer className="footer">
-      <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-        <div className="md:flex md:justify-between">
-          <div className="mb-6 md:mb-0 px-0 md:px-28 lg:px-28">
+      <div className="mx-auto w-full py-8 md:py-[72px]">
+        <div className="flex flex-col md:flex-row px-4 md:px-[100px]">
+          <div className="mb-4 md:mb-0 shrink-0">
             <a href="#" className="flex items-center">
               <img src={Logo} className="footer-img" alt="Logo" />
             </a>
           </div>
-          <div className="div__footer flex flex-col md:flex-row lg:flex-row py-2 md:py-10 md:px-5 md:gap-3 lg:gap-6 lg:py-10 lg:px-10">
-            <div className="px-0 md:px-6 lg:px-12">
-              <ul className="text-gray-600 dark:text-black font-medium">
-                <li className="mb-4 ">
-                  <a href="#" className="font-face-ro-bold text-[14px]">
-                    Link
-                  </a>
-                </li>
+          <div className="div__footer w-full justify-end flex flex-col md:flex-row py-2 md:py-10 md:px-5 md:gap-[30px] lg:gap-[90px] lg:px-10">
+            <div className="mb-4 md:mb-0">
+              <ul className="text-black text-sm md:text-base font-face-ro">
+                <li className="mb-4 md:text-lg font-bold">Link</li>
                 <li className="mb-4">
                   <a href="#" className="font-face-ro hover:text-blue-500">
                     <Link to={"/"}>Browse Office</Link>
@@ -38,13 +34,9 @@ function Footer() {
                 </li>
               </ul>
             </div>
-            <div className="px-0 md:px-6 lg:px-12">
-              <ul className="text-gray-600 dark:text-black font-medium">
-                <li className="mb-4 text-[14px]">
-                  <a href="#" className="font-face-ro-bold ">
-                    Support
-                  </a>
-                </li>
+            <div className="mb-4 md:mb-0">
+              <ul className="text-black text-sm md:text-base font-face-ro">
+                <li className="mb-4 md:text-lg font-bold">Support</li>
                 <li className="mb-4">
                   <a href="#" className="font-face-ro hover:text-blue-500">
                     Discord
@@ -72,13 +64,9 @@ function Footer() {
                 </li>
               </ul>
             </div>
-            <div>
-              <ul className="text-gray-600 dark:text-black font-medium">
-                <li className="mb-4 text-[14px]">
-                  <a href="#" className="font-face-ro-bold">
-                    Contact
-                  </a>
-                </li>
+            <div className="mb-4 md:mb-0">
+              <ul className="text-black text-sm md:text-base font-face-ro">
+                <li className="mb-4 md:text-lg font-bold">Contact</li>
                 <li className="flex mb-4">
                   <svg
                     className="w-5 text-blue-500"
@@ -115,7 +103,7 @@ function Footer() {
                   </svg>
 
                   <a href="#" className="font-face-ro hover:text-blue-500">
-                    <span className="text-white">0</span>
+                    <span className="text-white break-words">0</span>
                     officebuddyjaya@gmail.com
                   </a>
                 </li>
@@ -123,7 +111,7 @@ function Footer() {
             </div>
           </div>
         </div>
-        <div className="sm:flex sm:items-center sm:justify-between px-0 md:px-28 lg:px-28">
+        <div className="flex items-center justify-between px-4 md:px-[100px]">
           <span
             className="text-sm text-gray-500 sm:text-center dark:text-black"
             style={{ color: "#74777F" }}

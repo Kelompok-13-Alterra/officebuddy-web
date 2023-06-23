@@ -7,7 +7,7 @@ const NavigationLayout = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex grow flex-col">
+      <div className="min-h-screen flex grow flex-col">
         <NavbarDashboard />
         <Outlet />
       </div>
