@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from "../../assets/svg";
 import { Link } from "react-router-dom";
 import moment from "moment";
@@ -13,7 +13,9 @@ const TotalBooking = () => {
   const [userList, setUserList] = useState([]);
   const [officeList, setOfficeList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [orderByDate, setOrderByDate] = useState("desc");
+  const [sortByDate, setSortByDate] = useState("desc");
+  const [sortByStatus, setSortByStatus] = useState("desc");
+  const [sortBy, setSortBy] = useState("date");
   const pageSize = 10;
 
   const getUsers = async () => {
@@ -27,7 +29,6 @@ const TotalBooking = () => {
       const users = res.data.data;
       setUserList(users);
     } catch (error) {
-      toast.error(`Gagal mendapatkan data user: ${error.message}`);
       console.log("GET USERS ERROR >>>>", error);
     }
   };
@@ -46,7 +47,6 @@ const TotalBooking = () => {
       const offices = res.data.data;
       setOfficeList(offices);
     } catch (error) {
-      toast.error(`Gagal mendapatkan data kantor: ${error.message}`);
       console.log("GET OFFICE ERROR >>>>", error);
     }
   };
@@ -88,30 +88,105 @@ const TotalBooking = () => {
     getBooking();
   }, []);
 
-  useEffect(() => {
-    if (orderByDate === "desc") {
-      const newOrder = _.orderBy(bookingData, "CreatedAt", "desc");
-      setBookingData(newOrder);
-    } else {
-      const newOrder = _.orderBy(bookingData, "CreatedAt", "asc");
-      setBookingData(newOrder);
-    }
-  }, [orderByDate]);
-
   const currentBookingList = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
     return bookingData.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, bookingData]);
 
-  const handleOrderByDate = () => {
-    if (orderByDate === "desc") {
-      setOrderByDate("asc");
+  const handleSortByDate = useCallback(() => {
+    if (sortByDate === "desc") {
+      const newSort = "asc";
+      setSortByDate(newSort);
+
+      const newOrder = _.orderBy(bookingData, "CreatedAt", newSort);
+      setBookingData(newOrder);
     } else {
-      setOrderByDate("desc");
+      const newSort = "desc";
+      setSortByDate(newSort);
+
+      const newOrder = _.orderBy(bookingData, "CreatedAt", newSort);
+      setBookingData(newOrder);
+    }
+  }, [sortByDate, bookingData]);
+
+  const handleSortByStatus = () => {
+    if (sortByStatus === "desc") {
+      const newSort = "asc";
+      setSortByStatus(newSort);
+
+      const newOrder = _.orderBy(
+        bookingData,
+        [
+          (booking) => {
+            if (
+              booking.PaymentStatus === "" ||
+              booking.PaymentStatus === "pending" ||
+              booking.PaymentStatus === "challange"
+            ) {
+              return "pending";
+            } else {
+              return booking.PaymentStatus;
+            }
+          },
+        ],
+        newSort,
+      );
+      setBookingData(newOrder);
+      console.log(bookingData);
+    } else {
+      const newSort = "desc";
+      setSortByStatus(newSort);
+      const newOrder = _.orderBy(
+        bookingData,
+        [
+          (booking) => {
+            if (
+              booking.PaymentStatus === "" ||
+              booking.PaymentStatus === "pending" ||
+              booking.PaymentStatus === "challange"
+            ) {
+              return "pending";
+            } else {
+              return booking.PaymentStatus;
+            }
+          },
+        ],
+        newSort,
+      );
+      setBookingData(newOrder);
+      console.log(bookingData);
     }
   };
 
+  const handleSorting = (sortBy) => {
+    setSortBy(sortBy);
+    if (sortBy === "date") {
+      handleSortByDate();
+    } else if (sortBy === "status") {
+      handleSortByStatus();
+    }
+  };
+
+  const bookingStatus = useCallback(
+    (status) => {
+      if (status === "pending" || status === "" || status === "challange")
+        return "Menunggu Pembayaran";
+      if (status === "failure") return "Gagal";
+      if (status === "success") return "Selesai";
+    },
+    [bookingData],
+  );
+
+  const statusStyle = useCallback(
+    (status) => {
+      if (status === "pending" || status === "" || status === "challange")
+        return "bg-[#CEE5FF] text-[#001D33]";
+      if (status === "failure") return "bg-red-300 text-red-950";
+      if (status === "success") return "bg-[#44474E1F] text-[#1a1b1ea3]";
+    },
+    [bookingData],
+  );
   return (
     <div className="p-8 bg-[#FDFBFF]">
       <div className="ms-4 mb-10 flex items-center gap-8 font-face-ro">
@@ -138,17 +213,44 @@ const TotalBooking = () => {
             <th className="py-[18px] pl-[22px]">Nama</th>
             <th className="py-[18px] pl-[22px]">Email</th>
             <th className="py-[18px] pl-[22px]">Booking</th>
-            <th className="py-[18px] pl-[22px] flex gap-3 items-center">
-              Tanggal Pesanan
-              <button onClick={handleOrderByDate}>
-                {orderByDate === "desc" ? <ArrowUpIcon /> : <ArrowDownIcon />}
-              </button>
+            <th className="py-[18px] pl-[22px]">
+              <div className="flex gap-3 items-center">
+                Tanggal Pesanan
+                <button
+                  className={`${
+                    sortBy === "date" && "bg-[#CEE5FF] rounded-md p-1"
+                  }`}
+                  onClick={() => handleSorting("date")}
+                >
+                  {sortByDate === "desc" ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                </button>
+              </div>
             </th>
-            <th className="py-[18px] pl-[22px]">Status</th>
+            <th className="py-[18px] pl-[22px]">
+              <div className="flex gap-3 items-center">
+                Status
+                <button
+                  className={`${
+                    sortBy === "status" && "bg-[#CEE5FF] rounded-md p-1"
+                  }`}
+                  onClick={() => handleSorting("status")}
+                >
+                  {sortByStatus === "desc" ? (
+                    <ArrowUpIcon />
+                  ) : (
+                    <ArrowDownIcon />
+                  )}
+                </button>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
-          {isLoading && <h1>Loading...</h1>}
+          {isLoading && (
+            <tr>
+              <td>Loading...</td>
+            </tr>
+          )}
           {currentBookingList.map((booking) => (
             <tr
               key={booking.ID}
@@ -187,13 +289,11 @@ const TotalBooking = () => {
               </td>
               <td className="py-10 pl-[22px]">
                 <span
-                  className={`px-4 py-[6px]  rounded-full font-face-ro-med text-[14px] capitalize ${
-                    booking.Status
-                      ? "bg-[#44474E1F] text-[#1a1b1ea3]"
-                      : "bg-[#CEE5FF] text-[#001D33]"
-                  }`}
+                  className={`px-4 py-[6px]  rounded-full font-face-ro-med text-[14px] capitalize ${statusStyle(
+                    booking.PaymentStatus,
+                  )}`}
                 >
-                  {!booking.Status ? "Menunggu Pembayaran" : "Selesai"}
+                  {bookingStatus(booking.PaymentStatus)}
                 </span>
               </td>
             </tr>

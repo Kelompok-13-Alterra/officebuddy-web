@@ -3,7 +3,7 @@ import React from "react";
 const ArrowDownIcon = () => {
   return (
     <svg
-      className="w-4 h-4 ml-1"
+      className="w-4 h-4"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="none"
