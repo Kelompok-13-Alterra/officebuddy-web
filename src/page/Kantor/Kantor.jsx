@@ -152,23 +152,29 @@ const Kantor = () => {
       setModalInsert(false);
 
       if (!res.data.meta.is_error) {
-        const uploadRes = await axios.post(
-          `https://api.officebuddy.space/api/v1/office/${officeId}/upload-image`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
+        if (formData) {
+          const uploadRes = await axios.post(
+            `https://api.officebuddy.space/api/v1/office/${officeId}/upload-image`,
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+              },
             },
-          },
-        );
+          );
 
-        if (!uploadRes.data.meta.is_error) {
+          if (!uploadRes.data.meta.is_error) {
+            setAlertInsert(true);
+            getOffices();
+            getWidgetData();
+          } else {
+            toast.error("Upload image error");
+          }
+        } else {
           setAlertInsert(true);
           getOffices();
           getWidgetData();
-        } else {
-          toast.error("Upload image error");
         }
       } else {
         toast.error("Insert office error");
@@ -223,11 +229,11 @@ const Kantor = () => {
           } else {
             toast.error("Upload image error");
           }
+        } else {
+          setAlertUpdate(true);
+          getOffices();
+          getWidgetData();
         }
-
-        setAlertUpdate(true);
-        getOffices();
-        getWidgetData();
       } else {
         toast.error("Update office error");
       }

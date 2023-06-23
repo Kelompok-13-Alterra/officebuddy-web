@@ -146,23 +146,29 @@ const CoWorking = () => {
       setModalInsert(false);
 
       if (!res.data.meta.is_error) {
-        const uploadRes = await axios.post(
-          `https://api.officebuddy.space/api/v1/office/${coWorkingId}/upload-image`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
+        if (formData) {
+          const uploadRes = await axios.post(
+            `https://api.officebuddy.space/api/v1/office/${coWorkingId}/upload-image`,
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+              },
             },
-          },
-        );
+          );
 
-        if (!uploadRes.data.meta.is_error) {
+          if (!uploadRes.data.meta.is_error) {
+            setAlertInsert(true);
+            getCoWorking();
+            getWidgetData();
+          } else {
+            toast.error("Upload image error");
+          }
+        } else {
           setAlertInsert(true);
           getCoWorking();
           getWidgetData();
-        } else {
-          toast.error("Upload image error");
         }
       } else {
         toast.error("Insert Co-Working error");
@@ -370,8 +376,13 @@ const CoWorking = () => {
                   </td>
                   <td className="py-[30px] pl-[22px]">
                     <h3 className="font-face-ro text-[#46474A]">
-                      {moment(office.Open, "HH:mm:ss").format("HH:mm A")} -{" "}
-                      {moment(office.Close, "HH:mm:ss").format("HH:mm A")}
+                      {moment(office.Open, "HH:mm:ss")
+                        .locale("en")
+                        .format("HH:mm A")}{" "}
+                      -{" "}
+                      {moment(office.Close, "HH:mm:ss")
+                        .locale("en")
+                        .format("HH:mm A")}
                     </h3>
                   </td>
                   <td className="py-3 pl-[22px] max-w-[230px]">
