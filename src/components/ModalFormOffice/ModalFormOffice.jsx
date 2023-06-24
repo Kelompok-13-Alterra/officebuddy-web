@@ -97,12 +97,12 @@ const ModalFormOffice = ({
   };
 
   const handleSubmit = (data) => {
-    if (!defaultValues) {
-      if (imgFiles.length < 1) {
-        toast.warning("Tambahkan gambar kantor");
-        return;
-      }
-    }
+    // if (!defaultValues) {
+    //   if (imgFiles.length < 1) {
+    //     toast.warning("Tambahkan gambar kantor");
+    //     return;
+    //   }
+    // }
     if (facilities.length < 1) {
       toast.warning("Tambahkan fasilitas");
       return;
@@ -254,8 +254,16 @@ const ModalFormOffice = ({
                   id="description"
                   type="text"
                   name="description"
-                  label="Deskripsi Kantor"
-                  placeholder="Deskripsi Kantor"
+                  label={
+                    type === "office"
+                      ? "Deskripsi Kantor"
+                      : type === "coworking" && "Deskripsi  Co-Working"
+                  }
+                  placeholder={
+                    type === "office"
+                      ? "Deskripsi Kantor"
+                      : type === "coworking" && "Deskripsi  Co-Working"
+                  }
                   value={formik.values.description}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -270,42 +278,43 @@ const ModalFormOffice = ({
                 )}
               </div>
 
-              <div className="mb-6">
-                <InputFloating
-                  id="price"
-                  type="number"
-                  name="price"
-                  label="Harga"
-                  placeholder="Harga"
-                  value={formik.values.price}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  isError={formik.errors.price && formik.touched.price}
-                />
-                {formik.errors.price && formik.touched.price && (
-                  <p className="mt-1 text-red-500 max-[640px]:text-sm">
-                    {formik.errors.price}
-                  </p>
-                )}
-              </div>
-
-              <div className="mb-6">
-                <InputFloating
-                  id="capacity"
-                  type="number"
-                  name="capacity"
-                  label="Kapasitas"
-                  placeholder="Kapasitas"
-                  value={formik.values.capacity}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  isError={formik.errors.capacity && formik.touched.capacity}
-                />
-                {formik.errors.capacity && formik.touched.capacity && (
-                  <p className="mt-1 text-red-500 max-[640px]:text-sm">
-                    {formik.errors.capacity}
-                  </p>
-                )}
+              <div className="flex gap-8 mb-6">
+                <div className="grow">
+                  <InputFloating
+                    id="capacity"
+                    type="number"
+                    name="capacity"
+                    label="Kapasitas"
+                    placeholder="Kapasitas"
+                    value={formik.values.capacity}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isError={formik.errors.capacity && formik.touched.capacity}
+                  />
+                  {formik.errors.capacity && formik.touched.capacity && (
+                    <p className="mt-1 text-red-500 max-[640px]:text-sm">
+                      {formik.errors.capacity}
+                    </p>
+                  )}
+                </div>
+                <div className="grow">
+                  <InputFloating
+                    id="price"
+                    type="number"
+                    name="price"
+                    label="Harga"
+                    placeholder="Harga"
+                    value={formik.values.price}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isError={formik.errors.price && formik.touched.price}
+                  />
+                  {formik.errors.price && formik.touched.price && (
+                    <p className="mt-1 text-red-500 max-[640px]:text-sm">
+                      {formik.errors.price}
+                    </p>
+                  )}
+                </div>
               </div>
 
               <div className="flex gap-10 items-center mb-6">

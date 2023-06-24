@@ -152,23 +152,29 @@ const Kantor = () => {
       setModalInsert(false);
 
       if (!res.data.meta.is_error) {
-        const uploadRes = await axios.post(
-          `https://api.officebuddy.space/api/v1/office/${officeId}/upload-image`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
+        if (formData) {
+          const uploadRes = await axios.post(
+            `https://api.officebuddy.space/api/v1/office/${officeId}/upload-image`,
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+              },
             },
-          },
-        );
+          );
 
-        if (!uploadRes.data.meta.is_error) {
+          if (!uploadRes.data.meta.is_error) {
+            setAlertInsert(true);
+            getOffices();
+            getWidgetData();
+          } else {
+            toast.error("Upload image error");
+          }
+        } else {
           setAlertInsert(true);
           getOffices();
           getWidgetData();
-        } else {
-          toast.error("Upload image error");
         }
       } else {
         toast.error("Insert office error");
@@ -223,11 +229,11 @@ const Kantor = () => {
           } else {
             toast.error("Upload image error");
           }
+        } else {
+          setAlertUpdate(true);
+          getOffices();
+          getWidgetData();
         }
-
-        setAlertUpdate(true);
-        getOffices();
-        getWidgetData();
       } else {
         toast.error("Update office error");
       }
@@ -372,7 +378,7 @@ const Kantor = () => {
                   key={office.ID}
                   className="bg-white border-b-[1px] border-b-[#F4F3F7]"
                 >
-                  <td className="py-[30px] pl-[22px]">
+                  <td className="py-[30px] pl-[22px] max-w-[200px]">
                     <h3 className="font-face-ro text-[#1E1F23]">
                       {office.Name}
                     </h3>
