@@ -225,7 +225,8 @@ const TotalUser = () => {
                         setDeleteId(user.ID);
                         setModalConfirmDelete(true);
                       }}
-                      className="px-6 py-[10px] rounded-full bg-[#BA1A1A]"
+                      disabled={user.Role === 1}
+                      className={`px-6 py-[10px] rounded-full bg-[#BA1A1A] disabled:cursor-not-allowed disabled:bg-red-300`}
                     >
                       <span className="font-face-ro text-white text-[14px]">
                         Hapus

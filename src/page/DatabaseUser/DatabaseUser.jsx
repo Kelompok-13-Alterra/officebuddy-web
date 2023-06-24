@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import UsersIcon from "../../assets/img/users-icon.png";
 import RatingIcon from "../../assets/img/star-icon.png";
@@ -172,7 +172,7 @@ const DatabaseUser = () => {
             userData: userData(booking.UserID),
             officeData: officeData(booking.OfficeID),
             date: booking.CreatedAt,
-            status: booking.Status,
+            status: booking.PaymentStatus,
           };
         }),
         "date",
@@ -185,6 +185,26 @@ const DatabaseUser = () => {
     const ratingData = ratingList.slice(-4, ratingList.length);
     return _.orderBy(ratingData, "CreatedAt", "desc") || [];
   };
+
+  const bookingStatus = useCallback(
+    (status) => {
+      if (status === "pending" || status === "" || status === "challange")
+        return "Menunggu Pembayaran";
+      if (status === "failure") return "Gagal";
+      if (status === "success") return "Selesai";
+    },
+    [bookingList],
+  );
+
+  const statusStyle = useCallback(
+    (status) => {
+      if (status === "pending" || status === "" || status === "challange")
+        return "bg-[#CEE5FF] text-[#001D33]";
+      if (status === "failure") return "bg-red-300 text-red-950";
+      if (status === "success") return "bg-[#44474E1F] text-[#1a1b1ea3]";
+    },
+    [bookingList],
+  );
 
   const chartData = [
     { name: "Tidak Aktif", value: 0 },
@@ -393,13 +413,11 @@ const DatabaseUser = () => {
                         : ""}
                     </p>
                     <p
-                      className={`font-face-ro-med rounded-full text-[13px] px-2 py-1 inline-block ${
-                        booking.status
-                          ? "bg-[#44474E1F] text-[#1a1b1ea3]"
-                          : "bg-[#CEE5FF] text-[#001D33]"
-                      }`}
+                      className={`font-face-ro-med rounded-full text-[13px] px-2 py-1 inline-block ${statusStyle(
+                        booking.status,
+                      )}`}
                     >
-                      {booking.status ? "Selesai" : "Menunggu Pembayaran"}
+                      {bookingStatus(booking.status)}
                     </p>
                   </div>
                 </div>
